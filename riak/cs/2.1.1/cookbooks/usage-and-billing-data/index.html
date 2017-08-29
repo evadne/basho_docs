@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+<html class="no-js" lang="en">
+
+
+
+
+<head>
+
+  <meta charset="utf-8">
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width">
+  <link rel="shortcut icon" href="//evadne.github.io/basho_docs/images/branding/favicon.ico" type="image/x-icon" />
+
+  <title>Usage and Billing Data</title>
+
+  <link href="//evadne.github.io/basho_docs/css/main.css" media="screen" rel="stylesheet" type="text/css">
+  <link rel="canonical" href="//evadne.github.io/basho_docs/riak/cs/latest/cookbooks/usage-and-billing-data/" />
+  <!-- The below meta tags are included to allow JS code to use variables
+       defined in Hugo---our static site generator. -->
+  <meta name="project" content="riak_cs">
+  <meta name="version" content="2.1.1">
+  <meta name="project_relative_path" content="cookbooks/usage-and-billing-data/">
+
+</head>
+
+
+
+<body class="riak_cs 2.1.1 latest ">
+
+
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-T9C8MK" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-T9C8MK');</script>
+
+
+  
+<header class="banner">
+
+
+
+  
+  <div class="float-right   banner__menu-bars   [bs] hidden-md-up">
+    <div class="menu-bars   js_toggle-content-nav"></div>
+  </div>
+
+
+
+  
+  <div class="float-left   banner__docs-logo">
+    <a href="//evadne.github.io/basho_docs/index.html" class="block   docs-logo"><img class="docs-logo__image" src="//evadne.github.io/basho_docs/images/branding/basho_docs_logo.png"></a>
+  </div>
+
+
+
+  
+  <div class="overflow-hidden   banner__navigation-pane   [bs] hidden-sm-down">
+
+
+    
+    <div class="float-left    banner__intra-brand__width-wrapper">
+    <div class="float-right   banner__intra-brand">
+      <div class="float-right">
+        
+        <a class="inline-block   banner__brand-link" href="http://basho.com/">Basho</a><a class="inline-block   banner__brand-link" href="https://academy.basho.com">Academy</a><a class="inline-block   banner__brand-link" href="//evadne.github.io/basho_docs/community">Community</a><a class="inline-block   banner__brand-link" href="http://basho.com/contact">Contact</a></div>
+    </div>
+    </div>
+
+
+
+
+    
+    <div class="float-left    banner__intra-site__width-wrapper">
+    <div class="float-right   banner__intra-site">
+      
+      <a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/kv/latest/">Riak KV</a><a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/ts/latest/">Riak TS</a><a class="inline-block   banner__brand-link banner__brand-link--current">Riak CS</a></div>
+    </div>
+
+
+  </div>
+
+</header>
+
+
+
+  
+  
+
+
+
+<nav class="content-nav content-nav--top-size-full">
+
+
+
+
+  <div class="content-nav__fixed-top">
+    <form id="searchbox_011972015458788978446:zgdcy4fa-o0" class="search" action="">
+
+      <span class="block float-left   search__icon-container   docs-icon--search">|</span>
+
+      <span class="block overflow">
+        <input class="search__input" id="main-search" type="search" name="q" placeholder="Search">
+      </span>
+
+    </form>
+
+
+    <div class="clearfix   version-picker">
+
+  
+      <a class="inline-block float-left    product__title" href="//evadne.github.io/basho_docs/"><img class="product__logo" src="//evadne.github.io/basho_docs/images/branding/riak-logo.png">Riak<span class="product__title-highlight">CS</span>
+      </a>
+  
+
+      <div class="inline-block float-right   selector selector--version">
+        <header class="selector__title">Versions</header>
+        <button class="selector__btn" type="button">2.1.1</button>
+        <div    class="selector__arrow"></div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  
+  <div class="overflow-y-hidden   selector-pane__sizing-box selector-pane__sizing-box--hidden">
+  <div class="                    selector-pane__shadow-box">
+
+    
+    <div class="edge-fader edge-fader--left">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+    <div class="edge-fader edge-fader--right">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+
+    <div class="overflow-x        selector-pane__primary selector-pane--versions  js_edge-fader--target">
+      
+    </div>
+  </div>
+  </div>
+
+
+
+
+  
+  <div class="             content-nav__primary__sizing-box">
+  <div class="             content-nav__primary__shadow-box">
+  <div class="overflow-y   content-nav__primary">
+
+    <div class="content-nav__menu-container">
+
+      <ul class="content-menu
+                 content-menu--depth-0
+                 content-menu--open">
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--bolt">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/" >
+              <span class="block   content-menu__item__right-border"><strong>Riak CS</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/downloads/" >
+        <span class="block   content-menu__item__right-border">Download Riak CS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/installing/" >
+        <span class="block   content-menu__item__right-border">Installing Riak CS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/installing/chef/" >
+        <span class="block   content-menu__item__right-border">Installing With Chef</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/tutorials/fast-track/" >
+        <span class="block   content-menu__item__right-border">The Riak CS Fast Track</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/tutorials/fast-track/what-is-riak-cs/" >
+        <span class="block   content-menu__item__right-border">What Is Riak CS?</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/tutorials/fast-track/local-testing-environment/" >
+        <span class="block   content-menu__item__right-border">Building a Local Test Environment</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/tutorials/fast-track/virtual-test-environment/" >
+        <span class="block   content-menu__item__right-border">Building a Virtual Test Environment</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/tutorials/fast-track/test-installation/" >
+        <span class="block   content-menu__item__right-border">Testing the Installation</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--lambda">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                         content-menu__menu-toggle--open ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/developing/" >
+              <span class="block   content-menu__item__right-border"><strong>Developing</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           content-menu--open"
+    style="display: block">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                   content-menu__menu-toggle--open ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/references/appendices/http-admin/" >
+        <span class="block   content-menu__item__right-border">Accounts &amp; Admin</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           content-menu--open"
+    style="display: block">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/account-management/" >
+        <span class="block   content-menu__item__right-border">Account Management</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/access-control-lists/" >
+        <span class="block   content-menu__item__right-border">Access Control Lists</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/authentication/" >
+        <span class="block   content-menu__item__right-border">Authentication</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item  content-menu__item--selected ">
+
+      <a class="block overflow   content-menu__link--depth-2" >
+        <span class="block   content-menu__item__right-border">Usage and Billing Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/references/apis/" >
+        <span class="block   content-menu__item__right-border">APIs</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/references/apis/storage/" >
+        <span class="block   content-menu__item__right-border">Riak CS Storage API</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/references/apis/storage/s3/" >
+        <span class="block   content-menu__item__right-border">S3 API</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/configuration/s3-client/" >
+        <span class="block   content-menu__item__right-border">Configuring an S3 Client</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/fog/" >
+        <span class="block   content-menu__item__right-border">Fog on Riak CS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/configuration/dragondisk/" >
+        <span class="block   content-menu__item__right-border">Configuring DragonDisk</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/configuration/transmit/" >
+        <span class="block   content-menu__item__right-border">Configuring Transmit</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/references/apis/storage/openstack/" >
+        <span class="block   content-menu__item__right-border">OpenStack API</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/using-with-keystone/" >
+        <span class="block   content-menu__item__right-border">Using Riak CS With Keystone</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/querying-access-statistics/" >
+        <span class="block   content-menu__item__right-border">Access Statistics</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/querying-storage-statistics/" >
+        <span class="block   content-menu__item__right-border">Storage Statistics</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--database">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/operating/" >
+              <span class="block   content-menu__item__right-border"><strong>Operating</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/configuration/" >
+        <span class="block   content-menu__item__right-border">Configuring</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/configuration/riak-for-cs/" >
+        <span class="block   content-menu__item__right-border">Configuring Riak KV for CS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/configuration/riak-cs/" >
+        <span class="block   content-menu__item__right-border">Configuring Riak CS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/configuration/stanchion/" >
+        <span class="block   content-menu__item__right-border">Configuring Stanchion</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/configuration/load-balancing-proxy/" >
+        <span class="block   content-menu__item__right-border">Load Balancing &amp; Proxy Configuration</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/configuration/reference/" >
+        <span class="block   content-menu__item__right-border">Configuration Reference</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/operating/running/" >
+        <span class="block   content-menu__item__right-border">Running</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/command-line-tools/" >
+        <span class="block   content-menu__item__right-border">Command-line Tools</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/installing/launching-and-stopping/" >
+        <span class="block   content-menu__item__right-border">Launching and Stopping</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/logging/" >
+        <span class="block   content-menu__item__right-border">Logging</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/operating/advanced/" >
+        <span class="block   content-menu__item__right-border">Advanced</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/rolling-upgrades/" >
+        <span class="block   content-menu__item__right-border">Rolling Upgrades</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/monitoring-and-metrics/" >
+        <span class="block   content-menu__item__right-border">Monitoring &amp; Metrics</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/references/appendices/riak-cs-control/" >
+        <span class="block   content-menu__item__right-border">Riak CS Control</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/supercluster/" >
+        <span class="block   content-menu__item__right-border">Riak CS Supercluster Support</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--beaker">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/theory/" >
+              <span class="block   content-menu__item__right-border"><strong>Theory &amp; Concepts</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/theory/stanchion/" >
+        <span class="block   content-menu__item__right-border">Stanchion</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/multipart-upload-overview/" >
+        <span class="block   content-menu__item__right-border">Multipart Upload Overview</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/garbage-collection/" >
+        <span class="block   content-menu__item__right-border">Garbage Collection</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/theory/comparisons/" >
+        <span class="block   content-menu__item__right-border">Comparisons</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/references/appendices/comparisons/swift/" >
+        <span class="block   content-menu__item__right-border">Riak CS Compared To Swift</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/references/appendices/comparisons/atmos/" >
+        <span class="block   content-menu__item__right-border">Riak CS Compared To Atmos</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--references">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/reference/" >
+              <span class="block   content-menu__item__right-border"><strong>Reference</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/faqs/riak-cs/" >
+        <span class="block   content-menu__item__right-border">FAQs</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/version-compatibility/" >
+        <span class="block   content-menu__item__right-border">Version Compatibility</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/release-notes/" >
+        <span class="block   content-menu__item__right-border">Riak CS Release Notes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--cloud">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/multi-datacenter-overview/" >
+              <span class="block   content-menu__item__right-border"><strong>Riak CS Enterprise</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/configuration/multi-datacenter/" >
+        <span class="block   content-menu__item__right-border">Configuring</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+        <li class="content-menu__blank-entry"></li>
+
+      </ul>
+
+    </div>
+
+
+
+    <div class="content-nav__fixed-bottom">
+
+      <ul class="content-menu">
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--comments">|</span>
+
+            <a class="block overflow" href="//evadne.github.io/basho_docs/community">
+              <span class="block   content-menu__item__right-border">
+                <sub>Want some extra help?</sub><br>
+                <strong>Ask our Community</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--question-sign">|</span>
+
+            <a class="block overflow" href="http://basho.com/contact">
+              <span class="block   content-menu__item__right-border">
+                <sub>Need to chat?</sub><br>
+                <strong>Contact us directly</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--github-alt">|</span>
+
+            <a class="block overflow" href="https://github.com/basho/basho_docs/edit/master/content/riak/cs/2.1.1/cookbooks/usage-and-billing-data.md">
+              <span class="block   content-menu__item__right-border">
+                <sub>Noticed a typo?</sub><br>
+                <strong>Correct it in GitHub</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+  </div>
+  </div>
+
+
+
+</nav>
+
+<script>
+  (function() {
+    var cx = '011972015458788978446:zgdcy4fa-o0';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<div style="width:0px;overflow:hidden;height:0px;">
+  <gcse:search></gcse:search>
+</div>
+
+
+
+
+
+
+  <div class="content-well">
+
+
+    <article class="main-article">
+
+
+      
+
+<header class="front-matter">
+
+
+  <h1 class="front-matter__title">
+
+    
+    <br>
+    Usage and Billing Data
+
+  </h1>
+  <nav class="table-of-contents"></nav>
+
+
+</header>
+
+
+      <main>
+        
+
+<p>Like many other object storage systems, Riak CS gathers a variety of
+usage statistics and makes them available through its administrative
+API.</p>
+
+<div class="blocknote">
+  
+    <div class="blocknote__title">Note on terminology</div>
+  
+  <p>In this and other documents in the Riak CS documentation, the terms &ldquo;storage&rdquo;
+and &ldquo;billing&rdquo; are used interchangeably. The same goes for the terms &ldquo;usage&rdquo;
+and access.</p>
+
+</div>
+
+
+<h2 id="access-statistics">Access Statistics</h2>
+
+<p>Access stats are tracked on a per-user basis, as rollups for slices of
+time. They are stored just like other Riak CS data, in the <code>cs.access</code>
+bucket in particular. For information about querying access statistics,
+please read <a href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/querying-access-statistics">Querying Access Statistics</a>.</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>The basic process driving usage and billing data in Riak CS is the
+following:</p>
+
+<ol>
+<li>Riak CS determines whom, if anyone, should be billed for each access</li>
+<li>Riak CS send this and some statistical information about the
+accesses to an aggregation subsystem</li>
+<li>The aggregation subsystem periodically sends its accumulated log to
+be archived</li>
+<li>The archival subsystem sums all recorded accesses for each user and
+stores a record for each user for the time slice</li>
+</ol>
+
+<p>Log retrieval then involves simply making a request to Riak for all
+slice objects for a user in a time period. No access data will be logged
+unless the user for the access is known.</p>
+
+<h3 id="tracked-statistics">Tracked Statistics</h3>
+
+<p>Several statistics are logged automatically is a user is specified for
+the request:</p>
+
+<ul>
+<li><code>Count</code> &mdash; the number of times this operation was used, where each
+request counts as one (1)</li>
+<li><code>BytesIn</code> &mdash; the number of bytes that were included in the request
+body</li>
+<li><code>BytesOut</code> &mdash; the number of bytes that were sent in the response body</li>
+</ul>
+
+<p>For successful requests, each of these stats is logged under the name
+given. For unsuccessful requests, they are logged under this name with a
+prefix of either <code>SystemError</code> for requests that end in response codes
+500+, or <code>UserError</code> for requests that end in response codes 400-499.
+For example, if a user tries to download a nonexistent file, it will be
+logged under <code>UserErrorCount</code> with the bytes of the message logged under
+<code>UserErrorBytesOut</code>.</p>
+
+<p>These three metrics are logged for each operation separately. The access
+logger determines the operation type by comparing the method, resource
+module, and path to a known table. For example, it knows that a <code>GET</code> on
+the <em>key</em> module with the <code>acl</code> query parameter in the path is a
+<code>KeyReadACL</code> operation. A <code>PUT</code> to the same resource without the <code>acl</code>
+query parameter is a <code>KeyWrite</code> operation. See <a href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/querying-access-statistics">Querying Access Statistics</a> for a list of all operation types.</p>
+
+<h3 id="log-accumulation">Log Accumulation</h3>
+
+<p>As resources finish their processing, the access logger module is called
+by Webmachine to log the access. This module implements a server that
+finds all of the access notes in the request&rsquo;s log data and stores them
+until the current interval ends.</p>
+
+<p>When the current interval ends, the access module transfers ownership of
+its accumulated data to the archiver module. The logger module then
+resets for logging the next slice&rsquo;s accesses.</p>
+
+<h4 id="interval-duration">Interval Duration</h4>
+
+<p>The length of the log flushing interval is configured by the application
+environment variable <code>access_log_flush_factor</code>. The value is expressed
+as an integer divisor of the <code>access_archive_period</code> setting. That is,
+if <code>access_log_flush_factor</code> is 5 and <code>access_archive_period</code> is 3600
+(== 1 hour) seconds, the log will be flushed every 720 seconds (== 12
+minutes), which is 5 times per archive period.</p>
+
+<p>The value of <code>access_log_flush_factor</code> must be an integer factor of
+<code>access_archive_period</code>. If the factor does not divide the period
+evenly, an error will be printed in the log, and the Riak CS node will
+refuse to start.</p>
+
+<p>The default value for <code>access_log_flush_factor</code> is 1 (once per archive
+period). These settings may be manipulated in the Riak CS <code>app.config</code>
+file, normally located at <code>/etc/riak-cs/app.config</code>.</p>
+
+<h4 id="log-size-trigger-for-archival">Log Size Trigger for Archival</h4>
+
+<p>Archival of the access log will also be triggered if the number of
+records waiting to be archived reaches a certain configured level. When
+the threshold is reached, all accumulated records are transferred to the
+archiver, which writes out a sample with <em>now</em> as the end-time.
+Accumulation is then restarted with <em>now</em> as the start time, and will
+continue until either the end of the time interval or until the log
+threshold is reached again.</p>
+
+<p>This level is configured by the application environment variable
+<code>access_log_flush_size</code>. Its default value is <code>1000000</code> (one million).</p>
+
+<h4 id="backlog-caveat">Backlog Caveat</h4>
+
+<p>If the logger finds itself so far behind that it would need to schedule
+its next archival in the past&mdash;that is, after sending a log
+accumulation for interval N to the archiver, it finds that the end of
+interval N+1 has already passed&mdash;the logger will drop the backlog in
+its message box by exiting and allowing its supervisor process to
+restart it. Just before exiting, it will print an error message
+describing how far behind it was:</p>
+
+<pre><code class="language-log">09:56:02.584 [error] Access logger is running 302 seconds behind, skipping 0 log messages to catch up
+</code></pre>
+
+<p>With the default one-hour archive period, this case will only be
+encountered when the logger is an entire hour behind. This behavior is
+meant as a safety valve to prevent that hour lag from growing due to
+memory pressure from the logger processes&rsquo;s message queue.</p>
+
+<h4 id="manually-triggering-archival">Manually Triggering Archival</h4>
+
+<p>When taking a machine out of service, it may be desirable to trigger log
+archival before the end of the interval. To do so, use the
+<code>riak-cs-access</code> script with the command <code>flush</code>. It should be installed
+on the same path as the <code>riak-cs</code> script. For most OS distributions this
+will be at <code>/usr/local/sbin</code>.</p>
+
+<p>By default, the script will wait up to 50 seconds for the logger to
+acknowledge that it has passed its accumulation to the archiver and
+another 50 seconds for the archiver to acknowledge that it has finished
+archiving all accumulations it has received. To wait longer, use the
+<code>-w</code> parameter on the command line with an integer number of 5-second
+intervals to wait. That is, to wait for 100 seconds for each phase, use:</p>
+
+<pre><code class="language-bash">riak-cs-access flush -w 20
+</code></pre>
+
+<h3 id="archive-retrieval">Archive Retrieval</h3>
+
+<p>When a request is received for a user&rsquo;s access stats over some time
+period, the objects for all intervals in that time period must be
+retrieved.</p>
+
+<p>It is important to note that the archival process does not attempt a
+read/modify/write cycle when writing a slice record. The <code>cs.access</code>
+bucket should have the <code>allow_mult=true</code> flag set, and so multiple Riak
+CS nodes writing the same slice record for the same user create
+siblings. Riak CS attempts to check and set the <code>allow_mult</code> bucket
+property when it starts up, and will print a warning in the log about
+being <code>unable to configure</code> or <code>unable to verify</code> bucket settings if it
+fails.</p>
+
+<p>Siblings should be handled at read time. Sibling resolution should be
+nothing more than a set union of all records. The HTTP resource serving
+the statistics expects to provide them on a node-accumulated basis, so
+it is important to set a <strong>unique Erlang node name for each Riak CS
+node</strong>.</p>
+
+<h2 id="storage-statistics">Storage Statistics</h2>
+
+<p>Storage statistics are also tracked on a per-user basis, as rollups for
+slices of time. They are stored in the same Riak cluster as other Riak
+CS data, in the <code>cs.storage</code> bucket.</p>
+
+<p>For detailed information about querying storage statistics, please read
+<a href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/querying-storage-statistics">Querying Storage Statistics</a>.</p>
+
+<h3 id="high-level">High Level</h3>
+
+<ol>
+<li>Storage is calculated for all users either
+a.  on a regular schedule or
+b.  when manually triggered with the <code>riak-cs-storage</code> script</li>
+<li>Each user&rsquo;s sum is stored in an object named for the timeslice in
+which the aggregation took place</li>
+<li>Sums are broken down by bucket</li>
+</ol>
+
+<p>Log retrieval is then simply making a request to Riak for all slice
+objects for a user in a particular time period.</p>
+
+<h4 id="prerequisite-code-paths-for-mapreduce">Prerequisite: Code Paths for MapReduce</h4>
+
+<p>The storage calculation system uses MapReduce to sum the files in a
+bucket. This means you must tell all of your Riak nodes where to find
+Riak CS&rsquo;s compiled files before calculating storage.</p>
+
+<p>See <a href="//evadne.github.io/basho_docs/riak/cs/2.1.1/cookbooks/configuration/riak-for-cs">Configuring Riak for CS</a> for directions on setting this up.</p>
+
+<h3 id="scheduling-and-manual-triggering">Scheduling and Manual Triggering</h3>
+
+<p>Triggering the storage calculation is a matter of setting up a regular
+schedule or manually starting the process via the <code>riak-cs-storage</code>
+script.</p>
+
+<h4 id="regular-schedules">Regular Schedules</h4>
+
+<p>If you would like to have an Riak CS node calculate the storage used by every
+user at the same time (or times) each day, specify a schedule in that node&rsquo;s
+Riak CS <code>riak-cs.conf</code> file, or in the old-style <code>advanced.config</code> or
+<code>app.config</code> file.</p>
+
+<p>In the <code>riak_cs</code> section of the file, add an entry for
+<code>storage_schedule</code> like this:</p>
+
+<pre><code class="language-riakcsconf">stats.storage.schedule.1 = 0600
+</code></pre>
+
+<pre><code class="language-advancedconfig">{storage_schedule, &quot;0600&quot;}
+</code></pre>
+
+<pre><code class="language-appconfig">{storage_schedule, &quot;0600&quot;}
+</code></pre>
+
+<p>The time is given as a string of the form <code>HHMM</code>, representing the
+hour and minute GMT to start the calculation process. In this example, the node
+would start the storage calculation at 6am GMT every day.</p>
+
+<p>To set up multiple times, simply specify multiple times. For example,
+to schedule the calculation to happen at both 6am and 6pm, use:</p>
+
+<pre><code class="language-riakcsconf">stats.storage.schedule.1 = 0600
+stats.storage.schedule.2 = 1800
+</code></pre>
+
+<pre><code class="language-advancedconfig">{storage_schedule, [&quot;0600&quot;, &quot;1800&quot;]}
+</code></pre>
+
+<pre><code class="language-appconfig">{storage_schedule, [&quot;0600&quot;, &quot;1800&quot;]}
+</code></pre>
+
+<div class="blocknote">
+  
+    <div class="blocknote__title">Note on archive periods</div>
+  
+  <p>When using multiple times in a storage schedule, they must be scheduled for
+different archive periods (see details for <code>storage_archive_period</code> in the
+<strong>Archival</strong> section below). Extra scheduled times in the same archive period
+are skipped. This is intended to allow more than one Riak CS node to calculate
+storage statistics concurrently, as they will take notice of users already
+calculated by other nodes and skip them (see details in the Manual Triggering
+section about overriding this behavior).</p>
+
+</div>
+
+
+<p>By default, no schedule is specified, so the storage calculation is
+never done automatically.</p>
+
+<h4 id="manual-triggering">Manual Triggering</h4>
+
+<p>If you would rather trigger storage calculations manually, simply use
+the <code>batch</code> command in the <code>riak-cs-storage</code> script:</p>
+
+<pre><code class="language-bash">riak-cs-storage batch
+# Response:
+# Batch storage calculation started.
+</code></pre>
+
+<p>If there is already a calculation in progress, or if starting the
+calculation fails for some other reason, the script will print an error
+message saying so.</p>
+
+<p>By default, a manually triggered calculation run will skip users that
+have already been calculated in the current archive period (see the
+Archival section below for details about <code>storage_archive_period</code>). If
+you would rather calculate an additional sample for every user in this
+period, add the <code>--recalc</code> (or <code>-r</code> for short) option to the command
+line:</p>
+
+<pre><code class="language-bash">riak-cs-storage batch -r # force recalculation of every user
+</code></pre>
+
+<h4 id="further-control">Further Control</h4>
+
+<p>In-process batch calculations can also be paused or canceled using the
+<code>riak-cs-storage</code> script.</p>
+
+<p>To pause an in-process batch, use:</p>
+
+<pre><code class="language-bash">riak-cs-storage pause
+# Response:
+# The calculation was paused.
+</code></pre>
+
+<p>To resume a paused batch, use:</p>
+
+<pre><code class="language-bash">riak-cs-storage resume
+# Response:
+# The calculation was resumed.
+</code></pre>
+
+<p>To cancel an in-process batch (whether <em>paused</em> or <em>active</em>), use:</p>
+
+<pre><code class="language-bash">riak-cs-storage cancel
+# Response:
+# The calculation was canceled.
+</code></pre>
+
+<p>You can also retrieve the current state of the daemon by using the
+<code>status</code> command. The first line will indicate whether the daemon is
+<em>idle</em>, <em>active</em>, or <em>paused</em>, and it will be followed by further
+    details based on progress. For example:</p>
+
+<pre><code class="language-log">A storage calculation is in progress
+Schedule: none defined
+Last run started at: 20120316T204135Z
+Current run started at: 20120316T204203Z
+Next run scheduled for: unknown/never
+Elapsed time of current run: 3
+Users completed in current run: 1
+Users left in current run: 4
+</code></pre>
+
+<h3 id="results">Results</h3>
+
+<p>When the node finishes calculating every user&rsquo;s storage, it will print a
+message to the log noting how long the entire process took:</p>
+
+<pre><code class="language-log">08:33:19.282 [info] Finished storage calculation in 1 seconds.
+</code></pre>
+
+<h3 id="process">Process</h3>
+
+<p>The calculation process is coordinated by a long-lived finite state
+machine process that handles both the scheduling (if a schedule is
+defined) and the running of the process.</p>
+
+<p>When a storage calculation starts, the first step is to obtain a list of
+known users of the system. Each user&rsquo;s record contains information about
+the buckets that the user owns.</p>
+
+<p>For each bucket that a user owns, a MapReduce query is run. The query&rsquo;s
+inputs are the list of the keys in the bucket (the input is
+<code>BucketName</code>, so the keys stay on the server). The query then has two
+phases: a map that produces tuples of the form <code>{1,
+ByteSize(File)}</code>&mdash;if <em>active</em>; nothing if <em>inactive</em>&mdash;and a reduce
+that sums those tuples element-wise. The result is one tuple whose first
+element is the number of files in the bucket and whose second element is
+the total number of bytes stored in that file.</p>
+
+<p>Only one bucket is calculated at a time to prevent putting too much load
+on the Riak cluster. Only one user is calculated at a time as well to
+prevent too large of a temporary list on the Riak CS node.</p>
+
+<p>Once the sum for each of the user&rsquo;s buckets is calculated, a record is
+written to the <code>cs.storage</code> Riak bucket.</p>
+
+<h3 id="archival">Archival</h3>
+
+<p>Records written to the <code>cs.storage</code> bucket are very similar to records
+written to the <code>cs.access</code> bucket used for logging access statistics.
+The value is a JSON object with one field per bucket. The key is a
+combination of the user&rsquo;s <code>key_id</code> and the timestamp of the time slice
+for which the calculation was run.</p>
+
+<p>The period for storage archival is separate from the period for access
+archival. The storage archival period is configured by the application
+environment variable <code>storage_archive_period</code>. The default is 86400 (one
+day). This is because storage calculations are expected to be archived
+much less frequently than access logs, and so specifying fewer possible
+keys to look up later reduces overhead at reporting time.</p>
+
+      </main>
+
+
+    </article>
+
+
+    <footer class="footer">
+
+  <div class="inline-block   footer__attributions">
+
+    <p>
+      This work is licensed under a
+      <br class="[bs] hidden-md-up">
+      <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+        Creative Commons Attribution 4.0 <br class="[bs] hidden-sm-up"> International Public License
+      </a>
+    </p>
+
+    <p>
+      © 2011-2017&nbsp;<a href="http://www.basho.com">Basho Technologies, Inc.</a>
+    </p>
+
+  </div>
+
+</footer>
+
+
+
+  </div>
+
+
+  <script src="//evadne.github.io/basho_docs/js/main.js" type="text/javascript"></script>
+
+</body>
+</html>

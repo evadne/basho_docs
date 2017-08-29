@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+<html class="no-js" lang="en">
+
+
+
+
+<head>
+
+  <meta charset="utf-8">
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width">
+  <link rel="shortcut icon" href="//evadne.github.io/basho_docs/images/branding/favicon.ico" type="image/x-icon" />
+
+  <title>Querying Data in Riak TS</title>
+
+  <link href="//evadne.github.io/basho_docs/css/main.css" media="screen" rel="stylesheet" type="text/css">
+  <link rel="canonical" href="//evadne.github.io/basho_docs/riak/ts/latest/using/querying/" />
+  <!-- The below meta tags are included to allow JS code to use variables
+       defined in Hugo---our static site generator. -->
+  <meta name="project" content="riak_ts">
+  <meta name="version" content="1.1.0">
+  <meta name="project_relative_path" content="using/querying/">
+
+</head>
+
+
+
+<body class="riak_ts 1.1.0  ">
+
+
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-T9C8MK" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-T9C8MK');</script>
+
+
+  
+<header class="banner">
+
+
+
+  
+  <div class="float-right   banner__menu-bars   [bs] hidden-md-up">
+    <div class="menu-bars   js_toggle-content-nav"></div>
+  </div>
+
+
+
+  
+  <div class="float-left   banner__docs-logo">
+    <a href="//evadne.github.io/basho_docs/index.html" class="block   docs-logo"><img class="docs-logo__image" src="//evadne.github.io/basho_docs/images/branding/basho_docs_logo.png"></a>
+  </div>
+
+
+
+  
+  <div class="overflow-hidden   banner__navigation-pane   [bs] hidden-sm-down">
+
+
+    
+    <div class="float-left    banner__intra-brand__width-wrapper">
+    <div class="float-right   banner__intra-brand">
+      <div class="float-right">
+        
+        <a class="inline-block   banner__brand-link" href="http://basho.com/">Basho</a><a class="inline-block   banner__brand-link" href="https://academy.basho.com">Academy</a><a class="inline-block   banner__brand-link" href="//evadne.github.io/basho_docs/community">Community</a><a class="inline-block   banner__brand-link" href="http://basho.com/contact">Contact</a></div>
+    </div>
+    </div>
+
+
+
+
+    
+    <div class="float-left    banner__intra-site__width-wrapper">
+    <div class="float-right   banner__intra-site">
+      
+      <a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/kv/latest/">Riak KV</a><a class="inline-block   banner__brand-link banner__brand-link--current">Riak TS</a><a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/cs/latest/">Riak CS</a></div>
+    </div>
+
+
+  </div>
+
+</header>
+
+
+
+  
+  
+
+
+
+<nav class="content-nav content-nav--top-size-full">
+
+
+
+
+  <div class="content-nav__fixed-top">
+    <form id="searchbox_011972015458788978446:zgdcy4fa-o0" class="search" action="">
+
+      <span class="block float-left   search__icon-container   docs-icon--search">|</span>
+
+      <span class="block overflow">
+        <input class="search__input" id="main-search" type="search" name="q" placeholder="Search">
+      </span>
+
+    </form>
+
+
+    <div class="clearfix   version-picker">
+
+  
+      <a class="inline-block float-left    product__title" href="//evadne.github.io/basho_docs/"><img class="product__logo" src="//evadne.github.io/basho_docs/images/branding/riak-logo.png">Riak<span class="product__title-highlight">TS</span>
+      </a>
+  
+
+      <div class="inline-block float-right   selector selector--version">
+        <header class="selector__title">Versions</header>
+        <button class="selector__btn" type="button">1.1.0</button>
+        <div    class="selector__arrow"></div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  
+  <div class="overflow-y-hidden   selector-pane__sizing-box selector-pane__sizing-box--hidden">
+  <div class="                    selector-pane__shadow-box">
+
+    
+    <div class="edge-fader edge-fader--left">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+    <div class="edge-fader edge-fader--right">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+
+    <div class="overflow-x        selector-pane__primary selector-pane--versions  js_edge-fader--target">
+      
+    </div>
+  </div>
+  </div>
+
+
+
+
+  
+  <div class="             content-nav__primary__sizing-box">
+  <div class="             content-nav__primary__shadow-box">
+  <div class="overflow-y   content-nav__primary">
+
+    <div class="content-nav__menu-container">
+
+      <ul class="content-menu
+                 content-menu--depth-0
+                 content-menu--open">
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--riak">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/" >
+              <span class="block   content-menu__item__right-border"><strong>Riak TS</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/releasenotes/" >
+        <span class="block   content-menu__item__right-border">Release Notes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li class="content-menu__download-entry">
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--download-alt">|</span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/downloads/" >
+              <span class="block   content-menu__item__right-border"><strong>Download Riak TS</strong></span>
+            </a>
+
+          </div>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--install">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/installing/" >
+              <span class="block   content-menu__item__right-border"><strong>Install</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/installing/debian-ubuntu/" >
+        <span class="block   content-menu__item__right-border">Debian and Ubuntu</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/installing/mac-osx/" >
+        <span class="block   content-menu__item__right-border">Mac OS X</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/installing/rhel-centos/" >
+        <span class="block   content-menu__item__right-border">CentOS/RHEL</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--database">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                         content-menu__menu-toggle--open ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/using/" >
+              <span class="block   content-menu__item__right-border"><strong>Use</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           content-menu--open"
+    style="display: block">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/using/planning/" >
+        <span class="block   content-menu__item__right-border">Plan Your Table</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/using/creating-activating/" >
+        <span class="block   content-menu__item__right-border">Create and Activate Your Table</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/using/writingdata/" >
+        <span class="block   content-menu__item__right-border">Write Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item  content-menu__item--selected ">
+
+      <a class="block overflow   content-menu__link--depth-1" >
+        <span class="block   content-menu__item__right-border">Query Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/using/configuring/" >
+        <span class="block   content-menu__item__right-border">Configure</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/using/aggregate-functions/" >
+        <span class="block   content-menu__item__right-border">Aggregate Functions</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/using/arithmetic-operations/" >
+        <span class="block   content-menu__item__right-border">Arithmetic Operations</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--lambda">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/developing/" >
+              <span class="block   content-menu__item__right-border"><strong>Develop</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/developing/erlang/" >
+        <span class="block   content-menu__item__right-border">Erlang</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/developing/java/" >
+        <span class="block   content-menu__item__right-border">Java</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/developing/nodejs/" >
+        <span class="block   content-menu__item__right-border">Node.js</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/developing/python/" >
+        <span class="block   content-menu__item__right-border">Python</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/developing/ruby/" >
+        <span class="block   content-menu__item__right-border">Ruby</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--beaker">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/learn-about/" >
+              <span class="block   content-menu__item__right-border"><strong>Learn</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/learn-about/bestpractices/" >
+        <span class="block   content-menu__item__right-border">Best Practices</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/learn-about/sqlriakts/" >
+        <span class="block   content-menu__item__right-border">SQL for Riak TS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.1.0/learn-about/tablearchitecture/" >
+        <span class="block   content-menu__item__right-border">Table Architecture </span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+        <li class="content-menu__blank-entry"></li>
+
+      </ul>
+
+    </div>
+
+
+
+    <div class="content-nav__fixed-bottom">
+
+      <ul class="content-menu">
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--comments">|</span>
+
+            <a class="block overflow" href="//evadne.github.io/basho_docs/community">
+              <span class="block   content-menu__item__right-border">
+                <sub>Want some extra help?</sub><br>
+                <strong>Ask our Community</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--question-sign">|</span>
+
+            <a class="block overflow" href="http://basho.com/contact">
+              <span class="block   content-menu__item__right-border">
+                <sub>Need to chat?</sub><br>
+                <strong>Contact us directly</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--github-alt">|</span>
+
+            <a class="block overflow" href="https://github.com/basho/basho_docs/edit/master/content/riak/ts/1.1.0/using/querying.md">
+              <span class="block   content-menu__item__right-border">
+                <sub>Noticed a typo?</sub><br>
+                <strong>Correct it in GitHub</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+  </div>
+  </div>
+
+
+
+</nav>
+
+<script>
+  (function() {
+    var cx = '011972015458788978446:zgdcy4fa-o0';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<div style="width:0px;overflow:hidden;height:0px;">
+  <gcse:search></gcse:search>
+</div>
+
+
+
+
+
+
+  <div class="content-well">
+
+
+    <article class="main-article">
+
+
+      
+
+<header class="front-matter">
+
+
+  <h1 class="front-matter__title">
+
+    
+    <br>
+    Querying Data in Riak TS
+
+  </h1>
+  <nav class="table-of-contents"></nav>
+
+
+</header>
+
+
+      <main>
+        
+
+<p>Now that you have <a href="../creating-activating/">created</a> a Riak TS table and <a href="../writingdata/">written</a> data to it, you can query your data.</p>
+
+<h2 id="basic-querying">Basic Querying</h2>
+
+<p>When querying your data via fields, there are three categories of fields, each with a different set of rules for valid queries.</p>
+
+<h3 id="timestamp-in-the-primary-key">Timestamp in the primary key</h3>
+
+<p>The timestamp in the primary key is an integer (in milliseconds) that must be compared either as a fully-enclosed range or as an exact match.</p>
+
+<ul>
+<li>Valid: <code>time &gt; 1449864277000 and time &lt; 1449864290000</code></li>
+<li>Invalid: <code>time &gt; 1449864277000</code></li>
+<li>Invalid: <code>time &gt; 1449864277000 or time &lt; 1449864290000</code></li>
+</ul>
+
+<h3 id="other-fields-in-the-primary-key">Other fields in the primary key</h3>
+
+<p>The other two fields in the primary key must be compared using strict equality against literal values. No ranges are permitted, <code>!=</code> must not be used, and <code>or</code> will not work.</p>
+
+<ul>
+<li>Valid: <code>country_code = 'uk'</code></li>
+<li>Invalid: <code>(country_code = 'uk' or country_code = 'de')</code></li>
+<li>Invalid: <code>country_code != 'se'</code></li>
+<li>Invalid: <code>temperature &lt; 85.0</code></li>
+</ul>
+
+<h3 id="fields-not-in-the-primary-key">Fields not in the primary key</h3>
+
+<p>These fields may be queried with unbounded ranges, <code>!=</code>, and <code>or</code> comparisons.</p>
+
+<h3 id="general-guidelines">General Guidelines</h3>
+
+<p>Before you begin querying, there are some guidelines to keep in mind.</p>
+
+<ul>
+<li>Fields may not be compared against other fields in the query.</li>
+<li>All elements of the compound primary key must be present.</li>
+<li>When using <code>or</code>, you must surround the expression with parentheses or your query will return an error.</li>
+</ul>
+
+<p>Basic queries return the full range of values between two given times for a series in a family. To demonstrate, we&rsquo;ll use the same example table:</p>
+
+<pre><code class="language-sql">CREATE TABLE GeoCheckin
+(
+   myfamily    varchar   not null,
+   myseries    varchar   not null,
+   time        timestamp not null,
+   weather     varchar   not null,
+   temperature double,
+   PRIMARY KEY (
+     (myfamily, myseries, quantum(time, 15, 'm')),
+     myfamily, myseries, time
+   )
+)
+</code></pre>
+
+<p>Your query must include all components of the primary key (<code>myfamily</code>, <code>myseries</code>, and <code>time</code>). If any part of the primary key is missing, you will get an error.</p>
+
+<h2 id="advanced-querying-by-field">Advanced Querying By Field</h2>
+
+<h3 id="select-query">Select Query</h3>
+
+<p>You can select particular fields from the data to query:</p>
+
+<pre><code>select weather, temperature from GeoCheckin where time &gt; 1234560 and time &lt; 1234569 and myfamily = 'family1' and myseries = 'series1'
+</code></pre>
+
+<p>Client-specific examples:</p>
+
+<pre><code class="language-erlang">riakc_ts:query(Pid, &quot;select weather, temperature from GeoCheckin where time &gt; 1234560 and time &lt; 1234569 and myfamily = 'family1' and myseries = 'series1'&quot;).
+</code></pre>
+
+<pre><code class="language-java">String queryText = &quot;select weather, temperature from GeoCheckin &quot; +
+                   &quot;where time &gt; 1234560 and time &lt; 1234569 and &quot; +
+                   &quot;myfamily = 'family1' and myseries = 'series1'&quot;;
+
+Query query = new Query.Builder(queryText).build();
+QueryResult queryResult = client.execute(query);
+</code></pre>
+
+<pre><code class="language-python">fmt = &quot;&quot;&quot;
+select weather, temperature from GeoCheckin where
+    time &gt; {t1} and time &lt; {t2} and
+    myfamily = 'family1' and myseries = 'series1'
+&quot;&quot;&quot;
+query = fmt.format(t1=tenMinsAgoMsec, t2=nowMsec)
+ts_obj = client.ts_query('GeoCheckin', query)
+</code></pre>
+
+<pre><code class="language-ruby">Riak::Timeseries::Query.new(client, &quot;select weather, temperature from GeoCheckin where time &gt; 1234560 and time &lt; 1234569 and myfamily = 'family1' and myseries = 'series1'&quot;).issue!
+</code></pre>
+
+<h3 id="extended-query">Extended Query</h3>
+
+<p>You can extend the query beyond the primary key and use secondary columns to filter results. In this example, we are extending our query to filter based on the <code>temperature</code> column:</p>
+
+<pre><code>select weather, temperature from GeoCheckin where time &gt; 1234560 and time &lt; 1234569 and myfamily = 'family1' and myseries = 'series1' and temperature &gt; 27.0
+</code></pre>
+
+<p>Client-specific examples:</p>
+
+<pre><code class="language-erlang">riakc_ts:query(Pid, &quot;select weather, temperature from GeoCheckin where time &gt; 1234560 and time &lt; 1234569 and myfamily = 'family1' and myseries = 'series1' and temperature &gt; 27.0&quot;).
+</code></pre>
+
+<pre><code class="language-java">String queryText = &quot;select weather, temperature from GeoCheckin &quot; +
+                   &quot;where time &gt; 1234560 and time &lt; 1234569 and &quot; +
+                   &quot;myfamily = 'family1' and myseries = 'series1' &quot; +
+                   &quot;temperature &gt; 27.0&quot;;
+
+Query query = new Query.Builder(queryText).build();
+QueryResult queryResult = client.execute(query);
+</code></pre>
+
+<pre><code class="language-python">fmt = &quot;&quot;&quot;
+select weather, temperature from GeoCheckin where
+    time &gt; {t1} and time &lt; {t2} and
+    myfamily = 'family1' and myseries = 'series1' and
+    temperature &gt; 27.0
+&quot;&quot;&quot;
+query = fmt.format(t1=tenMinsAgoMsec, t2=nowMsec)
+ts_obj = client.ts_query('GeoCheckin', query)
+</code></pre>
+
+<pre><code class="language-ruby">Riak::Timeseries::Query.new(client, &quot;select weather, temperature from GeoCheckin where time &gt; 1234560 and time &lt; 1234569 and myfamily = 'family1' and myseries = 'series1' and temperature &gt; 27.0&quot;).issue!
+</code></pre>
+
+<p>You can also use <code>or</code> when querying against values not in the primary key, such as <code>temperature</code> in our example. Note that the parentheses are required:</p>
+
+<pre><code>select weather, temperature from GeoCheckin where time &gt; 1234560 and time &lt; 1234569 and myfamily = 'family1' and myseries = 'series1' and (temperature &gt; 27.0 or temperature &lt; 0.0)
+</code></pre>
+
+<p>You cannot use <code>or</code> between two complete clauses, since keys cannot be specified twice.</p>
+
+<h3 id="sql-injection">SQL Injection</h3>
+
+<p>When querying with user-supplied data, it is essential that you protect against SQL injection. Please verify the user-supplied data before constructing queries.</p>
+
+<h2 id="sql-support">SQL Support</h2>
+
+<p>A small subset of SQL is supported. All columns are of the format:</p>
+
+<pre><code>Field    Operator   Constant
+````
+
+The following operators are supported for each data type:
+
+| |=|!=|&gt;|&lt;|&lt;=|&gt;=|
+|-----------|---|---|---|---|---|---|
+| varchar   | X | X |   |   |   |   |
+| boolean   | X | X |   |   |   |   |
+| sint64    | X | X | X | X | X | X |
+| double    | X | X | X | X | X | X |
+| timestamp | X | X | X | X | X | X |
+
+
+### Limitations
+
+* Column to column comparisons are not currently supported.
+* Secondary indexing (2i) will not work with Riak TS.
+* Riak search will not work with Riak TS.
+* Queries are limited by the number of quanta they can span when specifying the time limits.
+
+
+#### Quanta query range
+
+A query covering more than a certain number of quanta (5 by default) will generate the error `too_many_subqueries` and the query system will refuse to run it. Assuming a default quanta of 15 minutes, the maximum query time range is 75 minutes.
+
+In the below example we set a quanta of 15s:
+
+```sql
+CREATE TABLE GeoCheckin
+ (geohash varchar not null,
+  location varchar not null,
+  user varchar not null,
+  time timestamp not null,
+  weather varchar not null,
+  temperature varchar,
+    PRIMARY KEY((location, user, quantum(time, 15, 's')),
+                location, user, time))
+</code></pre>
+
+<p>The maximum time range we can query is 60s, anything beyond will fail.</p>
+
+<p>See the Data Modeling section in <a href="../../learn-about/tablearchitecture">Table Architecture</a> for more information.</p>
+
+<h4 id="leap-seconds-and-quantum-boundaries">Leap seconds and quantum boundaries</h4>
+
+<p>Periodically <a href="https://en.wikipedia.org/wiki/Leap_second">leap seconds</a>
+are announced. These are inserted at the end of one day (in UTC).</p>
+
+<p>UNIX treats them as one double-length second. For example, at the end of 1998 a second was added:</p>
+
+<pre><code>Date         Time of day   UNIX time
+1998-12-31   23:59:58      915148798
+1998-12-31   23:59:59      915148799
+1998-12-31   23:59:60      915148800     &lt;== Artificial leap second
+1999-01-01   00:00:00      915148800
+</code></pre>
+
+<p>Effectively, there is no way in the UNIX time scheme to differentiate an event that occurred during the extra second at the end of 1998 to something that occurred the first second of 1999.</p>
+
+<p>Similarly, Riak TS would treat <code>915148800</code> as the start of a new time quantum, and any data points which a client added for that second would be considered to be in the first time quantum in 1999.</p>
+
+<p>The data is not lost, but a query against 1998 time quanta will not produce those data points despite the fact that some of the events flagged as <code>915148800</code> technically occurred in 1998.</p>
+
+<h2 id="querying-tables">Querying Tables</h2>
+
+<h3 id="query-a-table-with-sql">Query a table with SQL</h3>
+
+<p>Query a table by issuing a SQL statement against the table. Your query MUST include a &lsquo;where&rsquo; clause with all components.</p>
+
+<p>In the following client-specific examples we&rsquo;ll select all fields from the GeoCheckin table where <code>time</code>, <code>myfamily</code>, and <code>myseries</code> match our supplied parameters:</p>
+
+<pre><code class="language-erlang">{ok, Pid} = riakc_pb_socket:start_link(&quot;myriakdb.host&quot;, 10017).
+riakc_ts:query(Pid, &quot;select * from GeoCheckin where time &gt; 1234560 and time &lt; 1234569 and myfamily = 'family1' and myseries = 'series1'&quot;).
+</code></pre>
+
+<pre><code class="language-java">import java.net.UnknownHostException;
+import java.util.concurrent.ExecutionException;
+import com.basho.riak.client.api.RiakClient;
+import com.basho.riak.client.api.commands.timeseries.Query;
+import com.basho.riak.client.core.query.timeseries.*;
+import java.util.*;
+public class RiakTSQuery {
+public static void main(String [] args) throws UnknownHostException, ExecutionException, InterruptedException
+{ // Riak Client with supplied IP and Port RiakClient client = RiakClient.newClient(10017, &quot;myriakdb.host&quot;); String queryText = &quot;select * from GeoCheckin &quot; + &quot;where time &gt;= 1234567 and time &lt;= 1234567 and &quot; + &quot;myfamily = 'family1' and myseries = 'series1' &quot;; Query query = new Query.Builder(queryText).build(); QueryResult queryResult = client.execute(query); List&lt;Row&gt; rows = queryResult.getRowsCopy(); client.shutdown(); }
+}
+</code></pre>
+
+<pre><code class="language-python">import datetime
+from riak.client import RiakClient
+
+epoch = datetime.datetime.utcfromtimestamp(0)
+
+def unix_time_millis(dt):
+    td = dt - epoch
+    return int(td.total_seconds() * 1000.0)
+
+tenMins = datetime.timedelta(0, 600)
+
+now = datetime.datetime(2015, 1, 1, 12, 0, 0)
+nowMS = unix_time_millis(now);
+
+tenMinsAgo = now - tenMins
+tenMinsAgoMS = unix_time_millis(tenMinsAgo);
+
+tenMinsFromNow = now + tenMins
+tenMinsFromNowMS = unix_time_millis(tenMinsFromNow);
+
+# NB: modify 'host' and 'pb_port' to match your installation
+client = RiakClient(host='myriakdb.host', pb_port=8087)
+
+fmt = &quot;&quot;&quot;
+select * from GeoCheckin where
+    time &gt; {t1} and time &lt; {t2} and
+    myfamily = 'family1' and myseries = 'series1'
+&quot;&quot;&quot;
+query = fmt.format(t1=tenMinsAgoMS, t2=tenMinsFromNowMS)
+
+ts_obj = client.ts_query('GeoCheckin', query)
+print &quot;Query result rows:&quot;, ts_obj.rows
+</code></pre>
+
+<pre><code class="language-ruby">client = Riak::Client.new 'myriakdb.host', pb_port: 10017
+query = Riak::Timeseries::Query.new client, &quot;select * from GeoCheckin where time &gt; 1234560 and time &lt; 1234569 and myfamily = 'family1' and myseries = 'series1'&quot;
+results = query.issue!
+</code></pre>
+
+<h3 id="query-a-table-definition">Query a table definition</h3>
+
+<p>You can now query a table definition with the <code>DESCRIBE</code> table query which returns the table&rsquo;s rows and columns.</p>
+
+<p>For example:</p>
+
+<pre><code class="language-sql">DESCRIBE GeoCheckin
+</code></pre>
+
+<p>Returns:
+ (Rows and Columns)</p>
+
+<pre><code>Column      | Type      | Is Null | Partition Key | Local Key
+--------------------------------------------------------
+myfamily    | varchar   | false   | 1             | 1
+myseries    | varchar   | false   | 2             | 2
+time        | timestamp | false   | 3             | 3
+weather     | varchar   | false   | &lt;null&gt;        | &lt;null&gt;
+temperature | double    | false   | &lt;null&gt;        | &lt;null&gt;
+</code></pre>
+
+<p>A successful DESCRIBE statement execution will return a language-specific representation of the table.</p>
+
+<ul>
+<li><strong>Node.js</strong> - you may use the <code>TS.Query</code> command to execute a <code>DESCRIBE</code> statement, or use the purpose-built <code>TS.Describe</code> command. In both cases, the response object will have <code>columns</code> and <code>rows</code> properties corresponding to the above table.</li>
+<li><strong>Python</strong> - either the <code>ts_query</code> or <code>ts_describe</code> methods of the client object can be used to executed a <code>DESCRIBE</code> statement. In both cases, the response object will have <code>columns</code> and <code>rows</code> properties corresponding to the above table.</li>
+<li><strong>Ruby</strong> - Use the <code>Riak::TimeSeries::Query</code> object to execute the DESCRIBE statement. The returned results will have a collection of rows as well as a <code>columns</code> property corresponding to the above table.</li>
+</ul>
+
+<h2 id="single-key-fetch">Single Key Fetch</h2>
+
+<p>You may find the need to fetch a single key from Riak TS, below you will find an example of how to do that in each of our official clients that support Riak TS.</p>
+
+<pre><code class="language-erlang">riakc_ts:get(Pid, &lt;&lt;&quot;GeoCheckin&quot;&gt;&gt;, [&lt;&lt;&quot;South Atlantic&quot;&gt;&gt;, &lt;&lt;&quot;South Carolina&quot;&gt;&gt;, 1420113600000], []).
+</code></pre>
+
+<pre><code class="language-java">final List&lt;Cell&gt; keyCells = Arrays.asList(new Cell(&quot;family1&quot;), new Cell(&quot;series1&quot;), Cell.newTimestamp(1420113600000));
+
+Fetch fetch = new Fetch.Builder(&quot;GeoCheckins&quot;, keyCells).build();
+
+QueryResult queryResult = client.execute(fetch);
+</code></pre>
+
+<pre><code class="language-python">client.ts_get('GeoCheckins', ['family1', 'series1', datetime.datetime(2015, 1, 1, 12, 0, 0)])
+</code></pre>
+
+<pre><code class="language-ruby">read_operation = Riak::TimeSeries::Read.new client, 'GeoCheckins'
+read_operation.key = ['family1', 'series1', 1420113600000]
+results = read_operation.read!
+</code></pre>
+
+<pre><code class="language-javascript">var key = [ 'family1', 'series1', 1420113600000 ];
+
+var cb = function (err, rslt) {
+    // NB: rslt will be an object with two properties:
+    // 'columns' - table columns
+    // 'rows' - row matching the Get request
+};
+
+var cmd = new Riak.Commands.TS.Get.Builder()
+    .withTable('GeoCheckins')
+    .withKey(key)
+    .withCallback(cb)
+    .build();
+
+client.execute(cmd);
+</code></pre>
+
+      </main>
+
+
+    </article>
+
+
+    <footer class="footer">
+
+  <div class="inline-block   footer__attributions">
+
+    <p>
+      This work is licensed under a
+      <br class="[bs] hidden-md-up">
+      <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+        Creative Commons Attribution 4.0 <br class="[bs] hidden-sm-up"> International Public License
+      </a>
+    </p>
+
+    <p>
+      © 2011-2017&nbsp;<a href="http://www.basho.com">Basho Technologies, Inc.</a>
+    </p>
+
+  </div>
+
+</footer>
+
+
+
+  </div>
+
+
+  <script src="//evadne.github.io/basho_docs/js/main.js" type="text/javascript"></script>
+
+</body>
+</html>

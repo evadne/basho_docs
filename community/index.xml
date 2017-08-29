@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Communities on Basho Documentation</title>
+    <link>//evadne.github.io/basho_docs/community/</link>
+    <description>Recent content in Communities on Basho Documentation</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="//evadne.github.io/basho_docs/community/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Active Anti-Entropy: Slight chance that AAE could stall itself or crash a Riak node.</title>
+      <link>//evadne.github.io/basho_docs/community/productadvisories/aaestall/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/community/productadvisories/aaestall/</guid>
+      <description>Info Value     Date issued November 17, 2016   Product Riak KV   Affected versions Riak KV 2.0.0+, Riak KV 2.1.0+    Overview There exists a highly unlikely condition where Riak KV’s active anti-entropy feature can either stall or cause a segmentation fault crash.
+Riak KV Enterprise Edition If you are using Riak KV Enterprise Edition, please see the Product Advisory in the Basho Support Portal for your patches and instructions.</description>
+    </item>
+    
+    <item>
+      <title>Basho Software Release and Maintenance Policy</title>
+      <link>//evadne.github.io/basho_docs/community/release-and-maintenance/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/community/release-and-maintenance/</guid>
+      <description>Basho may change or supplement this Policy in its sole discretion. Basho will exercise commercially reasonable efforts to notify then-current customers of any such changes provided that, in all cases, the revised Policy is effective upon posting.
+Definitions The following words and/or phrases having the meanings ascribed to them below:
+“Feature Release” may include patches and/or the introduction of changes to features or functionality in the software. Feature Releases are indicated by an increment to the number located at either the “X” or the “Y” location in the pattern X.</description>
+    </item>
+    
+    <item>
+      <title>Community Overview</title>
+      <link>//evadne.github.io/basho_docs/community/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/community/</guid>
+      <description>Our Community is an eclectic group of engineers, architects, academics and enthusiasts who care about solving the hardest problems of distributed systems with open source software. Riak, written in Erlang, tackles the continuing complexity of persisting unstructured data with an architecture uniquely designed to scale.
+As a Community, our core belief is that there is no question too simple. You can freely share questions, answers and feedback without hesitation. Whether you need help or simply want to get involved, we are easy to contact.</description>
+    </item>
+    
+    <item>
+      <title>Community Projects</title>
+      <link>//evadne.github.io/basho_docs/community/projects/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/community/projects/</guid>
+      <description>Here are all projects that have come about out of community contribution. Let us know if you choose to maintain one of them!
+Install and Configure Here are the many recommended ways to get Riak KV started in your environment.
+ All pre-built packages at Basho are managed on PackageCloud Spin up Riak KV on AWS using the latest AMI, pre-configured and optimized for use on AWS Riak KV Chef Recipe provisions using Chef Riak KV Puppet Module provisions using Puppet Labs Riak KV Ansible Role provisions using Ansible Cloudsoft-Riak is a tested Riak blueprints for developing and deploying using Cloudsoft Riak Mesos Framework is an experimental beta project that deploys Riak KV on top of Mesosphere&amp;rsquo;s DCOS.</description>
+    </item>
+    
+    <item>
+      <title>Default Configuration For Handoff May Cause Data Loss</title>
+      <link>//evadne.github.io/basho_docs/community/productadvisories/210-dataloss/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/community/productadvisories/210-dataloss/</guid>
+      <description>Info Value     Date issued May 1, 2015   Product Riak   Affected versions 2.1.0     UPDATE:
+Riak 2.1.1 has been released to address this issue in 2.1.0. Please upgrade.
+ Overview Default configuration for handoff may cause data loss in Riak 2.1.0.
+Description In Riak 2.1.0, the default configuration for handoff.ip causes vnodes marked for transfer during handoff to be removed without transferring data to their new destination nodes.</description>
+    </item>
+    
+    <item>
+      <title>Default Configuration For Handoff May Cause Data Loss in TS</title>
+      <link>//evadne.github.io/basho_docs/community/productadvisories/130-dataloss/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/community/productadvisories/130-dataloss/</guid>
+      <description>Info Value     Date issued June 30, 2016   Product Riak TS (Open Source)   Affected versions 1.3.0    UPDATE Riak TS 1.3.1 has been released. Please download it here
+ Overview Default configuration for handoff may cause data loss in the OSS release of Riak TS 1.3.0. If you are using Riak TS Enterprise, you are not impacted by this bug but you SHOULD upgrade to Riak TS Enterprise 1.</description>
+    </item>
+    
+    <item>
+      <title>Forward Incompatibility of app.config</title>
+      <link>//evadne.github.io/basho_docs/community/productadvisories/appconfig-forward/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/community/productadvisories/appconfig-forward/</guid>
+      <description>Info Value     Date issued April 15, 2015   Product Riak   Affected Riak versions 2.0.0+, 2.1.0+    Overview A forward incompatibility of app.config between 1.x and 2.x has been identified.
+Description There is a forward compatibility issue when upgrading from the 1.x series to the 2.x series and continuing to use an app.config instead of migrating to the new riak.</description>
+    </item>
+    
+    <item>
+      <title>Incompatibility between Dotted Version Vectors and Last-Write Wins</title>
+      <link>//evadne.github.io/basho_docs/community/productadvisories/dvvlastwritewins/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/community/productadvisories/dvvlastwritewins/</guid>
+      <description>Info Value     Date issued July 6, 2015   Product Riak   Affected versions 2.0.0+, 2.1.0+    Overview Using dotted version vectors and last_write_wins causes object updates to behave unexpectedly.
+Description In Riak 2.0.0 through Riak 2.1.1, enabling dotted version vectors and last_write_wins at the same time has been found to cause unexpected behavior on object updates (PUT or POST with causal context), including both passive and active anti-entropy.</description>
+    </item>
+    
+    <item>
+      <title>LevelDB SEGV in Riak KV 2.1.3</title>
+      <link>//evadne.github.io/basho_docs/community/productadvisories/leveldbsegfault/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/community/productadvisories/leveldbsegfault/</guid>
+      <description>Overview Riak KV (aka Riak / Riak EE) 2.1.3 has a race condition with opening LevelDB databases and may crash with a segmentation violation (SIGSEGV). LevelDB databases are opened on primary or fallback vnode startup and during AAE expiration The issue is possible but much less likely on the Riak TS 2.0, Riak KV 2.0 and earlier Riak KV 2.1 series.
+Description Beginning with Riak KV 2.1.3, a list of opened databases is used by the GroomingCompactions feature to look for databases with low write activity that can benefit from being compacted.</description>
+    </item>
+    
+    <item>
+      <title>Map Data Type Disk Incompatibility</title>
+      <link>//evadne.github.io/basho_docs/community/productadvisories/maps-204/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/community/productadvisories/maps-204/</guid>
+      <description>Info Value     Date issued January 21, 2015   Product Riak   Affected versions Riak 2.0.4   Symptoms Request timeouts, inability to access data in Riak maps   Cause Change in the on-disk format of Riak maps    Overview On January 20th, 2015, a user reported issues with Riak data types upon upgrading from Riak 2.0.2 to 2.</description>
+    </item>
+    
+    <item>
+      <title>Possibility of Code Injection on Riak Init File</title>
+      <link>//evadne.github.io/basho_docs/community/productadvisories/codeinjectioninitfiles/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/community/productadvisories/codeinjectioninitfiles/</guid>
+      <description>Info Value     Date issued March 1, 2016   Product Riak KV, Riak CS, and Riak TS   Affected Riak KV versions 2.1.3 and lower   Affected Riak CS versions 2.1.1 and lower   Affected Riak TS versions 1.2.0 and lower    Overview Riak KV, Riak CS, and Riak TS package an init script to handle several Riak operations.</description>
+    </item>
+    
+    <item>
+      <title>Potential data loss on restart with LevelDB tiered storage</title>
+      <link>//evadne.github.io/basho_docs/community/productadvisories/leveldbrestart/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/community/productadvisories/leveldbrestart/</guid>
+      <description>Data loss may occur during node restart when using LevelDB tiered storage on a low write volume cluster.
+   Info Value     Date issued March 2nd 2016   Product Riak KV &amp;amp; Riak TS   Affected KV versions 2.0.0+ and 2.1.0+   Affected TS versions 1.0.0+    Overview This issue is limited to customers using LevelDB tiered storage. There is a recognized error in the LevelDB tiered storage subsystem whereby if less than 60MB of data is written per vnode before Riak is restarted, the data will be unavailable for reads.</description>
+    </item>
+    
+    <item>
+      <title>Product Advisories</title>
+      <link>//evadne.github.io/basho_docs/community/productadvisories/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/community/productadvisories/</guid>
+      <description>This page contains product advisories that are periodically issued for Basho products.
+ Slight chance that AAE could stall itself or crash a Riak node Default Configuration For Handoff May Cause Data Loss in TS LevelDB SEGV in Riak KV 2.1.3 Possibility of Code Injection on Riak Init File Socket reuse issue with Riak Golang client 1.5.1 Potential data loss on restart with LevelDB tiered storage Incompatibility between Dotted Version Vectors and Last Write Wins Default Configuration For Handoff May Cause Data Loss SSL 3.</description>
+    </item>
+    
+    <item>
+      <title>Reporting Bugs</title>
+      <link>//evadne.github.io/basho_docs/community/reporting-bugs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/community/reporting-bugs/</guid>
+      <description>Bugs happen. The Basho Dev Team does all that it can to ensure our users are kept up-to-date on critical bugs and issues that may occur. Here&amp;rsquo;s the protocol to follow when you think you might have found something that needs reporting.
+Before You File a Bug or Issue Before you file a bug or issue, we ask that you put in the necessary time and research to ensure that what you are reporting is in fact a bona fide bug and not the result of some other configuration, operating system, or application problem.</description>
+    </item>
+    
+    <item>
+      <title>SSL 3.0 Vulnerability and POODLE Attack</title>
+      <link>//evadne.github.io/basho_docs/community/productadvisories/sslpoodle/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/community/productadvisories/sslpoodle/</guid>
+      <description>Info Value     Date issued January 27, 2015   Product Riak and Riak CS   Affected Riak versions 1.2.x, 1.3.x, 1.4.x, 2.0.0-2.0.2   Affected Riak CS versions All versions up to 1.5.2    Overview SSL version 3 has been revealed as insecure via an attack on POODLE. The Erlang VM on which Riak relies supports this old version.</description>
+    </item>
+    
+    <item>
+      <title>Socket reuse issue with Riak Golang client 1.5.1</title>
+      <link>//evadne.github.io/basho_docs/community/productadvisories/golang151socket/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/community/productadvisories/golang151socket/</guid>
+      <description>Info Value     Date issued March 1st 2016   Product Golang client 1.5.1   Affected versions 1.5.1    Overview When using the Riak golang client 1.5.1, if the socket read timeout is exceeded during execution of a Riak request, data may be contaminated between subsequent requests that use the same socket.
+Description When using the Riak golang client 1.5.1, if the socket read timeout is exceeded during execution of a Riak request, instead of closing it, the connection will be returned to the connection pool for use by a different request.</description>
+    </item>
+    
+    <item>
+      <title>Taishi Program</title>
+      <link>//evadne.github.io/basho_docs/community/taishi/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/community/taishi/</guid>
+      <description>The team at Basho knows that our community is more than any one product or one person; it’s a collection of people who share a passion for our mission to simplify distributed systems. As a mature community with thousands of participants, it’s important to take the time to thank those who continue to contribute to our collective success.
+We call this group Taishi: Basho’s community recognition program.
+Members of Taishi will be based on past contribution, current commitment and upholding our code of conduct (which has a TL;DR of be kind to each other).</description>
+    </item>
+    
+  </channel>
+</rss>

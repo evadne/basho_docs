@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+<html class="no-js" lang="en">
+
+
+
+
+<head>
+
+  <meta charset="utf-8">
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width">
+  <link rel="shortcut icon" href="//evadne.github.io/basho_docs/images/branding/favicon.ico" type="image/x-icon" />
+
+  <title>Using Riak Redis Add-on</title>
+
+  <link href="//evadne.github.io/basho_docs/css/main.css" media="screen" rel="stylesheet" type="text/css">
+  <link rel="canonical" href="//evadne.github.io/basho_docs/riak/ts/latest/add-ons/redis/using-rra/" />
+  <!-- The below meta tags are included to allow JS code to use variables
+       defined in Hugo---our static site generator. -->
+  <meta name="project" content="riak_ts">
+  <meta name="version" content="1.4.0">
+  <meta name="project_relative_path" content="add-ons/redis/using-rra/">
+
+</head>
+
+
+
+<body class="riak_ts 1.4.0  ">
+
+
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-T9C8MK" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-T9C8MK');</script>
+
+
+  
+<header class="banner">
+
+
+
+  
+  <div class="float-right   banner__menu-bars   [bs] hidden-md-up">
+    <div class="menu-bars   js_toggle-content-nav"></div>
+  </div>
+
+
+
+  
+  <div class="float-left   banner__docs-logo">
+    <a href="//evadne.github.io/basho_docs/index.html" class="block   docs-logo"><img class="docs-logo__image" src="//evadne.github.io/basho_docs/images/branding/basho_docs_logo.png"></a>
+  </div>
+
+
+
+  
+  <div class="overflow-hidden   banner__navigation-pane   [bs] hidden-sm-down">
+
+
+    
+    <div class="float-left    banner__intra-brand__width-wrapper">
+    <div class="float-right   banner__intra-brand">
+      <div class="float-right">
+        
+        <a class="inline-block   banner__brand-link" href="http://basho.com/">Basho</a><a class="inline-block   banner__brand-link" href="https://academy.basho.com">Academy</a><a class="inline-block   banner__brand-link" href="//evadne.github.io/basho_docs/community">Community</a><a class="inline-block   banner__brand-link" href="http://basho.com/contact">Contact</a></div>
+    </div>
+    </div>
+
+
+
+
+    
+    <div class="float-left    banner__intra-site__width-wrapper">
+    <div class="float-right   banner__intra-site">
+      
+      <a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/kv/latest/">Riak KV</a><a class="inline-block   banner__brand-link banner__brand-link--current">Riak TS</a><a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/cs/latest/">Riak CS</a></div>
+    </div>
+
+
+  </div>
+
+</header>
+
+
+
+  
+  
+
+
+
+<nav class="content-nav content-nav--top-size-full">
+
+
+
+
+  <div class="content-nav__fixed-top">
+    <form id="searchbox_011972015458788978446:zgdcy4fa-o0" class="search" action="">
+
+      <span class="block float-left   search__icon-container   docs-icon--search">|</span>
+
+      <span class="block overflow">
+        <input class="search__input" id="main-search" type="search" name="q" placeholder="Search">
+      </span>
+
+    </form>
+
+
+    <div class="clearfix   version-picker">
+
+  
+      <a class="inline-block float-left    product__title" href="//evadne.github.io/basho_docs/"><img class="product__logo" src="//evadne.github.io/basho_docs/images/branding/riak-logo.png">Riak<span class="product__title-highlight">TS</span>
+      </a>
+  
+
+      <div class="inline-block float-right   selector selector--version">
+        <header class="selector__title">Versions</header>
+        <button class="selector__btn" type="button">1.4.0</button>
+        <div    class="selector__arrow"></div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  
+  <div class="overflow-y-hidden   selector-pane__sizing-box selector-pane__sizing-box--hidden">
+  <div class="                    selector-pane__shadow-box">
+
+    
+    <div class="edge-fader edge-fader--left">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+    <div class="edge-fader edge-fader--right">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+
+    <div class="overflow-x        selector-pane__primary selector-pane--versions  js_edge-fader--target">
+      
+    </div>
+  </div>
+  </div>
+
+
+
+
+  
+  <div class="             content-nav__primary__sizing-box">
+  <div class="             content-nav__primary__shadow-box">
+  <div class="overflow-y   content-nav__primary">
+
+    <div class="content-nav__menu-container">
+
+      <ul class="content-menu
+                 content-menu--depth-0
+                 content-menu--open">
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--riak">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/" >
+              <span class="block   content-menu__item__right-border"><strong>Riak TS</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/releasenotes/" >
+        <span class="block   content-menu__item__right-border">Release Notes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li class="content-menu__download-entry">
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--download-alt">|</span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/downloads/" >
+              <span class="block   content-menu__item__right-border"><strong>Download Riak TS</strong></span>
+            </a>
+
+          </div>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--install">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/setup/" >
+              <span class="block   content-menu__item__right-border"><strong>Setup</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/setup/installing/" >
+        <span class="block   content-menu__item__right-border">Install</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/setup/installing/debian-ubuntu/" >
+        <span class="block   content-menu__item__right-border">Debian and Ubuntu</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/setup/installing/mac-osx/" >
+        <span class="block   content-menu__item__right-border">Mac OS X</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/setup/installing/rhel-centos/" >
+        <span class="block   content-menu__item__right-border">CentOS/RHEL</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/setup/installing/aws/" >
+        <span class="block   content-menu__item__right-border">AWS Marketplace</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/setup/installing/source/" >
+        <span class="block   content-menu__item__right-border">Source</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/setup/installing/source/erlang/" >
+        <span class="block   content-menu__item__right-border">Erlang</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/setup/upgrading/" >
+        <span class="block   content-menu__item__right-border">Upgrade</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/setup/downgrading/" >
+        <span class="block   content-menu__item__right-border">Downgrade</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--database">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/" >
+              <span class="block   content-menu__item__right-border"><strong>Use</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/core-fundamentals/" >
+        <span class="block   content-menu__item__right-border">Core Fundamentals</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/planning/" >
+        <span class="block   content-menu__item__right-border">Plan Your Table</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/timerepresentations/" >
+        <span class="block   content-menu__item__right-border">Time Representations</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/creating-activating/" >
+        <span class="block   content-menu__item__right-border">Create and Activate Your Table</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/writingdata/" >
+        <span class="block   content-menu__item__right-border">Write Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/querying/" >
+        <span class="block   content-menu__item__right-border">Query Data</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/querying/select/" >
+        <span class="block   content-menu__item__right-border">SELECT</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/querying/select/group-by/" >
+        <span class="block   content-menu__item__right-border">GROUP BY</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/querying/select/arithmetic-operations/" >
+        <span class="block   content-menu__item__right-border">Arithmetic Operations</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/querying/select/aggregate-functions/" >
+        <span class="block   content-menu__item__right-border">Aggregate Functions</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/querying/describe/" >
+        <span class="block   content-menu__item__right-border">DESCRIBE</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/querying/show-tables/" >
+        <span class="block   content-menu__item__right-border">SHOW TABLES</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/querying/guidelines/" >
+        <span class="block   content-menu__item__right-border">Querying Guidelines</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/querying/single-key-fetch/" >
+        <span class="block   content-menu__item__right-border">Single Key Fetch</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/configuring/" >
+        <span class="block   content-menu__item__right-border">Configure</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/mdc/" >
+        <span class="block   content-menu__item__right-border">MDC</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/riakshell/" >
+        <span class="block   content-menu__item__right-border">riak shell</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/global-object-expiration/" >
+        <span class="block   content-menu__item__right-border">Configure Global Object Expiration</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/security/" >
+        <span class="block   content-menu__item__right-border">Security</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/security/checklist/" >
+        <span class="block   content-menu__item__right-border">Security Checklist</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/security/enable-disable/" >
+        <span class="block   content-menu__item__right-border">Security: Enable &amp; Disable</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/security/user-management/" >
+        <span class="block   content-menu__item__right-border">User Management</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/security/sources-management/" >
+        <span class="block   content-menu__item__right-border">Sources Management</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/using/security/notify-basho/" >
+        <span class="block   content-menu__item__right-border">Notifying Basho</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--lambda">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/developing/" >
+              <span class="block   content-menu__item__right-border"><strong>Develop</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/developing/csharp/" >
+        <span class="block   content-menu__item__right-border">C#</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/developing/erlang/" >
+        <span class="block   content-menu__item__right-border">Erlang</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/developing/golang/" >
+        <span class="block   content-menu__item__right-border">Go</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/developing/http/" >
+        <span class="block   content-menu__item__right-border">HTTP</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/developing/java/" >
+        <span class="block   content-menu__item__right-border">Java</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/developing/nodejs/" >
+        <span class="block   content-menu__item__right-border">Node.js</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/developing/php/" >
+        <span class="block   content-menu__item__right-border">PHP</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/developing/python/" >
+        <span class="block   content-menu__item__right-border">Python</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/developing/ruby/" >
+        <span class="block   content-menu__item__right-border">Ruby</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--tools">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                         content-menu__menu-toggle--open ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/" >
+              <span class="block   content-menu__item__right-border"><strong>Add-ons</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           content-menu--open"
+    style="display: block">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/spark-riak-connector/" >
+        <span class="block   content-menu__item__right-border">Spark-Riak Connector</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/spark-riak-connector/quick-start/" >
+        <span class="block   content-menu__item__right-border">Quick Start Guide</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/spark-riak-connector/getting/" >
+        <span class="block   content-menu__item__right-border">Get Spark-Riak Connector</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/spark-riak-connector/building-testing/" >
+        <span class="block   content-menu__item__right-border">Building &amp; Testing</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/spark-riak-connector/usage/" >
+        <span class="block   content-menu__item__right-border">Usage</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/spark-riak-connector/usage/config-spark-context/" >
+        <span class="block   content-menu__item__right-border">Spark Context Configuration</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/spark-riak-connector/usage/reading-data/" >
+        <span class="block   content-menu__item__right-border">Reading Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/spark-riak-connector/usage/writing-data/" >
+        <span class="block   content-menu__item__right-border">Writing Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/spark-riak-connector/usage/dataframes/" >
+        <span class="block   content-menu__item__right-border">Working With Spark Dataframes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/spark-riak-connector/usage/dates/" >
+        <span class="block   content-menu__item__right-border">Working With TS Dates</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/spark-riak-connector/usage/range-query-partition/" >
+        <span class="block   content-menu__item__right-border">TS Table Range Query Partitioning</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/spark-riak-connector/usage/bulk-write/" >
+        <span class="block   content-menu__item__right-border">Bulk Write</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/spark-riak-connector/usage/streaming-example/" >
+        <span class="block   content-menu__item__right-border">Spark Streaming Example</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                   content-menu__menu-toggle--open ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/redis/" >
+        <span class="block   content-menu__item__right-border">Redis Add-on</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           content-menu--open"
+    style="display: block">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/redis/set-up-rra/" >
+        <span class="block   content-menu__item__right-border">Set Up Redis Add-on</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/redis/set-up-rra/deployment-models/" >
+        <span class="block   content-menu__item__right-border">Redis Add-on Deployment Models</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item  content-menu__item--selected ">
+
+      <a class="block overflow   content-menu__link--depth-2" >
+        <span class="block   content-menu__item__right-border">Using Redis Add-on</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/redis/developing-rra/" >
+        <span class="block   content-menu__item__right-border">Develop with Redis Add-on</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/add-ons/redis/redis-add-on-features/" >
+        <span class="block   content-menu__item__right-border">Redis Add-on Features</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--beaker">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/learn-about/" >
+              <span class="block   content-menu__item__right-border"><strong>Learn</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/learn-about/bestpractices/" >
+        <span class="block   content-menu__item__right-border">Best Practices</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/learn-about/sqlriakts/" >
+        <span class="block   content-menu__item__right-border">SQL for Riak TS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/learn-about/tablearchitecture/" >
+        <span class="block   content-menu__item__right-border">Table Architecture </span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.4.0/learn-about/timestamps/" >
+        <span class="block   content-menu__item__right-border">Timestamps</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+        <li class="content-menu__blank-entry"></li>
+
+      </ul>
+
+    </div>
+
+
+
+    <div class="content-nav__fixed-bottom">
+
+      <ul class="content-menu">
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--comments">|</span>
+
+            <a class="block overflow" href="//evadne.github.io/basho_docs/community">
+              <span class="block   content-menu__item__right-border">
+                <sub>Want some extra help?</sub><br>
+                <strong>Ask our Community</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--question-sign">|</span>
+
+            <a class="block overflow" href="http://basho.com/contact">
+              <span class="block   content-menu__item__right-border">
+                <sub>Need to chat?</sub><br>
+                <strong>Contact us directly</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--github-alt">|</span>
+
+            <a class="block overflow" href="https://github.com/basho/basho_docs/edit/master/content/riak/ts/1.4.0/add-ons/redis/using-rra.md">
+              <span class="block   content-menu__item__right-border">
+                <sub>Noticed a typo?</sub><br>
+                <strong>Correct it in GitHub</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+  </div>
+  </div>
+
+
+
+</nav>
+
+<script>
+  (function() {
+    var cx = '011972015458788978446:zgdcy4fa-o0';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<div style="width:0px;overflow:hidden;height:0px;">
+  <gcse:search></gcse:search>
+</div>
+
+
+
+
+
+
+  <div class="content-well">
+
+
+    <article class="main-article">
+
+
+      
+
+<header class="front-matter">
+
+
+  <h1 class="front-matter__title">
+
+    
+    <br>
+    Using Riak Redis Add-on
+
+  </h1>
+  <nav class="table-of-contents"></nav>
+
+
+</header>
+
+
+      <main>
+        
+
+<p>Now that you’ve <a href="../set-up-rra/">set up Riak Redis Add-on (RRA)</a>, you&rsquo;re ready to use RRA with any Redis client which supports <code>GET</code>, <code>PUT</code> and <code>DEL</code> operations.</p>
+
+<p>This page will walk you through using RRA.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>We assume that the Redis client (<code>redis-cli</code>) is installed, either alongside the Redis server or on a test machine.</p>
+
+<p>You will need the list of Riak KV and Riak Redis Add-on host:port combinations. For testing, Riak KV values are obtained via the <a href="//evadne.github.io/basho_docs/riak/kv/2.2.0/developing/api/http/">HTTP API</a>.</p>
+
+<h2 id="run-the-read-through-test">Run the Read-Through Test</h2>
+
+<p>Throughout this test example, the bucket &ldquo;test&rdquo; and key &ldquo;foo&rdquo; are used to
+demonstrate how to address the hieararchical namespace support in Riak KV
+through the flat Redis key. The bucket type is not specified in this example,
+so is effectively the default bucket type, named &ldquo;default&rdquo;. For additional
+information regarding key namespace, see <a href="../developing-rra/">develop Riak Redis Add-on (RRA)</a>.</p>
+
+<p>The read-through test ensures that your configuration correctly tracks values obtained from Riak KV and Riak Redis Add-on (RRA). The main actions of the test are:</p>
+
+<ul>
+<li>DELETE the Riak object at the <code>test</code> bucket with the key <code>foo</code>, which checks that there are no siblings.</li>
+<li>PUT a Riak object with the value &lsquo;bar&rsquo; at the <code>test</code> bucket with the key <code>foo</code>.</li>
+<li>GET the Riak object at the <code>test</code> bucket with the key <code>foo</code>.</li>
+<li>GET the string-representation of the object from the cache proxy service using the key <code>test:foo</code>. (The cache proxy service should parse out the first portion of the Redis colon-separated key (namespace) to identify which Riak bucket to perform the backend read from.)</li>
+<li>Assert that the value obtained from the previous cache proxy GET is &lsquo;bar&rsquo;.</li>
+</ul>
+
+<p>First, create a file named<code>read_through_test.sh</code> with the following content:</p>
+
+<pre><code class="language-bash"># set test environment
+RIAK_HTTP_IP=&quot;127.0.0.1&quot;
+RIAK_HTTP_PORT=&quot;8098&quot;
+CACHE_PROXY_IP=&quot;127.0.0.1&quot;
+CACHE_PROXY_PORT=&quot;22122&quot;
+CACHE_PROXY_STATISTICS_PORT=&quot;22123&quot;
+RIAK_TEST_BUCKET=&quot;test&quot;
+KEY=&quot;foo&quot;
+VALUE=&quot;bar&quot;
+
+# DELETE Riak object, ensure no siblings
+curl -s -X DELETE &quot;http://$RIAK_HTTP_IP:$RIAK_HTTP_PORT/buckets/$RIAK_TEST_BUCKET/keys/$KEY&quot;
+
+# PUT Riak object
+curl -s -X PUT -d &quot;$VALUE&quot; &quot;http://$RIAK_HTTP_IP:$RIAK_HTTP_PORT/buckets/$RIAK_TEST_BUCKET/keys/$KEY&quot;
+
+# GET Riak object
+RIAK_VALUE=$(curl -s -X GET &quot;http://$RIAK_HTTP_IP:$RIAK_HTTP_PORT/buckets/$RIAK_TEST_BUCKET/keys/$KEY&quot;)
+
+# GET Cache Proxy value
+CACHE_VALUE=$(redis-cli -h &quot;$CACHE_PROXY_IP&quot; -p &quot;$CACHE_PROXY_PORT&quot; &quot;$RIAK_TEST_BUCKET:$KEY&quot;
+
+# DELETE Riak object, cleanup
+curl -s -X DELETE &quot;http://$RIAK_HTTP_IP:$RIAK_HTTP_PORT/buckets/$RIAK_TEST_BUCKET/keys/$KEY&quot;
+
+# Assert
+if [[ &quot;RIAK_VALUE&quot; == &quot;$CACHE_VALUE&quot; ]]; then
+    RESULT=&quot;Success&quot;
+else
+    RESULT=&quot;FAIL&quot;
+fi
+echo &quot;$RESULT - read $RIAK_VALUE from Riak and $CACHE_VALUE from Cache Proxy.&quot;
+</code></pre>
+
+<p>Then, once you&rsquo;ve created the file, run it as follows:</p>
+
+<pre><code class="language-bash">./read_through_test.sh 22122 8098 test
+</code></pre>
+
+<h3 id="exceptions">Exceptions</h3>
+
+<p>If the test does not pass, verify that both Redis and RRA are running. You can do this by running:</p>
+
+<pre><code class="language-bash">ps aux |grep [r]edis
+ps aux |grep [n]utcracker
+</code></pre>
+
+<p>The result should list <code>redis</code> and <code>nutcracker</code> respectively.</p>
+
+<p>Also, verify that Riak KV is started and listening on the protocol buffer port specified:</p>
+
+<pre><code class="language-bash">sudo riak config effective |grep proto
+</code></pre>
+
+<p>If RRA is misconfigured, [reconfigure][redis add-on setup] it, and restart the service with the following:</p>
+
+<pre><code class="language-bash">sudo service cache_proxy restart
+</code></pre>
+
+<p>If RRA is configured correctly and all required services are running, you may want to restart each service from front to back as follows:</p>
+
+<ol>
+<li>Stop RRA.</li>
+<li>Stop Redis.</li>
+<li><em>Optional</em> Restart Riak KV (This should only be necessary if Riak KV is not responding to protocol buffer requests.)</li>
+<li>Start Redis.</li>
+<li>Start RRA.</li>
+</ol>
+
+<pre><code class="language-bash">sudo service cache_proxy stop
+sudo service redis stop
+
+# optional
+sudo riak restart
+
+sudo service redis start
+sudo service cache_proxy start
+</code></pre>
+
+<h2 id="using-riak-redis-add-on">Using Riak Redis Add-on</h2>
+
+<p>Once you&rsquo;ve successfully configured Riak Redis Add-on (RRA) and established a Riak KV and Redis client in the language of your choosing, you&rsquo;re ready to start using RRA.</p>
+
+<p>For objects that should not be cached, interact with Riak KV as usual: issuing GET, PUT, and DELETE commands through the Riak client.</p>
+
+<p>For objects that should be cached, read from RRA: issuing GET, SET, and DEL commands through the Redis client.</p>
+
+<h3 id="monitoring">Monitoring</h3>
+
+<h4 id="rra">RRA</h4>
+
+<p>Since RRA is installed as a service, the system service monitoring daemon will automatically restart a service with the correct configuration in the event that the service’s process was killed or terminated by other means.</p>
+
+<p>The log file for RRA is stored by default in /var/log/cache_proxy.log . RRA is logrotate friendly, responding to the signal to reopen the log file following a rotate.</p>
+
+<p>For additional monitoring, RRA provides statistics on service availability.  The statistics provided are generally useful in monitoring the health of the RRA service.</p>
+
+<p>For example, running the following command (using the loopback interface and the default statistics port as an example):</p>
+
+<pre><code class="language-bash">telnet 127.0.0.1 22123
+</code></pre>
+
+<p>Returns statistic results:</p>
+
+<pre><code class="language-json">{
+    &quot;bdp_cache_proxy&quot;: {
+        &quot;192.168.50.2:6379&quot;: {
+            &quot;in_queue&quot;: 0,
+            &quot;in_queue_bytes&quot;: 0,
+            &quot;out_queue&quot;: 0,
+            &quot;out_queue_bytes&quot;: 0,
+            &quot;request_bytes&quot;: 216,
+            &quot;requests&quot;: 9,
+            &quot;response_bytes&quot;: 39,
+            &quot;responses&quot;: 4,
+            &quot;server_connections&quot;: 1,
+            &quot;server_ejected_at&quot;: 0,
+            &quot;server_eof&quot;: 0,
+            &quot;server_err&quot;: 0,
+            &quot;server_timedout&quot;: 0
+        },
+        &quot;192.168.50.3:6379&quot;: {
+            &quot;in_queue&quot;: 0,
+            &quot;in_queue_bytes&quot;: 0,
+            &quot;out_queue&quot;: 0,
+            &quot;out_queue_bytes&quot;: 0,
+            &quot;request_bytes&quot;: 0,
+            &quot;requests&quot;: 0,
+            &quot;response_bytes&quot;: 0,
+            &quot;responses&quot;: 0,
+            &quot;server_connections&quot;: 0,
+            &quot;server_ejected_at&quot;: 0,
+            &quot;server_eof&quot;: 0,
+            &quot;server_err&quot;: 0,
+            &quot;server_timedout&quot;: 0
+        },
+        &quot;192.168.50.4:6379&quot;: {
+            &quot;in_queue&quot;: 0,
+            &quot;in_queue_bytes&quot;: 0,
+            &quot;out_queue&quot;: 0,
+            &quot;out_queue_bytes&quot;: 0,
+            &quot;request_bytes&quot;: 90,
+            &quot;requests&quot;: 5,
+            &quot;response_bytes&quot;: 258,
+            &quot;responses&quot;: 2,
+            &quot;server_connections&quot;: 0,
+            &quot;server_ejected_at&quot;: 0,
+            &quot;server_eof&quot;: 0,
+            &quot;server_err&quot;: 0,
+            &quot;server_timedout&quot;: 0
+        },
+        &quot;client_connections&quot;: 0,
+        &quot;client_eof&quot;: 6,
+        &quot;client_err&quot;: 0,
+        &quot;forward_error&quot;: 0,
+        &quot;fragments&quot;: 0,
+        &quot;server_ejects&quot;: 0
+    },
+    &quot;curr_connections&quot;: 4,
+    &quot;service&quot;: &quot;nutcracker&quot;,
+    &quot;source&quot;: &quot;vagrant&quot;,
+    &quot;timestamp&quot;: 1438301846,
+    &quot;total_connections&quot;: 10,
+    &quot;uptime&quot;: 7227,
+    &quot;version&quot;: &quot;0.4.0&quot;
+}
+</code></pre>
+
+<p>Using the above results, you should be able to determine metrics changes that would flag a change in service health. With this information you can implement monitoring to help guarantee the overall health of the cache proxy service in RRA and the custom software within your overall solution.</p>
+
+<p>While we do not endorse a specific monitoring solution, the open interface to statistics allows you to use the monitoring solution of your choice. The following is a brief listing of compatible monitoring solutions:</p>
+
+<ul>
+<li>Custom - <a href="https://github.com/gfranxman/NutcrackerMonitor">https://github.com/gfranxman/NutcrackerMonitor</a></li>
+<li>NewRelic - <a href="http://newrelic.com/plugins/schoology/245">http://newrelic.com/plugins/schoology/245</a></li>
+<li>Nagios - <a href="https://github.com/schoology/twemproxy_nagios">https://github.com/schoology/twemproxy_nagios</a></li>
+</ul>
+
+<h4 id="redis">Redis</h4>
+
+<p>Various Redis monitoring solutions exist in the market and, like monitoring RRA, these monitoring solutions make underlying calls to obtain Redis statistics, typically via the <code>info</code> command alone.</p>
+
+<p>As with RRA, Redis statistics available on the Redis client port allow for monitoring via solutions such as the following:</p>
+
+<ul>
+<li>Custom - <a href="http://volumelabs.net/redis_monitoring/">http://volumelabs.net/redis_monitoring/</a></li>
+<li>NewRelic - <a href="http://newrelic.com/plugins/poison-pen-llc/28">http://newrelic.com/plugins/poison-pen-llc/28</a></li>
+<li>Nagios - <a href="https://exchange.nagios.org/directory/Plugins/Databases/check_redis-2Epl/details">https://exchange.nagios.org/directory/Plugins/Databases/check_redis-2Epl/details</a></li>
+</ul>
+
+      </main>
+
+
+    </article>
+
+
+    <footer class="footer">
+
+  <div class="inline-block   footer__attributions">
+
+    <p>
+      This work is licensed under a
+      <br class="[bs] hidden-md-up">
+      <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+        Creative Commons Attribution 4.0 <br class="[bs] hidden-sm-up"> International Public License
+      </a>
+    </p>
+
+    <p>
+      © 2011-2017&nbsp;<a href="http://www.basho.com">Basho Technologies, Inc.</a>
+    </p>
+
+  </div>
+
+</footer>
+
+
+
+  </div>
+
+
+  <script src="//evadne.github.io/basho_docs/js/main.js" type="text/javascript"></script>
+
+</body>
+</html>

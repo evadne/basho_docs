@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+<html class="no-js" lang="en">
+
+
+
+
+<head>
+
+  <meta charset="utf-8">
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width">
+  <link rel="shortcut icon" href="//evadne.github.io/basho_docs/images/branding/favicon.ico" type="image/x-icon" />
+
+  <title>Querying Access Statistics</title>
+
+  <link href="//evadne.github.io/basho_docs/css/main.css" media="screen" rel="stylesheet" type="text/css">
+  <link rel="canonical" href="//evadne.github.io/basho_docs/riak/cs/latest/cookbooks/querying-access-statistics/" />
+  <!-- The below meta tags are included to allow JS code to use variables
+       defined in Hugo---our static site generator. -->
+  <meta name="project" content="riak_cs">
+  <meta name="version" content="2.0.1">
+  <meta name="project_relative_path" content="cookbooks/querying-access-statistics/">
+
+</head>
+
+
+
+<body class="riak_cs 2.0.1  ">
+
+
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-T9C8MK" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-T9C8MK');</script>
+
+
+  
+<header class="banner">
+
+
+
+  
+  <div class="float-right   banner__menu-bars   [bs] hidden-md-up">
+    <div class="menu-bars   js_toggle-content-nav"></div>
+  </div>
+
+
+
+  
+  <div class="float-left   banner__docs-logo">
+    <a href="//evadne.github.io/basho_docs/index.html" class="block   docs-logo"><img class="docs-logo__image" src="//evadne.github.io/basho_docs/images/branding/basho_docs_logo.png"></a>
+  </div>
+
+
+
+  
+  <div class="overflow-hidden   banner__navigation-pane   [bs] hidden-sm-down">
+
+
+    
+    <div class="float-left    banner__intra-brand__width-wrapper">
+    <div class="float-right   banner__intra-brand">
+      <div class="float-right">
+        
+        <a class="inline-block   banner__brand-link" href="http://basho.com/">Basho</a><a class="inline-block   banner__brand-link" href="https://academy.basho.com">Academy</a><a class="inline-block   banner__brand-link" href="//evadne.github.io/basho_docs/community">Community</a><a class="inline-block   banner__brand-link" href="http://basho.com/contact">Contact</a></div>
+    </div>
+    </div>
+
+
+
+
+    
+    <div class="float-left    banner__intra-site__width-wrapper">
+    <div class="float-right   banner__intra-site">
+      
+      <a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/kv/latest/">Riak KV</a><a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/ts/latest/">Riak TS</a><a class="inline-block   banner__brand-link banner__brand-link--current">Riak CS</a></div>
+    </div>
+
+
+  </div>
+
+</header>
+
+
+
+  
+  
+
+
+
+<nav class="content-nav content-nav--top-size-full">
+
+
+
+
+  <div class="content-nav__fixed-top">
+    <form id="searchbox_011972015458788978446:zgdcy4fa-o0" class="search" action="">
+
+      <span class="block float-left   search__icon-container   docs-icon--search">|</span>
+
+      <span class="block overflow">
+        <input class="search__input" id="main-search" type="search" name="q" placeholder="Search">
+      </span>
+
+    </form>
+
+
+    <div class="clearfix   version-picker">
+
+  
+      <a class="inline-block float-left    product__title" href="//evadne.github.io/basho_docs/"><img class="product__logo" src="//evadne.github.io/basho_docs/images/branding/riak-logo.png">Riak<span class="product__title-highlight">CS</span>
+      </a>
+  
+
+      <div class="inline-block float-right   selector selector--version">
+        <header class="selector__title">Versions</header>
+        <button class="selector__btn" type="button">2.0.1</button>
+        <div    class="selector__arrow"></div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  
+  <div class="overflow-y-hidden   selector-pane__sizing-box selector-pane__sizing-box--hidden">
+  <div class="                    selector-pane__shadow-box">
+
+    
+    <div class="edge-fader edge-fader--left">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+    <div class="edge-fader edge-fader--right">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+
+    <div class="overflow-x        selector-pane__primary selector-pane--versions  js_edge-fader--target">
+      
+    </div>
+  </div>
+  </div>
+
+
+
+
+  
+  <div class="             content-nav__primary__sizing-box">
+  <div class="             content-nav__primary__shadow-box">
+  <div class="overflow-y   content-nav__primary">
+
+    <div class="content-nav__menu-container">
+
+      <ul class="content-menu
+                 content-menu--depth-0
+                 content-menu--open">
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--bolt">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/" >
+              <span class="block   content-menu__item__right-border"><strong>Riak CS</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/downloads/" >
+        <span class="block   content-menu__item__right-border">Download Riak CS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/installing/" >
+        <span class="block   content-menu__item__right-border">Installing Riak CS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/installing/chef/" >
+        <span class="block   content-menu__item__right-border">Installing With Chef</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/tutorials/fast-track/" >
+        <span class="block   content-menu__item__right-border">The Riak CS Fast Track</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/tutorials/fast-track/what-is-riak-cs/" >
+        <span class="block   content-menu__item__right-border">What Is Riak CS?</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/tutorials/fast-track/local-testing-environment/" >
+        <span class="block   content-menu__item__right-border">Building a Local Test Environment</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/tutorials/fast-track/virtual-test-environment/" >
+        <span class="block   content-menu__item__right-border">Building a Virtual Test Environment</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/tutorials/fast-track/test-installation/" >
+        <span class="block   content-menu__item__right-border">Testing the Installation</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--lambda">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                         content-menu__menu-toggle--open ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/developing/" >
+              <span class="block   content-menu__item__right-border"><strong>Developing</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           content-menu--open"
+    style="display: block">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/references/appendices/http-admin/" >
+        <span class="block   content-menu__item__right-border">Accounts &amp; Admin</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/account-management/" >
+        <span class="block   content-menu__item__right-border">Account Management</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/access-control-lists/" >
+        <span class="block   content-menu__item__right-border">Access Control Lists</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/authentication/" >
+        <span class="block   content-menu__item__right-border">Authentication</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/usage-and-billing-data/" >
+        <span class="block   content-menu__item__right-border">Usage and Billing Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/references/apis/" >
+        <span class="block   content-menu__item__right-border">APIs</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/references/apis/storage/" >
+        <span class="block   content-menu__item__right-border">Riak CS Storage API</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/references/apis/storage/s3/" >
+        <span class="block   content-menu__item__right-border">S3 API</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/configuration/s3-client/" >
+        <span class="block   content-menu__item__right-border">Configuring an S3 Client</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/fog/" >
+        <span class="block   content-menu__item__right-border">Fog on Riak CS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/configuration/dragondisk/" >
+        <span class="block   content-menu__item__right-border">Configuring DragonDisk</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/configuration/transmit/" >
+        <span class="block   content-menu__item__right-border">Configuring Transmit</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/references/apis/storage/openstack/" >
+        <span class="block   content-menu__item__right-border">OpenStack API</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/using-with-keystone/" >
+        <span class="block   content-menu__item__right-border">Using Riak CS With Keystone</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item  content-menu__item--selected ">
+
+      <a class="block overflow   content-menu__link--depth-1" >
+        <span class="block   content-menu__item__right-border">Access Statistics</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/querying-storage-statistics/" >
+        <span class="block   content-menu__item__right-border">Storage Statistics</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--database">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/operating/" >
+              <span class="block   content-menu__item__right-border"><strong>Operating</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/configuration/" >
+        <span class="block   content-menu__item__right-border">Configuring</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/configuration/riak-for-cs/" >
+        <span class="block   content-menu__item__right-border">Configuring Riak KV for CS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/configuration/riak-cs/" >
+        <span class="block   content-menu__item__right-border">Configuring Riak CS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/configuration/stanchion/" >
+        <span class="block   content-menu__item__right-border">Configuring Stanchion</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/configuration/load-balancing-proxy/" >
+        <span class="block   content-menu__item__right-border">Load Balancing &amp; Proxy Configuration</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/configuration/reference/" >
+        <span class="block   content-menu__item__right-border">Configuration Reference</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/operating/running/" >
+        <span class="block   content-menu__item__right-border">Running</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/command-line-tools/" >
+        <span class="block   content-menu__item__right-border">Command-line Tools</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/installing/launching-and-stopping/" >
+        <span class="block   content-menu__item__right-border">Launching and Stopping</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/logging/" >
+        <span class="block   content-menu__item__right-border">Logging</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/operating/advanced/" >
+        <span class="block   content-menu__item__right-border">Advanced</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/rolling-upgrades/" >
+        <span class="block   content-menu__item__right-border">Rolling Upgrades</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/monitoring-and-metrics/" >
+        <span class="block   content-menu__item__right-border">Monitoring &amp; Metrics</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/references/appendices/riak-cs-control/" >
+        <span class="block   content-menu__item__right-border">Riak CS Control</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/supercluster/" >
+        <span class="block   content-menu__item__right-border">Riak CS Supercluster Support</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--beaker">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/theory/" >
+              <span class="block   content-menu__item__right-border"><strong>Theory &amp; Concepts</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/theory/stanchion/" >
+        <span class="block   content-menu__item__right-border">Stanchion</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/multipart-upload-overview/" >
+        <span class="block   content-menu__item__right-border">Multipart Upload Overview</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/garbage-collection/" >
+        <span class="block   content-menu__item__right-border">Garbage Collection</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/theory/comparisons/" >
+        <span class="block   content-menu__item__right-border">Comparisons</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/references/appendices/comparisons/swift/" >
+        <span class="block   content-menu__item__right-border">Riak CS Compared To Swift</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/references/appendices/comparisons/atmos/" >
+        <span class="block   content-menu__item__right-border">Riak CS Compared To Atmos</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--references">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/reference/" >
+              <span class="block   content-menu__item__right-border"><strong>Reference</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/faqs/riak-cs/" >
+        <span class="block   content-menu__item__right-border">FAQs</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/version-compatibility/" >
+        <span class="block   content-menu__item__right-border">Version Compatibility</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/release-notes/" >
+        <span class="block   content-menu__item__right-border">Riak CS Release Notes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--cloud">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/multi-datacenter-overview/" >
+              <span class="block   content-menu__item__right-border"><strong>Riak CS Enterprise</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/configuration/multi-datacenter/" >
+        <span class="block   content-menu__item__right-border">Configuring</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+        <li class="content-menu__blank-entry"></li>
+
+      </ul>
+
+    </div>
+
+
+
+    <div class="content-nav__fixed-bottom">
+
+      <ul class="content-menu">
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--comments">|</span>
+
+            <a class="block overflow" href="//evadne.github.io/basho_docs/community">
+              <span class="block   content-menu__item__right-border">
+                <sub>Want some extra help?</sub><br>
+                <strong>Ask our Community</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--question-sign">|</span>
+
+            <a class="block overflow" href="http://basho.com/contact">
+              <span class="block   content-menu__item__right-border">
+                <sub>Need to chat?</sub><br>
+                <strong>Contact us directly</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--github-alt">|</span>
+
+            <a class="block overflow" href="https://github.com/basho/basho_docs/edit/master/content/riak/cs/2.0.1/cookbooks/querying-access-statistics.md">
+              <span class="block   content-menu__item__right-border">
+                <sub>Noticed a typo?</sub><br>
+                <strong>Correct it in GitHub</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+  </div>
+  </div>
+
+
+
+</nav>
+
+<script>
+  (function() {
+    var cx = '011972015458788978446:zgdcy4fa-o0';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<div style="width:0px;overflow:hidden;height:0px;">
+  <gcse:search></gcse:search>
+</div>
+
+
+
+
+
+
+  <div class="content-well">
+
+
+    <article class="main-article">
+
+
+      
+
+<header class="front-matter">
+
+
+  <h1 class="front-matter__title">
+
+    
+    <br>
+    Querying Access Statistics
+
+  </h1>
+  <nav class="table-of-contents"></nav>
+
+
+</header>
+
+
+      <main>
+        
+
+<p>Access statistics are tracked on a per-user basis as rollups for slices
+of time. Querying these statistics is done via the
+<code>/riak-cs/usage/$USER_KEY_ID</code> resource.</p>
+
+<div class="blocknote">
+  
+    <div class="blocknote__title">Note on terminology</div>
+  
+  <p>In this and other documents in the Riak CS documentation, the terms &ldquo;storage&rdquo;
+and &ldquo;billing&rdquo; are used interchangeably. The same goes for the terms &ldquo;usage&rdquo;
+and access.</p>
+
+</div>
+
+
+<p>For information about how access statistics are logged, please read
+<a href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/usage-and-billing-data">Usage and Billing Data</a>.</p>
+
+<p>The following sections discuss accessing the access statistics using
+bare HTTP requests. Query parameters are used to specify the types and
+date ranges of information to include. For information on using <code>s3cmd</code>
+(or other tools) to fetch statistics as S3 objects, skip to the <a href="#the-magic-usage-bucket">The Magic <code>usage</code> Bucket</a> section.</p>
+
+<p>The examples on this page assume that the <code>admin_port</code> has not
+been configured to something other than default CS port of <code>8080</code>.</p>
+
+<h2 id="choosing-the-result-format">Choosing the Result Format</h2>
+
+<p>Results are available as either JSON or XML. Request the appropriate
+format by using the HTTP <code>Accept</code> header with either <code>application/json</code>
+or <code>application/xml</code>, respectively.</p>
+
+<h2 id="specifying-the-user">Specifying the User</h2>
+
+<p>Access statistics are provided on a per-user basis. Specify which user&rsquo;s
+statistics you want by providing that user&rsquo;s <code>key_id</code> in the URL. For
+example, to get access statistics for the user key
+<code>8NK4FH2SGKJJM8JIP2GU</code>, use the URL
+<code>/riak-cs/usage/8NK4FH2SGKJJM8JIP2GU</code>.</p>
+
+<p><strong>Note</strong>: The new user id generator should not include non-URL-safe
+    characters, but if it does, those characters will need to be escaped
+    in this URL.</p>
+
+<p>A <code>404</code> code with an error message body will be returned if the user
+does not exist. For example, there is no <code>ASDF</code> user in my cluster, so
+fetching <code>http://localhost:8080/riak-cs/usage/ASDF</code> produces the
+following JSON/XML (reformatted for easy reading):</p>
+
+<pre><code class="language-json">HTTP/1.1 404 Object Not Found
+
+{
+  &quot;Error&quot;: {
+    &quot;Message&quot;:&quot;Unknown user&quot;
+  }
+}
+</code></pre>
+
+<pre><code class="language-xml">HTTP/1.1 404 Object Not Found
+
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+  &lt;Error&gt;
+    &lt;Message&gt;Unknown user&lt;/Message&gt;
+  &lt;/Error&gt;
+</code></pre>
+
+<h2 id="enable-access-results">Enable Access Results</h2>
+
+<blockquote>
+<p><strong>Authentication Required</strong></p>
+
+<p>Queries to the usage resources described here must be authenticated as
+described in the <a href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/authentication">Authentication documentation</a>. Keep this in mind when using <code>curl</code>. Authentication credentials for <code>s3cmd</code> or <code>s3-curl</code> can be specified in their respective configuration files.</p>
+</blockquote>
+
+<p>The usage HTTP resource provides both access and storage statistics.
+Since each of these queries can be taxing in its own right, they are
+both omitted from the result by default:</p>
+
+<pre><code class="language-curl">curl http://localhost:8080/riak-cs/usage/8NK4FH2SGKJJM8JIP2GU
+</code></pre>
+
+<p>Sample responses (reformatted for easy reading):</p>
+
+<pre><code class="language-json">{
+  &quot;Access&quot; :&quot;not_requested&quot;,
+  &quot;Storage&quot;:&quot;not_requested&quot;
+}
+</code></pre>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+  &lt;Usage&gt;
+    &lt;Access&gt;not_requested&lt;/Access&gt;
+    &lt;Storage&gt;not_requested&lt;/Storage&gt;
+  &lt;/Usage&gt;
+</code></pre>
+
+<p>To request that access results be included, pass the query parameter <code>a</code>
+to the resource (any true-ish value will work, including just the bare
+<code>a</code>, <code>t</code>, <code>true</code>, <code>1</code>, <code>y</code>, and <code>yes</code>):</p>
+
+<pre><code class="language-curl">curl http://localhost:8080/riak-cs/usage/8NK4FH2SGKJJM8JIP2GU?a
+</code></pre>
+
+<p>Sample responses (reformatted for easy reading):</p>
+
+<pre><code class="language-json">{
+  &quot;Access&quot;: [
+    { &quot;Errors&quot;: [] }
+  ],
+  &quot;Storage&quot;: &quot;not_requested&quot;
+}
+</code></pre>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+  &lt;Usage&gt;
+    &lt;Access&gt;
+      &lt;Errors/&gt;
+    &lt;/Access&gt;
+    &lt;Storage&gt;not_requested&lt;/Storage&gt;
+  &lt;/Usage&gt;
+</code></pre>
+
+<p>There are no statistics included in this report because the default time
+span is <em>now</em>, which is not available in the archives.</p>
+
+<h2 id="specifying-the-time-span-to-report">Specifying the Time Span to Report</h2>
+
+<p>Request the time span you want data for by passing <code>s</code> (start) and <code>e</code>
+(end) query parameters to the resource. The slices for which data will
+be returned are all of those between <code>s</code> and <code>e</code>, as well as the slice
+including <code>s</code> and the slice including <code>e</code>.</p>
+
+<p>For example, for slices <code>A</code>-<code>I</code>:</p>
+
+<pre><code>   A     B     C     D     E     F     G     H     I
+|-----|-----|-----|-----|-----|-----|-----|-----|-----|
+               s                 e
+</code></pre>
+
+<p>Specifying an <code>s</code> that falls somewhere in slice <code>C</code> and an <code>e</code> that
+falls somewhere in slice <code>F</code> means that data for slices <code>C</code>, <code>D</code>, <code>E</code>,
+and <code>F</code> will be returned.</p>
+
+<p>Each should be provided in ISO 8601 format (<code>yyyymmddThhmmssZ</code>). For
+example, the following values would request the span between 2:00pm and
+4:00pm (GMT) on January 30, 2012:</p>
+
+<pre><code class="language-curl">http://localhost:8080/riak-cs/usage/8NK4FH2SGKJJM8JIP2GU?a&amp;s=20120315T140000Z&amp;e=20120315T160000Z
+</code></pre>
+
+<p>Sample responses (reformatted for easy reading):</p>
+
+<pre><code class="language-json">{
+  &quot;Access&quot;: [
+    {
+      &quot;Node&quot;: &quot;riak_cs@127.0.0.1&quot;,
+      &quot;Samples&quot;: [
+        {
+          &quot;StartTime&quot;: &quot;20120315T150000Z&quot;,
+          &quot;EndTime&quot;:&quot;20120315T152931Z&quot;,
+          &quot;KeyWrite&quot;: { &quot;BytesIn&quot;: 32505856, &quot;Count&quot;: 1 },
+          &quot;KeyRead&quot;: { &quot;BytesOut&quot;: 32505856, &quot;Count&quot;: 1 },
+          &quot;BucketRead&quot;: { &quot;BytesOut&quot;: 3633, &quot;Count&quot;: 5 }
+        }
+      ]
+    },
+    { 
+      &quot;Errors&quot;: []
+    }
+  ],
+  &quot;Storage&quot;: &quot;not_requested&quot;
+}
+</code></pre>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+  &lt;Usage&gt;
+    &lt;Access&gt;
+      &lt;Node name=&quot;riak_cs@127.0.0.1&quot;&gt;
+        &lt;Sample StartTime=&quot;20120315T150000Z&quot; EndTime=&quot;20120315T152931Z&quot;&gt;
+          &lt;Operation type=&quot;KeyWrite&quot;&gt;
+            &lt;BytesIn&gt;32505856&lt;/BytesIn&gt;
+            &lt;Count&gt;1&lt;/Count&gt;
+          &lt;/Operation&gt;
+          &lt;Operation type=&quot;KeyRead&quot;&gt;
+            &lt;BytesOut&gt;32505856&lt;/BytesOut&gt;
+            &lt;Count&gt;1&lt;/Count&gt;
+          &lt;/Operation&gt;
+          &lt;Operation type=&quot;BucketRead&quot;&gt;
+            &lt;BytesOut&gt;3633&lt;/BytesOut&gt;
+            &lt;Count&gt;5&lt;/Count&gt;
+          &lt;/Operation&gt;
+        &lt;/Sample&gt;
+      &lt;/Node&gt;
+      &lt;Errors/&gt;
+    &lt;/Access&gt;
+    &lt;Storage&gt;not_requested&lt;/Storage&gt;
+  &lt;/Usage&gt;
+</code></pre>
+
+<p>The behavior of the resource when the <code>s</code> or <code>e</code> parameter is omitted
+may change, but is currently as follows:</p>
+
+<ul>
+<li>Omitting <code>e</code> will cause the resource to return only data for the slice
+in which <code>s</code> falls</li>
+<li>Omitting <code>s</code> will cause the resource to return data for all slices
+from <code>e</code> through the current time</li>
+</ul>
+
+<p>Or, more simply, the default <code>s</code> is <em>now</em> and the default <code>e</code> is equal
+to <code>s</code>.</p>
+
+<h3 id="time-span-limit">Time Span Limit</h3>
+
+<p>To prevent excessive time and memory from being accidentally consumed,
+the amount of time that may be retrieved in any request is limited.</p>
+
+<p>The limit is configured by the <code>riak_cs</code> application environment
+variable <code>usage_request_limit</code>. The value is expressed as an integer
+number of archive intervals (see <a href="//evadne.github.io/basho_docs/riak/cs/2.0.1/cookbooks/usage-and-billing-data">Usage and Billing Data</a> for a
+description of archive intervals).</p>
+
+<p>The default value is <code>744</code>, which is 31 days at the default archive
+interval of one hour.</p>
+
+<h2 id="the-magic-usage-bucket">The Magic <code>usage</code> Bucket</h2>
+
+<p>If you would prefer to use <code>s3cmd</code> or another S3 library to fetch access
+stats, you may do so by referencing objects in the global <code>usage</code>
+bucket. The format for objects in the usage bucket is:</p>
+
+<pre><code class="language-bash">s3://riak-cs/usage/UserKeyId/Options/StartTime/EndTime
+</code></pre>
+
+<p>Or, if <code>/</code> is automatically quoted (<code>%2f</code>) by your client, the <code>.</code>
+character may be used (this is also nicer for s3cmd, since it will
+automatically choose a more useful name for the file it creates):</p>
+
+<pre><code class="language-bash">s3://riak-cs/usage/UserKeyId.Options.StartTime.EndTime
+</code></pre>
+
+<p>That is, in the usage bucket, this is a sub-bucket named for the user&rsquo;s
+<code>key_id</code> (the <code>UserKeyId</code> part of the path).</p>
+
+<p>Inside the user&rsquo;s bucket is a sub-bucket named for the contents and
+their representation (the <code>Options</code> part of the path). This portion
+should be:</p>
+
+<ul>
+<li><code>aj</code> to receive access statistics as JSON data</li>
+<li><code>ax</code> to receive access statistics as XML data</li>
+</ul>
+
+<p>The next two portions of the path, <code>StartTime</code> and <code>EndTime</code>, are the
+start and end times for the window to report, respectively. These take
+the same ISO 8601 format that the <code>s</code> and <code>e</code> query parameters take in
+the other request method.</p>
+
+<p>As an example, making the same request as the last example, for
+JSON-format access statistics between 2:00pm and 4:00pm GMT on January
+30, 2012, looks like this:</p>
+
+<pre><code class="language-bash">s3cmd get s3://riak-cs/usage/8NK4FH2SGKJJM8JIP2GU/aj/20120315T140000Z/20120315T160000Z
+</code></pre>
+
+<p><strong>Note</strong>: All objects in the <code>usage</code> bucket are read-only. <code>PUT</code> and
+<code>DELETE</code> requests will fail for them.</p>
+
+<p><strong>Note</strong>: Regular users are only allowed to access the statistics bucket
+for their own <code>key_id</code>. The admin user is allowed to access any stat
+bucket.</p>
+
+<h2 id="interpreting-the-results">Interpreting the Results</h2>
+
+<p>Results of the access query are grouped by node. That is, within the
+access field of the result will be one entry for each Riak CS node that
+had data for the requested time span.</p>
+
+<p>Each node entry will contain one or more &ldquo;samples&rdquo; for each time slice
+that the user accessed that Riak CS node. The sample will have a start
+time and end time describing what span the sample covers.</p>
+
+<p>The other entries of each sample are the operations the user performed
+during the sampled time. Operation statistics are provided as rollups
+for each operation type. The rollup includes one or more of the
+following fields:</p>
+
+<ul>
+<li><code>Count</code> &mdash; the number of times this operation was used successfully</li>
+<li><code>UserErrorCount</code> &mdash; the number of times this operation was used but
+ended in a 400-499 response code</li>
+<li><code>SystemErrorCount</code> &mdash; the number of times this operation was used but
+ended in a 500-599 response code</li>
+<li><code>BytesIn</code> &mdash; the number of bytes that were included in the request
+bodies of successful operations</li>
+<li><code>UserErrorBytesIn</code> &mdash; the number of bytes that were included in the
+request bodies of operations that ended in 400-499 response codes</li>
+<li><code>SystemErrorBytesIn</code> &mdash; the number of bytes that were included in the
+request bodies of operations that ended in 500-599 response codes</li>
+<li><code>BytesOut</code> &mdash; the number of bytes that were included in the response
+bodies of successful operations</li>
+<li><code>UserErrorBytesOut</code> &mdash; the number of bytes that were included in the
+response bodies of operations that ended in 400-499 response codes</li>
+<li><code>SystemErrorBytesOut</code> &mdash; the number of bytes that were included in
+the response bodies of operations that ended in 500-599 response codes</li>
+<li><code>BytesOutIncomplete</code> &mdash; the number of bytes that were sent in
+response bodies before the client disconnected, if there was more that
+could have been sent afterward (i.e. the byte count of partial
+downloads)</li>
+</ul>
+
+<p>It is important to note that accesses are only logged when the
+Webmachine request finishes. This means that, for example, an upload
+started in one time slice but ended in another will only add to the
+<code>bytes in</code> field for the time slice in which in finished, rather than
+splitting the statistics between the slices in which they actually
+happened.</p>
+
+<h3 id="operation-types">Operation Types</h3>
+
+<p>The operation types that are currently tracked are the following:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Operation</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>ListBuckets</code></td>
+<td align="left">Lists a user&rsquo;s buckets (<code>GET /</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>UsageRead</code></td>
+<td align="left">Reads a user&rsquo;s usage statistics (<code>GET /riak-cs/usage/user/*</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>BucketRead</code></td>
+<td align="left">Lists the files in a bucket (<code>GET /bucket</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>BucketStat</code></td>
+<td align="left">Checks for the existence of a bucket (<code>HEAD /bucket</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>BucketCreate</code></td>
+<td align="left">Creates a bucket (<code>PUT /bucket</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>BucketDelete</code></td>
+<td align="left">Deletes a bucket (<code>DELETE /bucket</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>BucketUnknown</code></td>
+<td align="left">Unknown bucket operation (<code>?? /bucket</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>BucketReadACL</code></td>
+<td align="left">Retrieves the ACL of a bucket (<code>GET /bucket?acl</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>BucketStatACL</code></td>
+<td align="left">Checks for the existence of a bucket (<code>HEAD /bucket?acl</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>BucketWriteACL</code></td>
+<td align="left">Changes the ACL of a bucket (<code>PUT /bucket?acl</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>BucketUnknownACL</code></td>
+<td align="left">Unknown bucket ACL operation (<code>?? /bucket?acl</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>KeyRead</code></td>
+<td align="left">Fetches an object (<code>GET /bucket/key</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>KeyStat</code></td>
+<td align="left">Checks for the existence of an object (<code>HEAD /bucket/key</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>KeyWrite</code></td>
+<td align="left">Uploads an object (<code>PUT /bucket/key</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>KeyDelete</code></td>
+<td align="left">Deletes an object (<code>DELETE /bucket/key</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>KeyUnknown</code></td>
+<td align="left">Unknown object operation (<code>?? /bucket/key</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>KeyReadACL</code></td>
+<td align="left">Retrieves the ACL of a key (<code>GET /bucket/key?acl</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>KeyStatACL</code></td>
+<td align="left">Checks for the existence of an object (<code>HEAD /bucket/key?acl</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>KeyWriteACL</code></td>
+<td align="left">Changes the ACL of an object (<code>PUT /bucket/key?acl</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>KeyUnknownACL</code></td>
+<td align="left">Unknown key ACL operation (<code>?? /bucket/key?acl</code>)</td>
+</tr>
+
+<tr>
+<td align="left"><code>UnknownGET</code></td>
+<td align="left">A <code>GET</code> was issued on an unrecognized resource, which likely means that the <code>riak_cs_access_logger:operation/1</code> function is out of date</td>
+</tr>
+
+<tr>
+<td align="left"><code>UnknownHEAD</code></td>
+<td align="left">See <code>UnknownGET</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>UnknownPUT</code></td>
+<td align="left">See <code>UnknownGET</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>UnknownPOST</code></td>
+<td align="left">See <code>UnknownGET</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>UnknownDELETE</code></td>
+<td align="left">See <code>UnknownGET</code></td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="lookup-errors">Lookup Errors</h3>
+
+<p>In addition to the node entries in the access results, there is also an
+entry for errors that Riak CS encountered while fetching access
+archives. The errors list is very similar to the samples of a node list:
+each entry will contain the start and end times of the period, as well
+as the &ldquo;reason&rdquo; the lookup failed.</p>
+
+<p>For example, if the Riak lookups that Riak CS uses end in timeout
+instead of success, the result including an errors list might look like
+the following (reformatted for easy reading):</p>
+
+<pre><code class="language-json">{
+  &quot;Access&quot;: [
+    {
+      &quot;Errors&quot;: [
+        {
+          &quot;StartTime&quot;: &quot;20120315T160000Z&quot;,
+          &quot;EndTime&quot;: &quot;20120315T170000Z&quot;,
+          &quot;Reason&quot;: &quot;timeout&quot;
+        }
+      ]
+    }
+  ],
+  &quot;Storage&quot;: &quot;not_requested&quot;
+}
+</code></pre>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+  &lt;Usage&gt;
+    &lt;Access&gt;
+      &lt;Errors&gt;
+        &lt;Sample StartTime=&quot;20120315T160000Z&quot; EndTime=&quot;20120315T170000Z&quot;&gt;
+          &lt;Reason&gt;timeout&lt;/Reason&gt;
+        &lt;/Sample&gt;
+      &lt;/Errors&gt;
+    &lt;/Access&gt;
+    &lt;Storage&gt;not_requested&lt;/Storage&gt;
+  &lt;/Usage&gt;
+</code></pre>
+
+      </main>
+
+
+    </article>
+
+
+    <footer class="footer">
+
+  <div class="inline-block   footer__attributions">
+
+    <p>
+      This work is licensed under a
+      <br class="[bs] hidden-md-up">
+      <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+        Creative Commons Attribution 4.0 <br class="[bs] hidden-sm-up"> International Public License
+      </a>
+    </p>
+
+    <p>
+      © 2011-2017&nbsp;<a href="http://www.basho.com">Basho Technologies, Inc.</a>
+    </p>
+
+  </div>
+
+</footer>
+
+
+
+  </div>
+
+
+  <script src="//evadne.github.io/basho_docs/js/main.js" type="text/javascript"></script>
+
+</body>
+</html>

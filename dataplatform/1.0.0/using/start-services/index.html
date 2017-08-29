@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+<html class="no-js" lang="en">
+
+
+
+
+<head>
+
+  <meta charset="utf-8">
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width">
+  <link rel="shortcut icon" href="//evadne.github.io/basho_docs/images/branding/favicon.ico" type="image/x-icon" />
+
+  <title>Starting Services on Basho Data Platform</title>
+
+  <link href="//evadne.github.io/basho_docs/css/main.css" media="screen" rel="stylesheet" type="text/css">
+  <link rel="canonical" href="//evadne.github.io/basho_docs/dataplatform/latest/using/start-services/" />
+  <!-- The below meta tags are included to allow JS code to use variables
+       defined in Hugo---our static site generator. -->
+  <meta name="project" content="dataplatform">
+  <meta name="version" content="1.0.0">
+  <meta name="project_relative_path" content="using/start-services/">
+
+</head>
+
+
+
+<body class="dataplatform 1.0.0 latest ">
+
+
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-T9C8MK" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-T9C8MK');</script>
+
+
+  
+<header class="banner">
+
+
+
+  
+  <div class="float-right   banner__menu-bars   [bs] hidden-md-up">
+    <div class="menu-bars   js_toggle-content-nav"></div>
+  </div>
+
+
+
+  
+  <div class="float-left   banner__docs-logo">
+    <a href="//evadne.github.io/basho_docs/index.html" class="block   docs-logo"><img class="docs-logo__image" src="//evadne.github.io/basho_docs/images/branding/basho_docs_logo.png"></a>
+  </div>
+
+
+
+  
+  <div class="overflow-hidden   banner__navigation-pane   [bs] hidden-sm-down">
+
+
+    
+    <div class="float-left    banner__intra-brand__width-wrapper">
+    <div class="float-right   banner__intra-brand">
+      <div class="float-right">
+        
+        <a class="inline-block   banner__brand-link" href="http://basho.com/">Basho</a><a class="inline-block   banner__brand-link" href="https://academy.basho.com">Academy</a><a class="inline-block   banner__brand-link" href="//evadne.github.io/basho_docs/community">Community</a><a class="inline-block   banner__brand-link" href="http://basho.com/contact">Contact</a></div>
+    </div>
+    </div>
+
+
+
+
+    
+    <div class="float-left    banner__intra-site__width-wrapper">
+    <div class="float-right   banner__intra-site">
+      
+      <a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/kv/latest/">Riak KV</a><a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/ts/latest/">Riak TS</a><a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/cs/latest/">Riak CS</a></div>
+    </div>
+
+
+  </div>
+
+</header>
+
+
+
+  
+  
+
+
+
+<nav class="content-nav content-nav--top-size-full">
+
+
+
+
+  <div class="content-nav__fixed-top">
+    <form id="searchbox_011972015458788978446:zgdcy4fa-o0" class="search" action="">
+
+      <span class="block float-left   search__icon-container   docs-icon--search">|</span>
+
+      <span class="block overflow">
+        <input class="search__input" id="main-search" type="search" name="q" placeholder="Search">
+      </span>
+
+    </form>
+
+
+    <div class="clearfix   version-picker">
+
+  
+
+      <div class="inline-block float-right   selector selector--version">
+        <header class="selector__title">Versions</header>
+        <button class="selector__btn" type="button">1.0.0</button>
+        <div    class="selector__arrow"></div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  
+  <div class="overflow-y-hidden   selector-pane__sizing-box selector-pane__sizing-box--hidden">
+  <div class="                    selector-pane__shadow-box">
+
+    
+    <div class="edge-fader edge-fader--left">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+    <div class="edge-fader edge-fader--right">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+
+    <div class="overflow-x        selector-pane__primary selector-pane--versions  js_edge-fader--target">
+      
+    </div>
+  </div>
+  </div>
+
+
+
+
+  
+  <div class="             content-nav__primary__sizing-box">
+  <div class="             content-nav__primary__shadow-box">
+  <div class="overflow-y   content-nav__primary">
+
+    <div class="content-nav__menu-container">
+
+      <ul class="content-menu
+                 content-menu--depth-0
+                 content-menu--open">
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--riak">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/" >
+              <span class="block   content-menu__item__right-border"><strong>Basho Data Platform</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/downloads/" >
+        <span class="block   content-menu__item__right-border">Download Basho Data Platform</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/installing/" >
+        <span class="block   content-menu__item__right-border">Installing</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/upgrading/" >
+        <span class="block   content-menu__item__right-border">Upgrading from Beta to 1.0.0</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/release-notes/" >
+        <span class="block   content-menu__item__right-border">Release Notes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--configure">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/" >
+              <span class="block   content-menu__item__right-border"><strong>Configuring</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/setup-a-cluster/" >
+        <span class="block   content-menu__item__right-border">Setup a Data Platform Cluster</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/replace-spark-cluster-manager/" >
+        <span class="block   content-menu__item__right-border">Replacing Spark Cluster Manager</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/cache-proxy/" >
+        <span class="block   content-menu__item__right-border">Getting Started with Cache Proxy</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/default-ports/" >
+        <span class="block   content-menu__item__right-border">Default Ports</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/spark-ip-address/" >
+        <span class="block   content-menu__item__right-border">Set Spark IP Address</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--database">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                         content-menu__menu-toggle--open ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/using/" >
+              <span class="block   content-menu__item__right-border"><strong>Using</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           content-menu--open"
+    style="display: block">
+
+
+
+  <li>
+
+    <div class="content-menu__item  content-menu__item--selected ">
+
+      <a class="block overflow   content-menu__link--depth-1" >
+        <span class="block   content-menu__item__right-border">Start Services</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/using/spark-riak-connector/" >
+        <span class="block   content-menu__item__right-border">Spark-Riak Connector</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/using/commands/" >
+        <span class="block   content-menu__item__right-border">Data Platform Commands</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--beaker">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/learn/" >
+              <span class="block   content-menu__item__right-border"><strong>Learn</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/learn/service-manager/" >
+        <span class="block   content-menu__item__right-border">Service Manager</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/learn/cache-proxy/" >
+        <span class="block   content-menu__item__right-border">Cache Proxy</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/learn/leader-election-service/" >
+        <span class="block   content-menu__item__right-border">Leader Election Service</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/dataplatform/1.0.0/learn/spark-cluster-manager/" >
+        <span class="block   content-menu__item__right-border">Spark Cluster Manager</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+        <li class="content-menu__blank-entry"></li>
+
+      </ul>
+
+    </div>
+
+
+
+    <div class="content-nav__fixed-bottom">
+
+      <ul class="content-menu">
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--comments">|</span>
+
+            <a class="block overflow" href="//evadne.github.io/basho_docs/community">
+              <span class="block   content-menu__item__right-border">
+                <sub>Want some extra help?</sub><br>
+                <strong>Ask our Community</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--question-sign">|</span>
+
+            <a class="block overflow" href="http://basho.com/contact">
+              <span class="block   content-menu__item__right-border">
+                <sub>Need to chat?</sub><br>
+                <strong>Contact us directly</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--github-alt">|</span>
+
+            <a class="block overflow" href="https://github.com/basho/basho_docs/edit/master/content/dataplatform/1.0.0/using/start-services.md">
+              <span class="block   content-menu__item__right-border">
+                <sub>Noticed a typo?</sub><br>
+                <strong>Correct it in GitHub</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+  </div>
+  </div>
+
+
+
+</nav>
+
+<script>
+  (function() {
+    var cx = '011972015458788978446:zgdcy4fa-o0';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<div style="width:0px;overflow:hidden;height:0px;">
+  <gcse:search></gcse:search>
+</div>
+
+
+
+
+
+
+  <div class="content-well">
+
+
+    <article class="main-article">
+
+
+      
+
+<header class="front-matter">
+
+
+  <h1 class="front-matter__title">
+
+    
+    <br>
+    Starting Services on Basho Data Platform
+
+  </h1>
+  <nav class="table-of-contents"></nav>
+
+
+</header>
+
+
+      <main>
+        
+
+<p>You&rsquo;ve <a href="//evadne.github.io/basho_docs/dataplatform/1.0.0/installing/">installed</a> Basho Data Platform (BDP), <a href="//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/setup-a-cluster/">configured</a> your cluster, and <a href="//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/setup-a-cluster/#add-services">added services</a> to your nodes. The setup of your BDP cluster is complete! Now you can begin using your BDP cluster.</p>
+
+<h2 id="start-services">Start Services</h2>
+
+<p>The very first thing you can do with your BDP cluster is start the services you added. In the last section of the <a href="//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/setup-a-cluster/#add-services">configuration instructions</a>, you added the following services:</p>
+
+<ul>
+<li>Spark-master</li>
+<li>Spark-worker</li>
+<li>Redis</li>
+<li>Cache proxy</li>
+</ul>
+
+<h3 id="spark-master-service">Spark-Master Service</h3>
+
+<p>To start the spark-master service, run the following, using the name and IP of the node you wish to start the service on:</p>
+
+<pre><code class="language-bash">sudo data-platform-admin start-service »NODENAME«@»IPADDRESS« my-spark-group my-spark-master
+</code></pre>
+
+<p>Then verify that the spark-master service is running:</p>
+
+<pre><code class="language-bash">ps -ef | grep [s]park-master
+</code></pre>
+
+<p>You should see the output like this:</p>
+
+<pre><code>riak     23418     1  7 20:32 ?        00:00:13 /usr/local/jdk/bin/java -cp /usr/lib/riak/lib/data_platform-1/priv/spark-master/sbin/../conf/:/usr/lib/riak/lib/data_platform-1/priv/spark-master/lib/spark-assembly-1.4.0-hadoop2.6.0.jar:/usr/lib/riak/lib/data_platform-1/priv/spark-master/lib/datanucleus-api-jdo-3.2.6.jar:/usr/lib/riak/lib/data_platform-1/priv/spark-master/lib/datanucleus-rdbms-3.2.9.jar:/usr/lib/riak/lib/data_platform-1/priv/spark-master/lib/datanucleus-core-3.2.10.jar -Dspark.deploy.recoveryMode=CUSTOM -Dspark.deploy.recoveryMode.factory=org.apache.spark.deploy.master.RiakEnsembleRecoveryModeFactory -Dspark.deploy.leadelect.namespace=spark_leaders -Dspark.deploy.leadelect.service=localhost:10012 -Dspark.deploy.riak.metadata.map=spark-cluster-map -Dspark.deploy.riak.consistent.bucket=spark-bucket -Dspark.deploy.leadelect.timeout=10000 -Dspark.riak.connection.host=localhost:10017 -cp /usr/lib/riak/lib/data_platform-1/priv/spark-master/sbin/../lib/* -Xms512m -Xmx512m org.apache.spark.deploy.master.Master --ip 172.28.128.3 --port 7077 --webui-port 8080
+</code></pre>
+
+<p>If you need to stop the spark-master, the proper sequence is:</p>
+
+<pre><code class="language-bash">sudo data-platform-admin stop-service »NODENAME«@»IPADDRESS« my-spark-group my-spark-master
+</code></pre>
+
+<h3 id="spark-worker-service">Spark-Worker Service</h3>
+
+<p>To start the spark-worker service, run the following, using the name and IP of the node you wish to start the service on:</p>
+
+<pre><code class="language-bash">sudo data-platform-admin start-service »NODENAME«@»IPADDRESS« my-spark-group my-spark-worker
+</code></pre>
+
+<p>You can repeat this command (using a different nodename and IP address) to add additional spark-worker services.</p>
+
+<p>To stop a spark-worker service, you need to stop the service first:</p>
+
+<pre><code class="language-bash">sudo data-platform-admin stop-service »NODENAME«@»IPADDRESS« my-spark-group my-spark-worker
+</code></pre>
+
+<h3 id="redis-service">Redis Service</h3>
+
+<p>To start the Redis service, run the following, using the name and IP of the node you wish to start the service on:</p>
+
+<pre><code class="language-bash">sudo data-platform-admin start-service »NODENAME«@»IPADDRESS« my-redis-group my-redis
+</code></pre>
+
+<h3 id="cache-proxy-service">Cache Proxy Service</h3>
+
+<p>To start the cache proxy service, run:</p>
+
+<pre><code class="language-bash">sudo data-platform-admin start-service »NODENAME«@»IPADDRESS« my-cache-proxy-group my-cache-proxy
+</code></pre>
+
+<h2 id="verify-the-services-are-running-correctly">Verify The Services Are Running Correctly</h2>
+
+<h3 id="redis-and-cache-proxy">Redis and Cache Proxy</h3>
+
+<p>Do you use CentOS or Ubuntu?</p>
+
+<h4 id="centos">CentOS</h4>
+
+<p>Set the base path of BDP:</p>
+
+<pre><code class="language-bash">export BDP_HOME=/usr/lib64/riak/lib/data_platform-1
+</code></pre>
+
+<h4 id="ubuntu">Ubuntu</h4>
+
+<p>Set the base path of BDP:</p>
+
+<pre><code class="language-bash">export BDP_HOME=/usr/lib/riak/lib/data_platform-1
+</code></pre>
+
+<h4 id="verification">Verification</h4>
+
+<p>First, add the Redis CLI utility to your <code>PATH</code> and specify Ips and ports for the services involved in the test:</p>
+
+<pre><code class="language-bash">export PATH=&quot;$PATH:$BDP_HOME/priv/redis/bin&quot;
+export RIAK_IP=»RIAK_IP
+export RIAK_HTTP_PORT=»RIAK_HTTP_PORT«
+export CACHE_PROXY_IP=»CACHE_PROXY_IP«
+export CACHE_PROXY_PORT=»CACHE_PROXY_PORT«
+export REDIS_IP=»REDIS_IP«
+export REDIS_PORT=»REDIS_PORT«
+</code></pre>
+
+<p>Then, add some test data to your Riak cluster, using the IP:HttpPort of your Riak KV node:</p>
+
+<pre><code class="language-bash">curl -s -X PUT -d &quot;my-value&quot; &quot;http://$RIAK_IP:$RIAK_HTTP_PORT/buckets/my-bucket/keys/my-key&quot;
+</code></pre>
+
+<p>Retrieve the test data via cache proxy, using the IP address you set for cache proxy:</p>
+
+<pre><code class="language-bash">redis-cli -h $CACHE_PROXY_IP -p $CACHE_PROXY_PORT get my-bucket:my-key
+</code></pre>
+
+<p>Finally, confirm that the data is now also in Redis:</p>
+
+<pre><code class="language-bash">redis-cli $REDIS_IP -p $REDIS_PORT get my-bucket:my-key
+</code></pre>
+
+      </main>
+
+
+    </article>
+
+
+    <footer class="footer">
+
+  <div class="inline-block   footer__attributions">
+
+    <p>
+      This work is licensed under a
+      <br class="[bs] hidden-md-up">
+      <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+        Creative Commons Attribution 4.0 <br class="[bs] hidden-sm-up"> International Public License
+      </a>
+    </p>
+
+    <p>
+      © 2011-2017&nbsp;<a href="http://www.basho.com">Basho Technologies, Inc.</a>
+    </p>
+
+  </div>
+
+</footer>
+
+
+
+  </div>
+
+
+  <script src="//evadne.github.io/basho_docs/js/main.js" type="text/javascript"></script>
+
+</body>
+</html>

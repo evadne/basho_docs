@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+<html class="no-js" lang="en">
+
+
+
+
+<head>
+
+  <meta charset="utf-8">
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width">
+  <link rel="shortcut icon" href="//evadne.github.io/basho_docs/images/branding/favicon.ico" type="image/x-icon" />
+
+  <title>Installing Riak CS</title>
+
+  <link href="//evadne.github.io/basho_docs/css/main.css" media="screen" rel="stylesheet" type="text/css">
+  <link rel="canonical" href="//evadne.github.io/basho_docs/riak/cs/latest/cookbooks/installing/" />
+  <!-- The below meta tags are included to allow JS code to use variables
+       defined in Hugo---our static site generator. -->
+  <meta name="project" content="riak_cs">
+  <meta name="version" content="2.0.0">
+  <meta name="project_relative_path" content="cookbooks/installing/">
+
+</head>
+
+
+
+<body class="riak_cs 2.0.0  ">
+
+
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-T9C8MK" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-T9C8MK');</script>
+
+
+  
+<header class="banner">
+
+
+
+  
+  <div class="float-right   banner__menu-bars   [bs] hidden-md-up">
+    <div class="menu-bars   js_toggle-content-nav"></div>
+  </div>
+
+
+
+  
+  <div class="float-left   banner__docs-logo">
+    <a href="//evadne.github.io/basho_docs/index.html" class="block   docs-logo"><img class="docs-logo__image" src="//evadne.github.io/basho_docs/images/branding/basho_docs_logo.png"></a>
+  </div>
+
+
+
+  
+  <div class="overflow-hidden   banner__navigation-pane   [bs] hidden-sm-down">
+
+
+    
+    <div class="float-left    banner__intra-brand__width-wrapper">
+    <div class="float-right   banner__intra-brand">
+      <div class="float-right">
+        
+        <a class="inline-block   banner__brand-link" href="http://basho.com/">Basho</a><a class="inline-block   banner__brand-link" href="https://academy.basho.com">Academy</a><a class="inline-block   banner__brand-link" href="//evadne.github.io/basho_docs/community">Community</a><a class="inline-block   banner__brand-link" href="http://basho.com/contact">Contact</a></div>
+    </div>
+    </div>
+
+
+
+
+    
+    <div class="float-left    banner__intra-site__width-wrapper">
+    <div class="float-right   banner__intra-site">
+      
+      <a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/kv/latest/">Riak KV</a><a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/ts/latest/">Riak TS</a><a class="inline-block   banner__brand-link banner__brand-link--current">Riak CS</a></div>
+    </div>
+
+
+  </div>
+
+</header>
+
+
+
+  
+  
+
+
+
+<nav class="content-nav content-nav--top-size-full">
+
+
+
+
+  <div class="content-nav__fixed-top">
+    <form id="searchbox_011972015458788978446:zgdcy4fa-o0" class="search" action="">
+
+      <span class="block float-left   search__icon-container   docs-icon--search">|</span>
+
+      <span class="block overflow">
+        <input class="search__input" id="main-search" type="search" name="q" placeholder="Search">
+      </span>
+
+    </form>
+
+
+    <div class="clearfix   version-picker">
+
+  
+      <a class="inline-block float-left    product__title" href="//evadne.github.io/basho_docs/"><img class="product__logo" src="//evadne.github.io/basho_docs/images/branding/riak-logo.png">Riak<span class="product__title-highlight">CS</span>
+      </a>
+  
+
+      <div class="inline-block float-right   selector selector--version">
+        <header class="selector__title">Versions</header>
+        <button class="selector__btn" type="button">2.0.0</button>
+        <div    class="selector__arrow"></div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  
+  <div class="overflow-y-hidden   selector-pane__sizing-box selector-pane__sizing-box--hidden">
+  <div class="                    selector-pane__shadow-box">
+
+    
+    <div class="edge-fader edge-fader--left">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+    <div class="edge-fader edge-fader--right">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+
+    <div class="overflow-x        selector-pane__primary selector-pane--versions  js_edge-fader--target">
+      
+    </div>
+  </div>
+  </div>
+
+
+
+
+  
+  <div class="             content-nav__primary__sizing-box">
+  <div class="             content-nav__primary__shadow-box">
+  <div class="overflow-y   content-nav__primary">
+
+    <div class="content-nav__menu-container">
+
+      <ul class="content-menu
+                 content-menu--depth-0
+                 content-menu--open">
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--bolt">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                         content-menu__menu-toggle--open ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/" >
+              <span class="block   content-menu__item__right-border"><strong>Riak CS</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           content-menu--open"
+    style="display: block">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/downloads/" >
+        <span class="block   content-menu__item__right-border">Download Riak CS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item  content-menu__item--selected ">
+
+      <a class="block overflow   content-menu__link--depth-1" >
+        <span class="block   content-menu__item__right-border">Installing Riak CS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/installing/chef/" >
+        <span class="block   content-menu__item__right-border">Installing With Chef</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/tutorials/fast-track/" >
+        <span class="block   content-menu__item__right-border">The Riak CS Fast Track</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/tutorials/fast-track/what-is-riak-cs/" >
+        <span class="block   content-menu__item__right-border">What Is Riak CS?</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/tutorials/fast-track/local-testing-environment/" >
+        <span class="block   content-menu__item__right-border">Building a Local Test Environment</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/tutorials/fast-track/virtual-test-environment/" >
+        <span class="block   content-menu__item__right-border">Building a Virtual Test Environment</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/tutorials/fast-track/test-installation/" >
+        <span class="block   content-menu__item__right-border">Testing the Installation</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--lambda">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/developing/" >
+              <span class="block   content-menu__item__right-border"><strong>Developing</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/references/appendices/http-admin/" >
+        <span class="block   content-menu__item__right-border">Accounts &amp; Admin</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/account-management/" >
+        <span class="block   content-menu__item__right-border">Account Management</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/access-control-lists/" >
+        <span class="block   content-menu__item__right-border">Access Control Lists</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/authentication/" >
+        <span class="block   content-menu__item__right-border">Authentication</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/usage-and-billing-data/" >
+        <span class="block   content-menu__item__right-border">Usage and Billing Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/references/apis/" >
+        <span class="block   content-menu__item__right-border">APIs</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/references/apis/storage/" >
+        <span class="block   content-menu__item__right-border">Riak CS Storage API</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/references/apis/storage/s3/" >
+        <span class="block   content-menu__item__right-border">S3 API</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/s3-client/" >
+        <span class="block   content-menu__item__right-border">Configuring an S3 Client</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/fog/" >
+        <span class="block   content-menu__item__right-border">Fog on Riak CS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/dragondisk/" >
+        <span class="block   content-menu__item__right-border">Configuring DragonDisk</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/transmit/" >
+        <span class="block   content-menu__item__right-border">Configuring Transmit</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/references/apis/storage/openstack/" >
+        <span class="block   content-menu__item__right-border">OpenStack API</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/using-with-keystone/" >
+        <span class="block   content-menu__item__right-border">Using Riak CS With Keystone</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/querying-access-statistics/" >
+        <span class="block   content-menu__item__right-border">Access Statistics</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/querying-storage-statistics/" >
+        <span class="block   content-menu__item__right-border">Storage Statistics</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--database">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/operating/" >
+              <span class="block   content-menu__item__right-border"><strong>Operating</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/" >
+        <span class="block   content-menu__item__right-border">Configuring</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/riak-for-cs/" >
+        <span class="block   content-menu__item__right-border">Configuring Riak KV for CS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/riak-cs/" >
+        <span class="block   content-menu__item__right-border">Configuring Riak CS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/stanchion/" >
+        <span class="block   content-menu__item__right-border">Configuring Stanchion</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/load-balancing-proxy/" >
+        <span class="block   content-menu__item__right-border">Load Balancing &amp; Proxy Configuration</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/reference/" >
+        <span class="block   content-menu__item__right-border">Configuration Reference</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/operating/running/" >
+        <span class="block   content-menu__item__right-border">Running</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/command-line-tools/" >
+        <span class="block   content-menu__item__right-border">Command-line Tools</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/installing/launching-and-stopping/" >
+        <span class="block   content-menu__item__right-border">Launching and Stopping</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/logging/" >
+        <span class="block   content-menu__item__right-border">Logging</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/operating/advanced/" >
+        <span class="block   content-menu__item__right-border">Advanced</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/rolling-upgrades/" >
+        <span class="block   content-menu__item__right-border">Rolling Upgrades</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/monitoring-and-metrics/" >
+        <span class="block   content-menu__item__right-border">Monitoring &amp; Metrics</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/references/appendices/riak-cs-control/" >
+        <span class="block   content-menu__item__right-border">Riak CS Control</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/supercluster/" >
+        <span class="block   content-menu__item__right-border">Riak CS Supercluster Support</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--beaker">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/theory/" >
+              <span class="block   content-menu__item__right-border"><strong>Theory &amp; Concepts</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/theory/stanchion/" >
+        <span class="block   content-menu__item__right-border">Stanchion</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/multipart-upload-overview/" >
+        <span class="block   content-menu__item__right-border">Multipart Upload Overview</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/garbage-collection/" >
+        <span class="block   content-menu__item__right-border">Garbage Collection</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/theory/comparisons/" >
+        <span class="block   content-menu__item__right-border">Comparisons</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/references/appendices/comparisons/swift/" >
+        <span class="block   content-menu__item__right-border">Riak CS Compared To Swift</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/references/appendices/comparisons/atmos/" >
+        <span class="block   content-menu__item__right-border">Riak CS Compared To Atmos</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--references">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/reference/" >
+              <span class="block   content-menu__item__right-border"><strong>Reference</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/faqs/riak-cs/" >
+        <span class="block   content-menu__item__right-border">FAQs</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/version-compatibility/" >
+        <span class="block   content-menu__item__right-border">Version Compatibility</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/release-notes/" >
+        <span class="block   content-menu__item__right-border">Riak CS Release Notes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--cloud">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/multi-datacenter-overview/" >
+              <span class="block   content-menu__item__right-border"><strong>Riak CS Enterprise</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/multi-datacenter/" >
+        <span class="block   content-menu__item__right-border">Configuring</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+        <li class="content-menu__blank-entry"></li>
+
+      </ul>
+
+    </div>
+
+
+
+    <div class="content-nav__fixed-bottom">
+
+      <ul class="content-menu">
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--comments">|</span>
+
+            <a class="block overflow" href="//evadne.github.io/basho_docs/community">
+              <span class="block   content-menu__item__right-border">
+                <sub>Want some extra help?</sub><br>
+                <strong>Ask our Community</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--question-sign">|</span>
+
+            <a class="block overflow" href="http://basho.com/contact">
+              <span class="block   content-menu__item__right-border">
+                <sub>Need to chat?</sub><br>
+                <strong>Contact us directly</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--github-alt">|</span>
+
+            <a class="block overflow" href="https://github.com/basho/basho_docs/edit/master/content/riak/cs/2.0.0/cookbooks/installing.md">
+              <span class="block   content-menu__item__right-border">
+                <sub>Noticed a typo?</sub><br>
+                <strong>Correct it in GitHub</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+  </div>
+  </div>
+
+
+
+</nav>
+
+<script>
+  (function() {
+    var cx = '011972015458788978446:zgdcy4fa-o0';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<div style="width:0px;overflow:hidden;height:0px;">
+  <gcse:search></gcse:search>
+</div>
+
+
+
+
+
+
+  <div class="content-well">
+
+
+    <article class="main-article">
+
+
+      
+
+<header class="front-matter">
+
+
+  <h1 class="front-matter__title">
+
+    
+    <br>
+    Installing Riak CS
+
+  </h1>
+  <nav class="table-of-contents"></nav>
+
+
+</header>
+
+
+      <main>
+        
+
+<p>Riak CS is supported on a variety of operating systems, including
+Ubuntu, CentOS, Fedora, Solaris, SmartOS, FreeBSD, and OS X. Riak CS is
+<em>not</em> supported on Microsoft Windows.</p>
+
+<p>You can install Riak CS on a single node (for development purposes) or
+using an automated deployment tool. Any Riak CS installation involves
+three components, all of which must be installed separately:</p>
+
+<ul>
+<li><a href="//evadne.github.io/basho_docs/riak/2.0.7/">Riak KV</a> &mdash; The distributed database on top of which Riak CS
+is built</li>
+<li>Riak CS itself</li>
+<li><a href="//evadne.github.io/basho_docs/riak/cs/2.0.0/theory/stanchion">Stanchion</a> &mdash; An application used to manage <a href="//evadne.github.io/basho_docs/riak/cs/2.0.0/theory/stanchion/#globally-unique-entities">globally unique entities</a> such as users and buckets.</li>
+</ul>
+
+<p><a href="#installing-riak">Riak KV</a> and <a href="#installing-riak-cs-on-a-node">Riak CS</a> must be installed on each node in your cluster. <a href="#installing-stanchion-on-a-node">Stanchion</a>, however, needs to be installed on only one node.</p>
+
+<h2 id="version-compatibility">Version Compatibility</h2>
+
+<p>We strongly recommend using one of the documented <a href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/version-compatibility/">version combinations</a>
+when installing and running Riak CS.</p>
+
+<h2 id="installing-riak-kv">Installing Riak KV</h2>
+
+<p>Before installing Riak CS, Riak KV must be installed on each node in
+your cluster. You can install Riak KV either as part of an OS-specific package
+or from source.</p>
+
+<ul>
+<li><a href="//evadne.github.io/basho_docs/riak/kv/2.0.7/setup/installing/debian-ubuntu">Debian and Ubuntu</a></li>
+<li><a href="//evadne.github.io/basho_docs/riak/kv/2.0.7/setup/installing/rhel-centos">RHEL and CentOS</a></li>
+<li><a href="//evadne.github.io/basho_docs/riak/kv/2.0.7/setup/installing/mac-osx">Mac OS X</a></li>
+<li><a href="//evadne.github.io/basho_docs/riak/kv/2.0.7/setup/installing/freebsd">FreeBSD</a></li>
+<li><a href="//evadne.github.io/basho_docs/riak/kv/2.0.7/setup/installing/suse">SUSE</a></li>
+<li><a href="//evadne.github.io/basho_docs/riak/kv/2.0.7/setup/installing/source">From Source</a></li>
+</ul>
+
+<p>Riak KV is also officially supported on the following public cloud
+infrastructures:</p>
+
+<ul>
+<li><a href="//evadne.github.io/basho_docs/riak/kv/2.0.7/setup/installing/windows-azure">Windows Azure</a></li>
+<li><a href="//evadne.github.io/basho_docs/riak/kv/2.0.7/setup/installing/amazon-web-services">AWS Marketplace</a></li>
+</ul>
+
+<p>Remember that you must repeat this installation process on each node in
+your cluster. For future reference, you should make note of the Riak KV
+installation directory.</p>
+
+<p>If you want to fully configure Riak KV prior to installing Riak CS, see our
+documentation on <a href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/riak-for-cs/">configuring Riak KV for CS</a>.</p>
+
+<h2 id="installing-riak-cs-on-a-node">Installing Riak CS on a Node</h2>
+
+<p>Riak CS and Stanchion packages are available on the <a href="//evadne.github.io/basho_docs/riak/cs/2.0.0/downloads/">Download Riak CS</a>
+page. Similarly, Riak packages are available on the <a href="//evadne.github.io/basho_docs/riak/kv/2.0.7/downloads/">Download Riak KV</a> page.</p>
+
+<p>After downloading Riak CS, Stanchion, and Riak, install them using your
+operating system&rsquo;s package management commands.</p>
+
+<blockquote>
+<p><strong>Note on Riak CS and public ports</strong></p>
+
+<p><strong>Riak CS is not designed to function directly on TCP port 80, and
+it should not be operated in a manner that exposes it directly to the
+public internet</strong>. Instead, consider a load-balancing solution
+such as a dedicated device <a href="http://haproxy.1wt.eu">HAProxy</a> or <a href="http://wiki.nginx.org/Main">Nginx</a> between Riak CS and the outside world.</p>
+</blockquote>
+
+<h3 id="installing-riak-cs-on-mac-os-x">Installing Riak CS on Mac OS X</h3>
+
+<p>To install Riak CS on OS X, first download the appropriate package from
+the <a href="//evadne.github.io/basho_docs/riak/cs/2.0.0/downloads">downloads</a> page:</p>
+
+<pre><code class="language-bash">curl -O http://s3.amazonaws.com/downloads.basho.com/riak-cs/1.5/2.0.0/osx/10.8/riak-cs-2.0.0-OSX-x86_64.tar.gz
+</code></pre>
+
+<p>Then, unpack the downloaded tarball:</p>
+
+<pre><code class="language-bash">tar -xvzf riak-cs-2.0.0-OSX-x86_64.tar.gz
+</code></pre>
+
+<p>At this point, you can move on to <a href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/riak-cs/">configuring Riak CS</a>.</p>
+
+<h3 id="installing-riak-cs-on-debian-or-ubuntu">Installing Riak CS on Debian or Ubuntu</h3>
+
+<p>On Debian and Ubuntu, Riak CS packages are hosted on
+<a href="https://packagecloud.io/basho/riak-cs">packagecloud.io</a>. Instructions
+for installing via shell scripts, manual installation, Chef, and Puppet
+can be found in packagecloud&rsquo;s <a href="https://packagecloud.io/basho/riak/install">installation docs</a>.</p>
+
+<p>Platform-specific pages are linked below:</p>
+
+<ul>
+<li><a href="https://packagecloud.io/basho/riak-cs/riak-cs_2.0.0-1_amd64.deb?distro=lucid">Lucid</a></li>
+<li><a href="https://packagecloud.io/basho/riak-cs/riak-cs_2.0.0-1_amd64.deb?distro=precise">Precise</a></li>
+<li><a href="https://packagecloud.io/basho/riak-cs/riak-cs_2.0.0-1_amd64.deb?distro=squeeze">Squeeze</a></li>
+<li><a href="https://packagecloud.io/basho/riak-cs/riak-cs_2.0.0-1_amd64.deb?distro=trusty">Trusty</a></li>
+<li><a href="https://packagecloud.io/basho/riak-cs/riak-cs_2.0.0-1_amd64.deb?distro=wheezy">Wheezy</a></li>
+</ul>
+
+<h4 id="advanced-apt-installation">Advanced apt Installation</h4>
+
+<p>For the simplest installation process on LTS (Long-Term Support)
+releases, use <code>apt-get</code>. First, you must retrieve the signing key:</p>
+
+<pre><code class="language-curl">curl https://packagecloud.io/gpg.key | sudo apt-key add -
+</code></pre>
+
+<p>Second, you must install the <code>apt-transport-https</code> package in order to
+be able to fetch packages over HTTPS:</p>
+
+<pre><code class="language-curl">sudo apt-get install -y apt-transport-https
+</code></pre>
+
+<p>With HTTPS enabled, we recommend adding the desired Riak CS package to
+your <code>.list</code> file. packagecloud can autogenerate such a file on the
+basis of a name that you specify, e.g. a hostname, and the desired
+operating system and distribution. The following example script would
+store your hostname in the variable <code>HOSTNAME</code>, send that information to
+packagecloud to autogenerate a <code>.list</code> file, and then store the return
+value in a file called <code>basho.list</code>, which is stored in the
+<code>/etc/apt/sources.list.d</code> directory. This example script is specific to
+the Precise Ubuntu distribution:</p>
+
+<pre><code class="language-bash">#!/bin/bash
+
+HOSTNAME=`hostname -f`
+FILENAME=/etc/apt/sources.list.d/basho.list
+OS=ubuntu
+DIST=precise
+PACKAGE_CLOUD_RIAK_CS_DIR=https://packagecloud.io/install/repositories/basho/riak-cs
+curl &quot;${PACKAGE_CLOUD_RIAK_CS_DIR}/config_file.list?os=${OS}&amp;dist=${DIST}&amp;name=${HOSTNAME}&quot; &gt; $FILENAME
+</code></pre>
+
+<p>The <code>name</code> that you submit to packagecloud can be anything you like. The
+<code>HOSTNAME</code> used above was for example purposes. The resulting file
+should hold contents like the following:</p>
+
+<pre><code># this file was generated by packagecloud.io for
+# the repository at https://packagecloud.io/basho/riak
+
+deb https://packagecloud.io/basho/riak-cs/ubuntu/ precise main
+deb-src https://packagecloud.io/basho/riak-cs/ubuntu/ precise main
+</code></pre>
+
+<p>With your <code>basho.list</code> file populated, you can update your apt sources
+list:</p>
+
+<pre><code class="language-bash">sudo apt-get update
+</code></pre>
+
+<p>Now install the <code>riak-cs</code> package:</p>
+
+<pre><code class="language-bash">sudo apt-get install riak-cs
+</code></pre>
+
+<h3 id="installing-riak-cs-on-rhel-or-centos">Installing Riak CS on RHEL or CentOS</h3>
+
+<p>On RHEL or CentOS, Riak CS packages are hosted on
+<a href="https://packagecloud.io/basho/riak-cs">packagecloud.io</a>. Instructions
+for installing via shell scripts, manual installation, Chef, and Puppet
+can be found in packagecloud&rsquo;s <a href="https://packagecloud.io/basho/riak-cs/install">installation
+docs</a>.</p>
+
+<p>Platform-specific pages are linked below:</p>
+
+<ul>
+<li><a href="https://packagecloud.io/basho/riak-cs/riak-cs-2.0.0-1.x86_64.rpm?distro=5">el5</a></li>
+<li><a href="https://packagecloud.io/basho/riak-cs/packages/el/6/riak-cs-2.0.0-1.el6.x86_64.rpm">el6</a>
+<!-- * [el7](https://packagecloud.io/basho/riak-cs/riak-cs-2.0.0-1.x86_64.rpm?distro=7) --></li>
+<li><a href="https://packagecloud.io/basho/riak-cs/riak-cs-2.0.0-1.fc19.x86_64.rpm?distro=19">Fedora 19</a></li>
+</ul>
+
+<h4 id="advanced-rpm-installation">Advanced rpm Installation</h4>
+
+<p>For the simplest installation process on LTS (Long-Term Support)
+releases, use yum. First, you must install the <code>pygpgme</code> package, which
+enables yum to handle <a href="https://www.gnupg.org/">GPG</a> signatures:</p>
+
+<pre><code class="language-bash">sudo yum install pygpgme
+</code></pre>
+
+<p>If you wish to install using a <code>.repo</code> file, packagecloud can generate
+one for you on the basis of a name that you specify, e.g. a hostname,
+and the desired operating system and distribution. The following example
+script would store your hostname in the variable <code>HOSTNAME</code>, send that
+information to packagecloud to generate a <code>.repo</code> file, and then store
+the return value in a file called <code>basho.repo</code>, which is stored in the
+<code>/etc/yum.repos.d</code> directory:</p>
+
+<pre><code class="language-bash">#!/bin/bash
+
+HOSTNAME=`hostname -f`
+FILENAME=/etc/yum.repos.d/basho.repo
+OS=el
+DIST=5
+PACKAGE_CLOUD_RIAK_CS_DIR=https://packagecloud.io/install/repositories/basho/riak-cs
+curl &quot;${PACKAGE_CLOUD_RIAK_CS_DIR}/config_file.repo?os=${OS}&amp;dist=${DIST}&amp;name=${HOSTNAME}&quot; &gt; $FILENAME
+</code></pre>
+
+<p>The <code>name</code> that you submit to packagecloud can be anything you like. The
+<code>HOSTNAME</code> used above was for example purposes. The resulting file
+should hold contents like the following:</p>
+
+<pre><code>[basho_riak-cs]
+name=basho_riak-cs
+baseurl=https://packagecloud.io/basho/riak-cs/el/5/$basesearch
+repo_gpgcheck=1
+gpgcheck=0
+enabled=1
+gpgkey=https://packagecloud.io/gpg.key
+sslverify=1
+sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+</code></pre>
+
+<p>With your <code>basho.repo</code> file populated, you can update your rpm sources
+list.</p>
+
+<h2 id="installing-stanchion-on-a-node">Installing Stanchion on a Node</h2>
+
+<p>Stanchion is an application that manages globally unique entities within
+a Riak CS cluster. It performs actions such as ensuring unique user
+accounts and bucket names across the whole system. <strong>Riak CS cannot be
+used without Stanchion</strong>.</p>
+
+<p>All Riak CS nodes must be configured to communicate with a single
+Stanchion node. Although multiple Stanchion instances may be installed
+and running within a cluster, even one on each node, only one may be
+actively used by the cluster. Running multiple instances of Stanchion
+simultaneously can produce a variety of problems such as the inability
+to create user accounts and buckets or the inability to enforce their
+uniqueness.</p>
+
+<p>Because only one Stanchion instance can be used at any given time, it&rsquo;s
+not uncommon for a load balancer to be used to handle Stanchion failover
+in the event that the primary Stanchion node becomes unavailable. You
+can achieve this by specifying a load balancer IP as the Stanchion IP
+in each Riak CS node&rsquo;s <code>riak-cs.conf</code>. This load balancer must be
+configured to send all requests to a single Stanchion node, failing over
+to a secondary Stanchion node if the primary is unavailable. More
+details can be found in <a href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/#specifying-the-stanchion-node">Specifying the Stanchion Node</a>.</p>
+
+<h3 id="installing-stanchion-on-mac-os-x">Installing Stanchion on Mac OS X</h3>
+
+<p>First, download the appropriate package from the <a href="//evadne.github.io/basho_docs/riak/cs/2.0.0/downloads/#stanchion-1-4-3">downloads</a> page.</p>
+
+<pre><code class="language-bash">curl -O http://s3.amazonaws.com/downloads.basho.com/stanchion/1.4/1.4.3/osx/10.8/stanchion-2.0.0-OSX-x86_64.tar.gz
+</code></pre>
+
+<p>Then, unpack the downloaded tarball:</p>
+
+<pre><code class="language-bash">stanchion-2.0.0-OSX-x86_64.tar.gz
+</code></pre>
+
+<p>At this point, you can move on to <a href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/riak-cs">configuring Riak CS</a>.</p>
+
+<h3 id="installing-stanchion-on-debian-or-ubuntu">Installing Stanchion on Debian or Ubuntu</h3>
+
+<p>On Debian or Ubuntu, you can either use <code>apt</code> or install the <code>.deb</code>
+package manually.</p>
+
+<h4 id="installing-using-apt-recommended">Installing Using <code>apt</code> (recommended)</h4>
+
+<p>First, install the signing key:</p>
+
+<pre><code class="language-curl">curl http://apt.basho.com/gpg/basho.apt.key | sudo apt-key add -
+</code></pre>
+
+<p>If the signing key and <code>apt</code> repository have already been added, add
+the Basho repository to your <code>apt</code> sources list (and update them):</p>
+
+<pre><code class="language-bash">sudo bash -c &quot;echo deb http://apt.basho.com $(lsb_release -sc) main &gt; /etc/apt/sources.list.d/basho.list&quot;
+sudo apt-get update
+</code></pre>
+
+<p>Now, install the <code>stanchion</code> package:</p>
+
+<pre><code class="language-bash">sudo apt-get install stanchion
+</code></pre>
+
+<p>At this point, you can move on to <a href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/riak-cs">configuring Riak CS</a>.</p>
+
+<h4 id="installing-the-deb-package-manually-not-recommended">Installing the <code>.deb</code> Package Manually (not recommended)</h4>
+
+<pre><code class="language-bash">sudo dpkg -i &lt;stanchion-package.deb&gt;
+</code></pre>
+
+<p>Replace <code>&lt;riak-cs-package.deb&gt;</code> with the actual filename for the package
+you are installing.</p>
+
+<p>At this point, you can move on to <a href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/riak-cs">configuring Riak CS</a>.</p>
+
+<h3 id="installing-stanchion-on-rhel-or-centos">Installing Stanchion on RHEL or CentOS</h3>
+
+<p>On RHEL or CentOS, you can either use <code>yum</code> or install the <code>.rpm</code>
+package manually.</p>
+
+<h4 id="installing-using-yum-recommended">Installing Using <code>yum</code> (recommended)</h4>
+
+<p>For CentOS/RHEL 6:</p>
+
+<pre><code class="language-bash">sudo yum install http://yum.basho.com/gpg/basho-release-6-1.noarch.rpm
+</code></pre>
+
+<p>For CentOS/RHEL 5:</p>
+
+<pre><code>sudo yum install http://yum.basho.com/gpg/basho-release-5-1.noarch.rpm
+</code></pre>
+
+<p>Once the <code>.rpm</code> package has been installed, install Stanchion:</p>
+
+<pre><code class="language-basho">sudo yum install stanchion
+</code></pre>
+
+<p>At this point, you can move on to <a href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/riak-cs">configuring Riak CS</a>.</p>
+
+<h4 id="installing-the-rpm-package-manually-not-recommended">Installing the <code>.rpm</code> Package Manually (not recommended)</h4>
+
+<pre><code class="language-bash">sudo rpm -Uvh &lt;stanchion-package.rpm&gt;
+</code></pre>
+
+<p>Replace <code>&lt;stanchion-package.rpm&gt;</code> with the actual filename for the
+package you are installing.</p>
+
+<p>At this point, you can move on to <a href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/riak-cs">configuring Riak CS</a>.</p>
+
+<blockquote>
+<p><strong>Note on SELinux</strong></p>
+
+<p>CentOS enables Security-Enhanced Linux (SELinux) by default. If you
+encounter errors during installation, try disabling SELinux.</p>
+</blockquote>
+
+<h2 id="what-s-next">What&rsquo;s Next?</h2>
+
+<p>Once you&rsquo;ve completed installation of Riak CS and Riak, you&rsquo;re ready to
+learn more about <a href="//evadne.github.io/basho_docs/riak/cs/2.0.0/cookbooks/configuration/riak-cs">configuring Riak CS</a>.</p>
+
+      </main>
+
+
+    </article>
+
+
+    <footer class="footer">
+
+  <div class="inline-block   footer__attributions">
+
+    <p>
+      This work is licensed under a
+      <br class="[bs] hidden-md-up">
+      <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+        Creative Commons Attribution 4.0 <br class="[bs] hidden-sm-up"> International Public License
+      </a>
+    </p>
+
+    <p>
+      © 2011-2017&nbsp;<a href="http://www.basho.com">Basho Technologies, Inc.</a>
+    </p>
+
+  </div>
+
+</footer>
+
+
+
+  </div>
+
+
+  <script src="//evadne.github.io/basho_docs/js/main.js" type="text/javascript"></script>
+
+</body>
+</html>

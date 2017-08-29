@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+<html class="no-js" lang="en">
+
+
+
+
+<head>
+
+  <meta charset="utf-8">
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width">
+  <link rel="shortcut icon" href="//evadne.github.io/basho_docs/images/branding/favicon.ico" type="image/x-icon" />
+
+  <title>SELECT in Riak TS</title>
+
+  <link href="//evadne.github.io/basho_docs/css/main.css" media="screen" rel="stylesheet" type="text/css">
+  <link rel="canonical" href="https://docs.basho.com/riak/ts/latest/using/querying/select" />
+  <!-- The below meta tags are included to allow JS code to use variables
+       defined in Hugo---our static site generator. -->
+  <meta name="project" content="riak_ts">
+  <meta name="version" content="1.5.2">
+  <meta name="project_relative_path" content="using/querying/select/">
+
+</head>
+
+
+
+<body class="riak_ts 1.5.2 latest ">
+
+
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-T9C8MK" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-T9C8MK');</script>
+
+
+  
+<header class="banner">
+
+
+
+  
+  <div class="float-right   banner__menu-bars   [bs] hidden-md-up">
+    <div class="menu-bars   js_toggle-content-nav"></div>
+  </div>
+
+
+
+  
+  <div class="float-left   banner__docs-logo">
+    <a href="//evadne.github.io/basho_docs/index.html" class="block   docs-logo"><img class="docs-logo__image" src="//evadne.github.io/basho_docs/images/branding/basho_docs_logo.png"></a>
+  </div>
+
+
+
+  
+  <div class="overflow-hidden   banner__navigation-pane   [bs] hidden-sm-down">
+
+
+    
+    <div class="float-left    banner__intra-brand__width-wrapper">
+    <div class="float-right   banner__intra-brand">
+      <div class="float-right">
+        
+        <a class="inline-block   banner__brand-link" href="http://basho.com/">Basho</a><a class="inline-block   banner__brand-link" href="https://academy.basho.com">Academy</a><a class="inline-block   banner__brand-link" href="//evadne.github.io/basho_docs/community">Community</a><a class="inline-block   banner__brand-link" href="http://basho.com/contact">Contact</a></div>
+    </div>
+    </div>
+
+
+
+
+    
+    <div class="float-left    banner__intra-site__width-wrapper">
+    <div class="float-right   banner__intra-site">
+      
+      <a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/kv/latest/">Riak KV</a><a class="inline-block   banner__brand-link banner__brand-link--current">Riak TS</a><a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/cs/latest/">Riak CS</a></div>
+    </div>
+
+
+  </div>
+
+</header>
+
+
+
+  
+  
+
+
+
+<nav class="content-nav content-nav--top-size-full">
+
+
+
+
+  <div class="content-nav__fixed-top">
+    <form id="searchbox_011972015458788978446:zgdcy4fa-o0" class="search" action="">
+
+      <span class="block float-left   search__icon-container   docs-icon--search">|</span>
+
+      <span class="block overflow">
+        <input class="search__input" id="main-search" type="search" name="q" placeholder="Search">
+      </span>
+
+    </form>
+
+
+    <div class="clearfix   version-picker">
+
+  
+      <a class="inline-block float-left    product__title" href="//evadne.github.io/basho_docs/"><img class="product__logo" src="//evadne.github.io/basho_docs/images/branding/riak-logo.png">Riak<span class="product__title-highlight">TS</span>
+      </a>
+  
+
+      <div class="inline-block float-right   selector selector--version">
+        <header class="selector__title">Versions</header>
+        <button class="selector__btn" type="button">1.5.2</button>
+        <div    class="selector__arrow"></div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  
+  <div class="overflow-y-hidden   selector-pane__sizing-box selector-pane__sizing-box--hidden">
+  <div class="                    selector-pane__shadow-box">
+
+    
+    <div class="edge-fader edge-fader--left">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+    <div class="edge-fader edge-fader--right">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+
+    <div class="overflow-x        selector-pane__primary selector-pane--versions  js_edge-fader--target">
+      
+    </div>
+  </div>
+  </div>
+
+
+
+
+  
+  <div class="             content-nav__primary__sizing-box">
+  <div class="             content-nav__primary__shadow-box">
+  <div class="overflow-y   content-nav__primary">
+
+    <div class="content-nav__menu-container">
+
+      <ul class="content-menu
+                 content-menu--depth-0
+                 content-menu--open">
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--riak">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/" >
+              <span class="block   content-menu__item__right-border"><strong>Riak TS</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/releasenotes/" >
+        <span class="block   content-menu__item__right-border">Release Notes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li class="content-menu__download-entry">
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--download-alt">|</span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/downloads/" >
+              <span class="block   content-menu__item__right-border"><strong>Download Riak TS</strong></span>
+            </a>
+
+          </div>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--install">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/setup/" >
+              <span class="block   content-menu__item__right-border"><strong>Setup</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/setup/installing/" >
+        <span class="block   content-menu__item__right-border">Install</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/setup/installing/debian-ubuntu/" >
+        <span class="block   content-menu__item__right-border">Debian and Ubuntu</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/setup/installing/mac-osx/" >
+        <span class="block   content-menu__item__right-border">Mac OS X</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/setup/installing/rhel-centos/" >
+        <span class="block   content-menu__item__right-border">CentOS/RHEL</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/setup/installing/aws/" >
+        <span class="block   content-menu__item__right-border">AWS Marketplace</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/setup/installing/source/" >
+        <span class="block   content-menu__item__right-border">Source</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/setup/installing/source/erlang/" >
+        <span class="block   content-menu__item__right-border">Erlang</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/setup/upgrading/" >
+        <span class="block   content-menu__item__right-border">Upgrade</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/setup/downgrading/" >
+        <span class="block   content-menu__item__right-border">Downgrade</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--cog">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/configuring/" >
+              <span class="block   content-menu__item__right-border"><strong>Configure</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/configuring/riakconf/" >
+        <span class="block   content-menu__item__right-border">riak.conf</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/configuring/mdc/" >
+        <span class="block   content-menu__item__right-border">Multi-Datacenter Replication</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/configuring/global-object-expiration/" >
+        <span class="block   content-menu__item__right-border">Global Object Expiration</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--database">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                         content-menu__menu-toggle--open ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/" >
+              <span class="block   content-menu__item__right-border"><strong>Use</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           content-menu--open"
+    style="display: block">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/core-fundamentals/" >
+        <span class="block   content-menu__item__right-border">Core Fundamentals</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/planning/" >
+        <span class="block   content-menu__item__right-border">Plan Your Table</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/timerepresentations/" >
+        <span class="block   content-menu__item__right-border">Time Representations</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/creating-activating/" >
+        <span class="block   content-menu__item__right-border">Create Your Table</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/writingdata/" >
+        <span class="block   content-menu__item__right-border">Write Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/deleting-data/" >
+        <span class="block   content-menu__item__right-border">Delete Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                   content-menu__menu-toggle--open ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/querying/" >
+        <span class="block   content-menu__item__right-border">Query Data</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           content-menu--open"
+    style="display: block">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/querying/reference/" >
+        <span class="block   content-menu__item__right-border">SQL Reference</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item  content-menu__item--selected ">
+      <span class="block float-right   content-menu__menu-toggle
+                   content-menu__menu-toggle--open ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2" >
+        <span class="block   content-menu__item__right-border">SELECT</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           content-menu--open"
+    style="display: block">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/querying/select/group-by/" >
+        <span class="block   content-menu__item__right-border">GROUP BY</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/querying/select/order-by/" >
+        <span class="block   content-menu__item__right-border">ORDER BY</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/querying/select/limit/" >
+        <span class="block   content-menu__item__right-border">LIMIT</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/querying/select/arithmetic-operations/" >
+        <span class="block   content-menu__item__right-border">Arithmetic Operations</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/querying/select/aggregate-functions/" >
+        <span class="block   content-menu__item__right-border">Aggregate Functions</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/querying/delete/" >
+        <span class="block   content-menu__item__right-border">DELETE</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/querying/describe/" >
+        <span class="block   content-menu__item__right-border">DESCRIBE</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/querying/show-tables/" >
+        <span class="block   content-menu__item__right-border">SHOW TABLES</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/querying/show-create-table/" >
+        <span class="block   content-menu__item__right-border">SHOW CREATE TABLE</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/querying/explain/" >
+        <span class="block   content-menu__item__right-border">EXPLAIN</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/querying/guidelines/" >
+        <span class="block   content-menu__item__right-border">Querying Guidelines</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/querying/single-key-fetch/" >
+        <span class="block   content-menu__item__right-border">Single Key Fetch</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/riakshell/" >
+        <span class="block   content-menu__item__right-border">riak shell</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/security/" >
+        <span class="block   content-menu__item__right-border">Security</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/security/checklist/" >
+        <span class="block   content-menu__item__right-border">Security Checklist</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/security/enable-disable/" >
+        <span class="block   content-menu__item__right-border">Security: Enable &amp; Disable</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/security/user-management/" >
+        <span class="block   content-menu__item__right-border">User Management</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/security/sources-management/" >
+        <span class="block   content-menu__item__right-border">Sources Management</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/security/notify-basho/" >
+        <span class="block   content-menu__item__right-border">Notifying Basho</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--lambda">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/developing/" >
+              <span class="block   content-menu__item__right-border"><strong>Develop</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/developing/csharp/" >
+        <span class="block   content-menu__item__right-border">C#</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/developing/erlang/" >
+        <span class="block   content-menu__item__right-border">Erlang</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/developing/golang/" >
+        <span class="block   content-menu__item__right-border">Go</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/developing/http/" >
+        <span class="block   content-menu__item__right-border">HTTP</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/developing/java/" >
+        <span class="block   content-menu__item__right-border">Java</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/developing/nodejs/" >
+        <span class="block   content-menu__item__right-border">Node.js</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/developing/php/" >
+        <span class="block   content-menu__item__right-border">PHP</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/developing/python/" >
+        <span class="block   content-menu__item__right-border">Python</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/developing/ruby/" >
+        <span class="block   content-menu__item__right-border">Ruby</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--tools">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/" >
+              <span class="block   content-menu__item__right-border"><strong>Add-ons</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/spark-riak-connector/" >
+        <span class="block   content-menu__item__right-border">Spark-Riak Connector</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/spark-riak-connector/quick-start/" >
+        <span class="block   content-menu__item__right-border">Quick Start Guide</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/spark-riak-connector/getting/" >
+        <span class="block   content-menu__item__right-border">Get Spark-Riak Connector</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/spark-riak-connector/building-testing/" >
+        <span class="block   content-menu__item__right-border">Building &amp; Testing</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/spark-riak-connector/usage/" >
+        <span class="block   content-menu__item__right-border">Usage</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/spark-riak-connector/usage/config-spark-context/" >
+        <span class="block   content-menu__item__right-border">Spark Context Configuration</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/spark-riak-connector/usage/reading-data/" >
+        <span class="block   content-menu__item__right-border">Reading Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/spark-riak-connector/usage/writing-data/" >
+        <span class="block   content-menu__item__right-border">Writing Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/spark-riak-connector/usage/dataframes/" >
+        <span class="block   content-menu__item__right-border">Working With Spark Dataframes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/spark-riak-connector/usage/dates/" >
+        <span class="block   content-menu__item__right-border">Working With TS Dates</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/spark-riak-connector/usage/range-query-partition/" >
+        <span class="block   content-menu__item__right-border">TS Table Range Query Partitioning</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/spark-riak-connector/usage/bulk-write/" >
+        <span class="block   content-menu__item__right-border">Bulk Write</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/spark-riak-connector/usage/streaming-example/" >
+        <span class="block   content-menu__item__right-border">Spark Streaming Example</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/redis/" >
+        <span class="block   content-menu__item__right-border">Redis Add-on</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/redis/set-up-rra/" >
+        <span class="block   content-menu__item__right-border">Set Up Redis Add-on</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/redis/set-up-rra/deployment-models/" >
+        <span class="block   content-menu__item__right-border">Redis Add-on Deployment Models</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/redis/using-rra/" >
+        <span class="block   content-menu__item__right-border">Using Redis Add-on</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/redis/developing-rra/" >
+        <span class="block   content-menu__item__right-border">Develop with Redis Add-on</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/add-ons/redis/redis-add-on-features/" >
+        <span class="block   content-menu__item__right-border">Redis Add-on Features</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--beaker">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/learn-about/" >
+              <span class="block   content-menu__item__right-border"><strong>Learn</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/learn-about/bestpractices/" >
+        <span class="block   content-menu__item__right-border">Best Practices</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/learn-about/sqlriakts/" >
+        <span class="block   content-menu__item__right-border">SQL for Riak TS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/learn-about/tablearchitecture/" >
+        <span class="block   content-menu__item__right-border">Table Architecture </span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.5.2/learn-about/timestamps/" >
+        <span class="block   content-menu__item__right-border">Timestamps</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+        <li class="content-menu__blank-entry"></li>
+
+      </ul>
+
+    </div>
+
+
+
+    <div class="content-nav__fixed-bottom">
+
+      <ul class="content-menu">
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--comments">|</span>
+
+            <a class="block overflow" href="//evadne.github.io/basho_docs/community">
+              <span class="block   content-menu__item__right-border">
+                <sub>Want some extra help?</sub><br>
+                <strong>Ask our Community</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--question-sign">|</span>
+
+            <a class="block overflow" href="http://basho.com/contact">
+              <span class="block   content-menu__item__right-border">
+                <sub>Need to chat?</sub><br>
+                <strong>Contact us directly</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--github-alt">|</span>
+
+            <a class="block overflow" href="https://github.com/basho/basho_docs/edit/master/content/riak/ts/1.5.2/using/querying/select.md">
+              <span class="block   content-menu__item__right-border">
+                <sub>Noticed a typo?</sub><br>
+                <strong>Correct it in GitHub</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+  </div>
+  </div>
+
+
+
+</nav>
+
+<script>
+  (function() {
+    var cx = '011972015458788978446:zgdcy4fa-o0';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<div style="width:0px;overflow:hidden;height:0px;">
+  <gcse:search></gcse:search>
+</div>
+
+
+
+
+
+
+  <div class="content-well">
+
+
+    <article class="main-article">
+
+
+      
+
+<header class="front-matter">
+
+
+  <h1 class="front-matter__title">
+
+    
+    <br>
+    SELECT in Riak TS
+
+  </h1>
+  <nav class="table-of-contents"></nav>
+
+
+</header>
+
+
+      <main>
+        
+
+<p>You can use the SELECT statement in Riak TS to query your TS dataset. This document will show you how to run various queries using <code>SELECT</code>.</p>
+
+<ul>
+<li>See the <a href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/querying/guidelines">guidelines</a> for more information on limitations and rules for queries in TS.</li>
+<li>See <a href="aggregate-functions/">aggregate functions</a> to learn how turn a set of rows in your Riak TS table into a value.</li>
+<li>See <a href="arithmetic-operations/">arithmetic operations</a> to see a list of operations available with <code>SELECT</code>.</li>
+<li>See <a href="group-by/">GROUP BY</a> to learn how to condense rows sharing the same value.</li>
+</ul>
+
+<p>For all of the examples on this page, we are using our standard example GeoCheckin table:</p>
+
+<pre><code class="language-sql">CREATE TABLE GeoCheckin
+(
+   region       VARCHAR   NOT NULL,
+   state        VARCHAR   NOT NULL,
+   time         TIMESTAMP NOT NULL,
+   weather      VARCHAR   NOT NULL,
+   temperature  DOUBLE,
+   PRIMARY KEY (
+     (region, state, QUANTUM(time, 15, 'm')),
+     region, state, time
+   )
+)
+</code></pre>
+
+<div class="blocknote">
+  
+    <div class="blocknote__title">SQL Injection</div>
+  
+  <p>When querying with user-supplied data, it is essential that you protect against SQL injection. Please verify the user-supplied data before constructing queries.</p>
+
+</div>
+
+
+<h2 id="querying-columns">Querying Columns</h2>
+
+<p>All queries using <code>SELECT</code> must include a &lsquo;where&rsquo; clause with all components.</p>
+
+<p>You can select particular columns from the data to query:</p>
+
+<pre><code>select weather, temperature from GeoCheckin where time &gt; 1234560 and time &lt; 1234569 and region = 'South Atlantic' and state = 'South Carolina'
+</code></pre>
+
+<p>Client-specific examples:</p>
+
+<pre><code class="language-java">String queryText = &quot;select weather, temperature from GeoCheckin &quot; +
+                   &quot;where time &gt; 1234560 and time &lt; 1234569 and &quot; +
+                   &quot;region = 'South Atlantic' and state = 'South Carolina'&quot;;
+
+Query query = new Query.Builder(queryText).build();
+QueryResult queryResult = client.execute(query);
+</code></pre>
+
+<pre><code class="language-ruby">Riak::Timeseries::Query.new(client, &quot;select weather, temperature from GeoCheckin where time &gt; 1234560 and time &lt; 1234569 and region = 'South Atlantic' and state = 'South Carolina'&quot;).issue!
+</code></pre>
+
+<pre><code class="language-python">fmt = &quot;&quot;&quot;
+select weather, temperature from GeoCheckin where
+    time &gt; {t1} and time &lt; {t2} and
+    region = 'South Atlantic' and state = 'South Carolina'
+&quot;&quot;&quot;
+query = fmt.format(t1=tenMinsAgoMsec, t2=nowMsec)
+ts_obj = client.ts_query('GeoCheckin', query)
+</code></pre>
+
+<pre><code class="language-csharp">var now = DateTime.UtcNow;
+var tenMinsAgo = now.AddMinutes(-10);
+var qfmt = &quot;SELECT * FROM GeoCheckin WHERE time &gt; {0} and time &lt; {1} and region = 'South Atlantic' and state = 'South Carolina'&quot;;
+var q = string.Format(
+    qfmt,
+    DateTimeUtil.ToUnixTimeMillis(tenMinsAgo),
+    DateTimeUtil.ToUnixTimeMillis(now));
+
+var cmd = new Query.Builder()
+    .WithTable(&quot;GeoCheckin&quot;)
+    .WithQuery(q)
+    .Build();
+
+RiakResult rslt = client.Execute(cmd);
+</code></pre>
+
+<pre><code class="language-javascript">var callback = function(err, resp) {
+    // resp.rows and resp.columns
+    // have data
+};
+// NB: t1/t2 are integers representing unix timestamps with
+// millisecond resolution
+var queryText = &quot;select * from GeoCheckin where time &gt; &quot; + t1 +
+                &quot; and time &lt; &quot; + t2 +
+                &quot; and region = 'South Atlantic' and state = 'South Carolina'&quot;;
+var q = new Riak.Commands.TS.Query.Builder()
+    .withQuery(queryText)
+    .withCallback(callback)
+    .build();
+cluster.execute(q);
+</code></pre>
+
+<pre><code class="language-erlang">riakc_ts:query(Pid, &quot;select weather, temperature from GeoCheckin where time &gt; 1234560 and time &lt; 1234569 and region = 'South Atlantic' and state = 'South Carolina'&quot;).
+</code></pre>
+
+<pre><code class="language-php">$response = (new Command\Builder\TimeSeries\Query($riak))
+    -&gt;withQuery(&quot;select weather, temperature from GeoCheckin where region = 'South Atlantic' and state = 'state1' and time &gt; 1234560 and time &lt; 1234569&quot;)
+    -&gt;build()
+    -&gt;execute();
+</code></pre>
+
+<pre><code class="language-golang">cmd, err := riak.NewTsQueryCommandBuilder()
+    .WithQuery(&quot;select weather, temperature from GeoCheckin where region = 'South Atlantic' and state = 'state1' and time &gt; 1234560 and time &lt; 1234569&quot;)
+    .Build()
+
+if err != nil {
+    return err
+}
+
+err = cluster.Execute(cmd)
+</code></pre>
+
+<h2 id="extended-queries">Extended Queries</h2>
+
+<p>You can extend the query beyond the primary key and use secondary columns to filter results. In this example, we are extending our query to filter based on <code>temperature</code>:</p>
+
+<pre><code>select weather, temperature from GeoCheckin where time &gt; 1234560 and time &lt; 1234569 and region = 'South Atlantic' and state = 'South Carolina' and temperature &gt; 27.0
+</code></pre>
+
+<p>Client-specific examples:</p>
+
+<pre><code class="language-java">String queryText = &quot;select weather, temperature from GeoCheckin &quot; +
+                   &quot;where time &gt; 1234560 and time &lt; 1234569 and &quot; +
+                   &quot;region = 'South Atlantic' and state = 'South Carolina' &quot; +
+                   &quot;temperature &gt; 27.0&quot;;
+
+Query query = new Query.Builder(queryText).build();
+QueryResult queryResult = client.execute(query);
+</code></pre>
+
+<pre><code class="language-ruby">Riak::Timeseries::Query.new(client, &quot;select weather, temperature from GeoCheckin where time &gt; 1234560 and time &lt; 1234569 and region = 'South Atlantic' and state = 'South Carolina' and temperature &gt; 27.0&quot;).issue!
+</code></pre>
+
+<pre><code class="language-python">fmt = &quot;&quot;&quot;
+select weather, temperature from GeoCheckin where
+    time &gt; {t1} and time &lt; {t2} and
+    region = 'South Atlantic' and state = 'South Carolina' and
+    temperature &gt; 27.0
+&quot;&quot;&quot;
+query = fmt.format(t1=tenMinsAgoMsec, t2=nowMsec)
+ts_obj = client.ts_query('GeoCheckin', query)
+</code></pre>
+
+<pre><code class="language-csharp">var now = DateTime.UtcNow;
+var tenMinsAgo = now.AddMinutes(-10);
+var qfmt = &quot;SELECT weather, temperature FROM GeoCheckin WHERE time &gt; {0} and time &lt; {1} and region = 'South Atlantic' and state = 'South Carolina' and temperature &gt; 27.0&quot;;
+var q = string.Format(
+    qfmt,
+    DateTimeUtil.ToUnixTimeMillis(tenMinsAgo),
+    DateTimeUtil.ToUnixTimeMillis(now));
+
+var cmd = new Query.Builder()
+    .WithTable(&quot;GeoCheckin&quot;)
+    .WithQuery(q)
+    .Build();
+
+RiakResult rslt = client.Execute(cmd);
+</code></pre>
+
+<pre><code class="language-javascript">var callback = function(err, resp) {
+    // resp.rows and resp.columns
+    // have data
+};
+// NB: t1/t2 are integers representing unix timestamps with
+// millisecond resolution
+var queryText = &quot;select weather, temperature from GeoCheckin where time &gt; &quot; + t1 +
+                &quot; and time &lt; &quot; + t2 +
+                &quot; and region = 'South Atlantic' and state = 'South Carolina'&quot; +
+                &quot; and temperature &gt; 27.0&quot;;
+var q = new Riak.Commands.TS.Query.Builder()
+    .withQuery(queryText)
+    .withCallback(callback)
+    .build();
+cluster.execute(q);
+</code></pre>
+
+<pre><code class="language-erlang">riakc_ts:query(Pid, &quot;select weather, temperature from GeoCheckin where time &gt; 1234560 and time &lt; 1234569 and region = 'South Atlantic' and state = 'South Carolina' and temperature &gt; 27.0&quot;).
+</code></pre>
+
+<pre><code class="language-php">$response = (new Command\Builder\TimeSeries\Query($riak))
+    -&gt;withQuery(&quot;select weather, temperature from GeoCheckin where region = 'South Atlantic' and state = 'state1' and time &gt; 1234560 and time &lt; 1234569 and temperature &gt; 27.0&quot;)
+    -&gt;build()
+    -&gt;execute();
+</code></pre>
+
+<pre><code class="language-golang">cmd, err := riak.NewTsQueryCommandBuilder()
+    .WithQuery(&quot;select weather, temperature from GeoCheckin where region = 'South Atlantic' and state = 'state1' and time &gt; 1234560 and time &lt; 1234569 and temperature &gt; 27.0&quot;)
+    .Build()
+
+if err != nil {
+    return err
+}
+
+err = cluster.Execute(cmd)
+</code></pre>
+
+<p>You can also use <code>or</code> when querying against column values, such as <code>temperature</code> in our example. Note that the parentheses are required:</p>
+
+<pre><code class="language-sql">SELECT weather, temperature FROM GeoCheckin WHERE time &gt; 1234560 AND time &lt; 1234569 AND region = 'South Atlantic' AND state = 'South Carolina' AND (temperature &gt; 27.0 OR temperature &lt; 0.0)
+</code></pre>
+
+<p>You cannot use <code>or</code> between two complete clauses, since keys cannot be specified twice.</p>
+
+<h2 id="iso-8601">ISO 8601</h2>
+
+<p>It is possible to use <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a>-compliant date/time strings in SELECT statements instead of integer timestamps:</p>
+
+<pre><code>time &gt; '2015-12-11 20:04:37' and time &lt; '2015-12-11 20:04:50'
+</code></pre>
+
+<p>You cannot use <a href="//evadne.github.io/basho_docs/riak/ts/1.5.2/using/timerepresentations/#reduced-accuracy">reduced accuracy time representations</a>. Instead, you must specify your time down to the second (or use fractional
+times).</p>
+
+<p>ISO 8601 time strings are converted to a millisecond timestamp, which the query then uses.</p>
+
+<pre><code class="language-sql">SELECT weather, temperature FROM GeoCheckin WHERE time &gt; '2009-11-01 03:15:00+07' AND time &lt; '2009-11-01 03:45:00+07' AND region = 'South Atlantic' AND state = 'South Carolina'
+</code></pre>
+
+<p>The timestamps used inside Riak TS for those comparisons will be
+1257020100000 and 1257021900000.</p>
+
+<p>The same query, expressed with fractional time:</p>
+
+<pre><code class="language-sql">SELECT weather, temperature FROM GeoCheckin WHERE time &gt; '2009-11-01 03.25+07' AND time &lt; '2009-11-01 03.75+07' AND region = 'South Atlantic' AND state = 'South Carolina'
+</code></pre>
+
+<p>See <a href="../../timerepresentations/">our documentation on ISO 8601 support</a> for more details on how to use ISO 8601.</p>
+
+<h2 id="is-not-null">IS [NOT] NULL</h2>
+
+<p>For queries which operate on ranges which contain columns that are nullable, the
+WHERE clause may contain NULL condition predicates.</p>
+
+<pre><code class="language-sql">_expression_ IS NULL
+_expression_ IS NOT NULL
+NOT _expression_ IS NULL -- equivalent to: _expression_ IS NOT NULL
+NOT _expression_ IS NOT NULL -- equivalent to: _expression_ IS NULL
+</code></pre>
+
+<p>For example, the following query extracts the key column values for all records
+within the time range, which do not have a value set for the temperature column:</p>
+
+<pre><code class="language-sql">SELECT region, state, time
+FROM GeoCheckin
+WHERE time &gt; 1234560 AND time &lt; 1234569
+      AND region = 'South Atlantic' AND state = 'South Carolina'
+      AND temperature IS NULL
+</code></pre>
+
+<p>IS NOT NULL is often used to operate on records which are fully populated to the
+point that an application requires. Within this context, the above query to
+locate records which do not satisfy such a requirement can be utilized to
+investigate and subsequently reconcile records which are partially populated.</p>
+
+<p>Another common use of NULL condition predicates is determining the relative
+cardinality of the subset not containing a value for the <em>column</em>.</p>
+
+<h2 id="client-null-results">Client NULL Results</h2>
+
+<p>In this example, we will show how NULL cell results are returned through each
+client with the following query:</p>
+
+<pre><code class="language-sql">SELECT region, temperature
+FROM GeoCheckin
+WHERE time &gt; 1234560 AND time &lt; 1234569
+      AND region = 'South Atlantic' AND state = 'South Carolina'
+      AND temperature IS NULL
+</code></pre>
+
+<pre><code class="language-java">String queryText =
+    &quot;SELECT region, temperature FROM GeoCheckin&quot; +
+    &quot;WHERE time &gt; 1234560 AND time &lt; 1234569&quot; +
+    &quot;AND region = 'South Atlantic' AND state = 'South Carolina'&quot; +
+    &quot;AND temperature IS NULL&quot;;
+
+Query query = new Query.Builder(queryText).build();
+QueryResult queryResult = client.execute(query);
+Row firstRow = queryResult.getRowsCopy().get(0);
+List&lt;Cell&gt; cells = firstRow.getCellsCopy();
+
+assertTrue(cells.size() == 2);
+
+assertTrue(cells.get(0) != null);
+assertTrue(cells.get(0).hasVarcharValue());
+assertTrue(cells.get(0).getVarcharAsUTF8String().equals(&quot;South Atlantic&quot;));
+
+assertTrue(cells.get(1) == null); // Null cells are represented as literal nulls in the row object's cell iterator.
+</code></pre>
+
+<pre><code class="language-ruby">Riak::Timeseries::Query.new(client, &quot;SELECT region, temperature FROM GeoCheckin WHERE time &gt; 1234560 AND time &lt; 1234569 AND region = 'South Atlantic' AND state = 'South Carolina' AND temperature IS NULL&quot;).issue!
+
+#=&gt; [[&quot;South Atlantic&quot;, nil], [&quot;South Atlantic&quot;, nil]]
+</code></pre>
+
+<pre><code class="language-python">fmt = &quot;&quot;&quot;
+SELECT region, temperature FROM GeoCheckin
+WHERE time &gt; {t1} AND time &lt; {t2}
+AND region = 'South Atlantic' AND state = 'South Carolina'
+AND temperature IS NULL
+&quot;&quot;&quot;
+query = fmt.format(t1=tenMinsAgoMsec, t2=nowMsec)
+ts_obj = client.ts_query('GeoCheckin', query)
+
+print ts_obj.rows
+# [[&quot;South Atlantic&quot;, None], [&quot;South Atlantic&quot;, None]]
+</code></pre>
+
+<pre><code class="language-csharp">var now = DateTime.UtcNow;
+var tenMinsAgo = now.AddMinutes(-10);
+var qfmt = &quot;SELECT region, temperature FROM GeoCheckin WHERE time &gt; 1234560 AND time &lt; 1234569 AND region = 'South Atlantic' AND state = 'South Carolina' AND temperature IS NULL&quot;;
+var q = string.Format(
+    qfmt,
+    DateTimeUtil.ToUnixTimeMillis(tenMinsAgo),
+    DateTimeUtil.ToUnixTimeMillis(now));
+
+var cmd = new Query.Builder()
+    .WithTable(&quot;GeoCheckin&quot;)
+    .WithQuery(q)
+    .Build();
+
+RiakResult rslt = client.Execute(cmd);
+
+QueryResponse response = cmd.Response;
+Row firstRow = response.Value.First();
+Assert.AreEqual(&quot;South Atlantic&quot;, firstRow.Cells.ElementAt(0).Value);
+Assert.IsNull(firstRow.Cells.ElementAt(1).Value);
+</code></pre>
+
+<pre><code class="language-javascript">var callback = function(err, resp) {
+    // resp.rows and resp.columns
+    // have data
+    // each row is an array of cells or null values.
+    var firstRow = result.rows[0];
+    firstRow[0]; // Returns &quot;South Atlantic&quot;
+    firstRow[1]; // Returns null
+};
+// NB: t1/t2 are integers representing unix timestamps with
+// millisecond resolution
+var queryText = &quot;SELECT region, temperature FROM GeoCheckin &quot; +
+                &quot;WHERE time &gt; &quot; + t1 + &quot; AND time &lt; &quot; + t2 +
+                &quot; AND region = 'South Atlantic' AND state = 'South Carolina' &quot; +
+                &quot; AND temperature IS NULL&quot;;
+var q = new Riak.Commands.TS.Query.Builder()
+    .withQuery(queryText)
+    .withCallback(callback)
+    .build();
+cluster.execute(q);
+</code></pre>
+
+<pre><code class="language-erlang">riakc_ts:query(Pid, &quot;SELECT region, temperature FROM GeoCheckin WHERE time &gt; 1234560 AND time &lt; 1234569 AND region = 'South Atlantic' AND state = 'South Carolina' AND temperature IS NULL&quot;).
+%% Returns
+%% {ok,{[&lt;&lt;&quot;region&quot;&gt;&gt;,&lt;&lt;&quot;temperature&quot;&gt;&gt;],
+%%     [{&lt;&lt;&quot;South Atlantic&quot;&gt;&gt;,[]},{&lt;&lt;&quot;South Atlantic&quot;&gt;&gt;,[]}]}}
+%%
+%% In the Erlang client, null cells are represented as empty lists ([])
+</code></pre>
+
+<pre><code class="language-php">$response = (new Command\Builder\TimeSeries\Query($riak))
+    -&gt;withQuery(&quot;SELECT region, temperature FROM GeoCheckin WHERE time &gt; 1234560 AND time &lt; 1234569 AND region = 'South Atlantic' AND state = 'South Carolina' AND temperature IS NULL&quot;)
+    -&gt;build()
+    -&gt;execute();
+$response-&gt;getResults()[0][0]-&gt;getValue(); // returns &quot;South Atlantic&quot;
+$response-&gt;getResults()[0][1]-&gt;getValue(); // returns null
+</code></pre>
+
+<pre><code class="language-golang">cmd, err := riak.NewTsQueryCommandBuilder()
+    .WithQuery(&quot;SELECT region, temperature FROM GeoCheckin WHERE time &gt; 1234560 AND time &lt; 1234569 AND region = 'South Atlantic' AND state = 'South Carolina' AND temperature IS NULL&quot;)
+    .Build()
+
+if err != nil {
+    return err
+}
+
+err = cluster.Execute(cmd);
+
+if err != nil {
+    return err
+}
+
+scmd, ok := cmd.(*TsQueryCommand);
+
+scmd.Response.Rows[0][0].GetStringValue() // returns &quot;South Atlantic&quot;
+scmd.Response.Rows[0][1] // returns nil
+</code></pre>
+
+      </main>
+
+
+    </article>
+
+
+    <footer class="footer">
+
+  <div class="inline-block   footer__attributions">
+
+    <p>
+      This work is licensed under a
+      <br class="[bs] hidden-md-up">
+      <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+        Creative Commons Attribution 4.0 <br class="[bs] hidden-sm-up"> International Public License
+      </a>
+    </p>
+
+    <p>
+      © 2011-2017&nbsp;<a href="http://www.basho.com">Basho Technologies, Inc.</a>
+    </p>
+
+  </div>
+
+</footer>
+
+
+
+  </div>
+
+
+  <script src="//evadne.github.io/basho_docs/js/main.js" type="text/javascript"></script>
+
+</body>
+</html>

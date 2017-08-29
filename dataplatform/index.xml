@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dataplatforms on Basho Documentation</title>
+    <link>//evadne.github.io/basho_docs/dataplatform/</link>
+    <description>Recent content in Dataplatforms on Basho Documentation</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="//evadne.github.io/basho_docs/dataplatform/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title></title>
+      <link>//evadne.github.io/basho_docs/dataplatform/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/</guid>
+      <description>This page exists solely to redirect from the generated URL to the above target
+We prefer to store these redirects as .html files in static/ but &amp;ndash; for reasons yet divined &amp;ndash; Hugo replaces public/datapltform/index.html with an empty file some time after is sync&amp;rsquo;d from static/ but before the dynamic/ content is done being compiled.</description>
+    </item>
+    
+    <item>
+      <title>Basho Data Platform</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/</guid>
+      <description>Basho Data Platform (BDP) builds on Riak KV (Riak) to support your data-centric services. Ensure your application is highly available and scalable by leveraging BDP features such as:
+ Data replication &amp;amp; synchronization between components Real-time analytics through Apache Spark integration Cluster management Caching with Redis for rapid performance (Enterprise only)  BDP reduces the complexity of integrating and deploying the components of your technology stack, providing Riak KV in-product, NoSQL databases, caching, real-time analytics, and search.</description>
+    </item>
+    
+    <item>
+      <title>Basho Data Platform 1.0.0 Release Notes</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/release-notes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/release-notes/</guid>
+      <description>Released August 27, 2015.
+This release is the introductory release of Basho Data Platform (BDP), so everything is new!
+Features Service Manager The service manager is the heart of BDP. It provides the means for building a cluster of nodes that can deploy, run, and manage the platform services. Specifically, the service manager provides the following capabilities:
+ Create a cluster of platform nodes that can run services. Metadata system that can be used to track installed services, running services, configuration information, etc.</description>
+    </item>
+    
+    <item>
+      <title>Basho Data Platform Commands</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/using/commands/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/using/commands/</guid>
+      <description>Basho Data Platform (BDP) comes with a command line tool (data-platform-admin) that allows you to perform various operations on your BDP cluster. The following reference outlines available commands and their uses.
+Usage: data-platform-admin { join | add-service-config | remove-service | start-service | stop-service | services | node-services | service-nodes }  Use --help after a sub-command for more details. For example:
+data-platform-admin join --help  join Join a node to the Basho Data Platform cluster.</description>
+    </item>
+    
+    <item>
+      <title>Cache Proxy Features</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/learn/cache-proxy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/learn/cache-proxy/</guid>
+      <description>Cache proxy is available to Enterprise users only.
+ Overview Basho Data Platform (BDP) cache proxy provides pre-sharding and connection aggregation as a service, which reduces latency and increases addressable cache memory space with lower cost hardware.
+On this page, you will find detailed descriptions of cache proxy&amp;rsquo;s components, including what each component does and how you implement it. Cache proxy has the following components:
+ Pre-sharding Connection Aggregation Command Pipelining Read-through Cache  You will also find a list of commands you can use with cache proxy.</description>
+    </item>
+    
+    <item>
+      <title>Configuring Basho Data Platform</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/</guid>
+      <description>In This Section The Configuring Basho Data Platform (BDP) section provides guides and references for setting up your data platform cluster. If you want to learn more about BDP, check out Learn About Basho Data Platform.
+Configuring Set Up a Basho Data Platform Cluster provides a step-by-step tutorial on setting up your data platform cluster.
+Replacing Spark Cluster Manager If you are using Spark, Replace Your Spark Cluster Manager will walk you through setting up the Basho Data Platform cluster manager to manage your Spark cluster.</description>
+    </item>
+    
+    <item>
+      <title>Default Ports for Basho Data Platform</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/default-ports/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/default-ports/</guid>
+      <description>The following is a list of default network ports used by Basho Data Platform. Your environment should be configured to allow traffic for these network ports.
+   Service Default     Secure Shell (SSH) 22/TCP   EPMD Listener 4369/TCP   Leader Election (Enterprise Edition only) 5323   Riak Inter-Nodes Communication 6000-7999 (port range)   Redis 6379   Cache-Proxy 22122   Cache-Proxy Stats 22123   Spark Master 7077   Spark Master Web UI 8080   Spark Worker 7078   Spark Worker Web UI 8081   Protocol Buffer 8087/TCP   HTTP 8098/TCP   Riak Handof 8099/TCP   Search (Solr) 8093   Search (Solr JMX) 8985   Cluster Manager 9080   Riak EE JMX (Enterprise Edition only) 41110    </description>
+    </item>
+    
+    <item>
+      <title>Download Basho Data Platform 1.0.0 and Other Tools</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/downloads/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/downloads/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Getting Started with Cache Proxy</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/cache-proxy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/cache-proxy/</guid>
+      <description>Cache proxy is available to Enterprise users only.
+ Now that you’ve set up a Basho Data Platform cluster, which included adding a service configuration for Redis and cache proxy, you’re ready to use cache proxy with any Redis client that supports the GET command.
+This page will walk you through configuring and using BDP cache proxy.
+Prerequisites Setting Your Environment Before you begin using cache proxy, you may want to set your environment variables.</description>
+    </item>
+    
+    <item>
+      <title>Installing Basho Data Platform</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/installing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/installing/</guid>
+      <description>Basho Data Platform (BDP) enables you to extend Riak with Spark and Redis. This page will guide you through the process of installing BDP on most supported operating systems.
+ BDP is supported on a limited number of platforms. See the list of supported OSes here.
+ Prerequisites You need to have root or sudo access on the nodes you will be installing BDP on.
+Installing  First, change the open-files limit.</description>
+    </item>
+    
+    <item>
+      <title>Leader Election Service</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/learn/leader-election-service/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/learn/leader-election-service/</guid>
+      <description>Leader Election Service is available to Enterprise users only.
+ Overview The Basho Data Platform (BDP) Leader Election Service enables Spark clusters to run without a ZooKeeper instance.
+The Leader Election Service uses a simple, line-based, ascii protocol to interact with Spark. This protocol is incompatible with the ZooKeeper protocol, and requires a BDP-specific patch to Spark for compatibility purposes. The Protocol Details section of this page further details the Leader Election Service protocol.</description>
+    </item>
+    
+    <item>
+      <title>Learn About Basho Data Platform</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/learn/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/learn/</guid>
+      <description>In This Section The Learn About Basho Data Platform (BDP) section provides overviews of the various parts and concepts behind BDP. If you are looking for information on setup or usage, check out Using Basho Data Platform.
+Service Manager The service manager is the foundation of the Basho Data Platform. It provides a means for building a cluster of nodes that can deploy, run, and manage platform services.
+Cache Proxy The cache proxy service uses Redis and Riak KV to provide pre-sharding and connection aggregation for your data platform cluster.</description>
+    </item>
+    
+    <item>
+      <title>Replacing Spark Cluster Manager with the Basho Data Platform Cluster Manager</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/replace-spark-cluster-manager/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/replace-spark-cluster-manager/</guid>
+      <description>The Basho Data Platform cluster manager is available to Enterprise users only.
+ You can simplify your operations by using the Basho Data Platform (BDP) cluster manager instead of Apache Zookeeper to manage your Spark cluster. This document will walk you through the steps.
+Apache Zookeeper is an open-source application that provides a consistent distributed storage for client data as well as a set of synchronization primitives. BDP provides all the necessary functionality required for Spark Master high availability without the need to maintain and manage another software system (Zookeeper), creating a simple, centrally-managed, robust solution.</description>
+    </item>
+    
+    <item>
+      <title>Service Manager Features</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/learn/service-manager/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/learn/service-manager/</guid>
+      <description>Overview The service manager is the foundation of the Basho Data Platform (BDP). It provides a means for building a cluster of nodes that can deploy, run, and manage platform services. Note that Riak KV is included with BDP, and use of BDP assumes familiarity with Riak KV.
+For information on usage check out data-platform-admin command-line interface.
+Data Replication and Synchronization Replicate and synchronize data across and between Riak and Spark, Redis, and Solr service instances to ensure data accuracy with no data loss and high availability.</description>
+    </item>
+    
+    <item>
+      <title>Set Spark IP Address</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/spark-ip-address/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/spark-ip-address/</guid>
+      <description>To bind Spark Master to a specific host you can manually set the Spark Master IP Address with:
+sudo bash -c &amp;quot;echo &#39;SPARK_MASTER_IP=»YOUR PUBLIC IP« &amp;gt;&amp;gt; »YOUR_PATH_TO BDP«/priv/spark-master/conf/spark-env.sh&#39;&amp;quot;  </description>
+    </item>
+    
+    <item>
+      <title>Setup a Basho Data Platform Cluster</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/setup-a-cluster/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/configuring/setup-a-cluster/</guid>
+      <description>Now that you&amp;rsquo;ve installed Basho Data Platform, you&amp;rsquo;re ready to set up a Basho Data Platform (BDP) cluster. This page will guide you through this process.
+This page also lists the default port connections for BDP.
+Prerequisites  We recommend running BDP on at least 5 nodes. Minimally, you will need 3 available, with BDP installed on all 3 nodes. You must have basic Riak configuration parameters, including listen interfaces (listen.</description>
+    </item>
+    
+    <item>
+      <title>Spark Cluster Manager</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/learn/spark-cluster-manager/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/learn/spark-cluster-manager/</guid>
+      <description>The Spark cluster manager is available to Enterprise users only.
+ The Spark cluster manager provides all the functionality required for Spark Master high availability without the need to manage yet another software system (Zookeeper). This reduces operational complexity of Basho Data Platform (BDP).
+ Please note that the Spark cluster manager depends on the Riak Leader Election Service. Check out Replace Your Previous Spark Cluster Manager with the Basho Data Platform Cluster Manager for instructions on setting up the Spark cluster manager.</description>
+    </item>
+    
+    <item>
+      <title>Starting Services on Basho Data Platform</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/using/start-services/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/using/start-services/</guid>
+      <description>You&amp;rsquo;ve installed Basho Data Platform (BDP), configured your cluster, and added services to your nodes. The setup of your BDP cluster is complete! Now you can begin using your BDP cluster.
+Start Services The very first thing you can do with your BDP cluster is start the services you added. In the last section of the configuration instructions, you added the following services:
+ Spark-master Spark-worker Redis Cache proxy  Spark-Master Service To start the spark-master service, run the following, using the name and IP of the node you wish to start the service on:</description>
+    </item>
+    
+    <item>
+      <title>Upgrading from Basho Data Platform Beta to 1.0.0</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/upgrading/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/upgrading/</guid>
+      <description>NOTE:
+This page only applies to people previously using the beta releases of Basho Data Platform.
+ There were many changes between the Basho Data Platform (BDP) beta releases and the 1.0.0 release, resulting in no upgrade path from the beta builds to this current release. If you were previously using a BDP beta release, you must uninstall the BDP beta packages before you install the BDP 1.0.0 release.</description>
+    </item>
+    
+    <item>
+      <title>Using Basho Data Platform Overview</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/using/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/using/</guid>
+      <description>In This Section The Using Basho Data Platform (BDP) section provides guides and references for managing and running your data platform cluster. If you want to learn more about BDP, check out Learn About Basho Data Platform.
+Installing Be sure to check out Installing Basho Data Platform for installation instructions.
+Starting Services on Basho Data Platform Once you have setup your cluster, check out Starting Services on Basho Data Platform for information on completing tasks and running your data platform cluster.</description>
+    </item>
+    
+    <item>
+      <title>Using Spark-Riak Connector</title>
+      <link>//evadne.github.io/basho_docs/dataplatform/1.0.0/using/spark-riak-connector/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//evadne.github.io/basho_docs/dataplatform/1.0.0/using/spark-riak-connector/</guid>
+      <description>This is a quick, practical guide on how to use the Spark Riak connector.
+Dependencies If your Spark project uses Maven, include the following dependency in your application&amp;rsquo;s POM file to enable Spark Riak connector:
+&amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.basho&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spark-riak-connector&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.0.0&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; ... &amp;lt;/dependencies&amp;gt;  If your Spark application is going to be written in Java, add the following dependency in addition to the one above:
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.basho&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spark-riak-connector-java&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.0.0&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt;  Creating Spark Context The following import statements have to be included at the top of your Spark application to enable the connector:</description>
+    </item>
+    
+  </channel>
+</rss>

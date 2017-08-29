@@ -1,0 +1,4962 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+<html class="no-js" lang="en">
+
+
+
+
+<head>
+
+  <meta charset="utf-8">
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width">
+  <link rel="shortcut icon" href="//evadne.github.io/basho_docs/images/branding/favicon.ico" type="image/x-icon" />
+
+  <title>Riak KV 2.0.9 Release Notes</title>
+
+  <link href="//evadne.github.io/basho_docs/css/main.css" media="screen" rel="stylesheet" type="text/css">
+  <link rel="canonical" href="//evadne.github.io/basho_docs/riak/kv/latest/release-notes/" />
+  <!-- The below meta tags are included to allow JS code to use variables
+       defined in Hugo---our static site generator. -->
+  <meta name="project" content="riak_kv">
+  <meta name="version" content="2.0.9">
+  <meta name="project_relative_path" content="release-notes/">
+
+</head>
+
+
+
+<body class="riak_kv 2.0.9  ">
+
+
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-T9C8MK" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-T9C8MK');</script>
+
+
+  
+<header class="banner">
+
+
+
+  
+  <div class="float-right   banner__menu-bars   [bs] hidden-md-up">
+    <div class="menu-bars   js_toggle-content-nav"></div>
+  </div>
+
+
+
+  
+  <div class="float-left   banner__docs-logo">
+    <a href="//evadne.github.io/basho_docs/index.html" class="block   docs-logo"><img class="docs-logo__image" src="//evadne.github.io/basho_docs/images/branding/basho_docs_logo.png"></a>
+  </div>
+
+
+
+  
+  <div class="overflow-hidden   banner__navigation-pane   [bs] hidden-sm-down">
+
+
+    
+    <div class="float-left    banner__intra-brand__width-wrapper">
+    <div class="float-right   banner__intra-brand">
+      <div class="float-right">
+        
+        <a class="inline-block   banner__brand-link" href="http://basho.com/">Basho</a><a class="inline-block   banner__brand-link" href="https://academy.basho.com">Academy</a><a class="inline-block   banner__brand-link" href="//evadne.github.io/basho_docs/community">Community</a><a class="inline-block   banner__brand-link" href="http://basho.com/contact">Contact</a></div>
+    </div>
+    </div>
+
+
+
+
+    
+    <div class="float-left    banner__intra-site__width-wrapper">
+    <div class="float-right   banner__intra-site">
+      
+      <a class="inline-block   banner__brand-link banner__brand-link--current">Riak KV</a><a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/ts/latest/">Riak TS</a><a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/cs/latest/">Riak CS</a></div>
+    </div>
+
+
+  </div>
+
+</header>
+
+
+
+  
+  
+
+
+
+<nav class="content-nav content-nav--top-size-full">
+
+
+
+
+  <div class="content-nav__fixed-top">
+    <form id="searchbox_011972015458788978446:zgdcy4fa-o0" class="search" action="">
+
+      <span class="block float-left   search__icon-container   docs-icon--search">|</span>
+
+      <span class="block overflow">
+        <input class="search__input" id="main-search" type="search" name="q" placeholder="Search">
+      </span>
+
+    </form>
+
+
+    <div class="clearfix   version-picker">
+
+  
+      <a class="inline-block float-left    product__title" href="//evadne.github.io/basho_docs/"><img class="product__logo" src="//evadne.github.io/basho_docs/images/branding/riak-logo.png">Riak<span class="product__title-highlight">KV</span>
+      </a>
+  
+
+      <div class="inline-block float-right   selector selector--version">
+        <header class="selector__title">Versions</header>
+        <button class="selector__btn" type="button">2.0.9</button>
+        <div    class="selector__arrow"></div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  
+  <div class="overflow-y-hidden   selector-pane__sizing-box selector-pane__sizing-box--hidden">
+  <div class="                    selector-pane__shadow-box">
+
+    
+    <div class="edge-fader edge-fader--left">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+    <div class="edge-fader edge-fader--right">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+
+    <div class="overflow-x        selector-pane__primary selector-pane--versions  js_edge-fader--target">
+      
+    </div>
+  </div>
+  </div>
+
+
+
+
+  
+  <div class="             content-nav__primary__sizing-box">
+  <div class="             content-nav__primary__shadow-box">
+  <div class="overflow-y   content-nav__primary">
+
+    <div class="content-nav__menu-container">
+
+      <ul class="content-menu
+                 content-menu--depth-0
+                 content-menu--open">
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--icon-riak">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                         content-menu__menu-toggle--open ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/" >
+              <span class="block   content-menu__item__right-border"><strong>Riak KV</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           content-menu--open"
+    style="display: block">
+
+
+
+  <li>
+
+    <div class="content-menu__item  content-menu__item--selected ">
+
+      <a class="block overflow   content-menu__link--depth-1" >
+        <span class="block   content-menu__item__right-border">Release Notes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li class="content-menu__download-entry">
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--icon-download-alt">|</span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/downloads/" >
+              <span class="block   content-menu__item__right-border"><strong>Download Riak KV</strong></span>
+            </a>
+
+          </div>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--icon-install">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/" >
+              <span class="block   content-menu__item__right-border"><strong>Setup</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/planning/" >
+        <span class="block   content-menu__item__right-border">Planning</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/planning/start/" >
+        <span class="block   content-menu__item__right-border">Start Planning</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/planning/operating-system/" >
+        <span class="block   content-menu__item__right-border">OS Support</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/planning/backend/" >
+        <span class="block   content-menu__item__right-border">Choosing a Backend</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/planning/backend/bitcask/" >
+        <span class="block   content-menu__item__right-border">Bitcask</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/planning/backend/leveldb/" >
+        <span class="block   content-menu__item__right-border">LevelDB</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/planning/backend/memory/" >
+        <span class="block   content-menu__item__right-border">Memory</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/planning/backend/multi/" >
+        <span class="block   content-menu__item__right-border">Multi-backend</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/planning/cluster-capacity/" >
+        <span class="block   content-menu__item__right-border">Cluster Capacity</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/planning/bitcask-capacity-calc/" >
+        <span class="block   content-menu__item__right-border">Bitcask Capacity Calculator</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/planning/best-practices/" >
+        <span class="block   content-menu__item__right-border">Best Practices</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/installing/" >
+        <span class="block   content-menu__item__right-border">Installing</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/installing/amazon-web-services/" >
+        <span class="block   content-menu__item__right-border">Amazon Web Services</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/installing/debian-ubuntu/" >
+        <span class="block   content-menu__item__right-border">Debian &amp; Ubuntu</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/installing/freebsd/" >
+        <span class="block   content-menu__item__right-border">FreeBSD</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/installing/mac-osx/" >
+        <span class="block   content-menu__item__right-border">Mac OS X</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/installing/rhel-centos/" >
+        <span class="block   content-menu__item__right-border">RHEL &amp; CentOS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/installing/smartos/" >
+        <span class="block   content-menu__item__right-border">SmartOS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/installing/solaris/" >
+        <span class="block   content-menu__item__right-border">Solaris</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/installing/suse/" >
+        <span class="block   content-menu__item__right-border">SUSE</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/installing/windows-azure/" >
+        <span class="block   content-menu__item__right-border">Windows Azure</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/installing/source/" >
+        <span class="block   content-menu__item__right-border">Installing From Source</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/installing/source/erlang/" >
+        <span class="block   content-menu__item__right-border">Installing Erlang</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/installing/source/jvm/" >
+        <span class="block   content-menu__item__right-border">Installing the JVM</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/installing/verify/" >
+        <span class="block   content-menu__item__right-border">Verifying an Installation</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/upgrading/" >
+        <span class="block   content-menu__item__right-border">Upgrading</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/upgrading/checklist/" >
+        <span class="block   content-menu__item__right-border">Production Checklist</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/upgrading/version/" >
+        <span class="block   content-menu__item__right-border">Upgrading to 2.0.9</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/setup/downgrade/" >
+        <span class="block   content-menu__item__right-border">Downgrading</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--icon-cog">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/" >
+              <span class="block   content-menu__item__right-border"><strong>Configuring</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/basic/" >
+        <span class="block   content-menu__item__right-border">Basic Configuration</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/backend/" >
+        <span class="block   content-menu__item__right-border">Backend Configuration</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/managing/" >
+        <span class="block   content-menu__item__right-border">Managing Configuration</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/reference/" >
+        <span class="block   content-menu__item__right-border">Configuration Reference</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/load-balancing-proxy/" >
+        <span class="block   content-menu__item__right-border">Load Balancing &amp; Proxy</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/search/" >
+        <span class="block   content-menu__item__right-border">Riak Search Settings</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/mapreduce/" >
+        <span class="block   content-menu__item__right-border">MapReduce Settings</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/global-object-expiration/" >
+        <span class="block   content-menu__item__right-border">Global Object Expiration</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/strong-consistency/" >
+        <span class="block   content-menu__item__right-border">Implementing Strong Consistency</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/v3-multi-datacenter/" >
+        <span class="block   content-menu__item__right-border">V3 Multi-Datacenter</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/v3-multi-datacenter/quick-start/" >
+        <span class="block   content-menu__item__right-border">Quickstart</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/v3-multi-datacenter/nat/" >
+        <span class="block   content-menu__item__right-border">With NAT</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/v3-multi-datacenter/ssl/" >
+        <span class="block   content-menu__item__right-border">SSL</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/v2-multi-datacenter/" >
+        <span class="block   content-menu__item__right-border">V2 Multi-Datacenter</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/v2-multi-datacenter/quick-start/" >
+        <span class="block   content-menu__item__right-border">Quickstart</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/v2-multi-datacenter/nat/" >
+        <span class="block   content-menu__item__right-border">With NAT</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/v2-multi-datacenter/ssl/" >
+        <span class="block   content-menu__item__right-border">SSL</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--icon-database">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/" >
+              <span class="block   content-menu__item__right-border"><strong>Using</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/running-a-cluster/" >
+        <span class="block   content-menu__item__right-border">Running a Cluster</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/admin/" >
+        <span class="block   content-menu__item__right-border">Cluster Administration</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/admin/commands/" >
+        <span class="block   content-menu__item__right-border">Cluster Admin Commands</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/admin/riak-admin/" >
+        <span class="block   content-menu__item__right-border">riak-admin CLI</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/admin/riak-cli/" >
+        <span class="block   content-menu__item__right-border">riak CLI</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/admin/riak-control/" >
+        <span class="block   content-menu__item__right-border">Riak Control</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/cluster-operations/" >
+        <span class="block   content-menu__item__right-border">Cluster Operations</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/cluster-operations/adding-removing-nodes/" >
+        <span class="block   content-menu__item__right-border">Adding/Removing Nodes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/cluster-operations/changing-cluster-info/" >
+        <span class="block   content-menu__item__right-border">Changing Cluster Info</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/cluster-operations/replacing-node/" >
+        <span class="block   content-menu__item__right-border">Replacing a Node</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/cluster-operations/inspecting-node/" >
+        <span class="block   content-menu__item__right-border">Inspecting a Node</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/cluster-operations/bucket-types/" >
+        <span class="block   content-menu__item__right-border">Bucket Types</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/cluster-operations/logging/" >
+        <span class="block   content-menu__item__right-border">Logging</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/cluster-operations/backing-up/" >
+        <span class="block   content-menu__item__right-border">Backing Up</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/cluster-operations/handoff/" >
+        <span class="block   content-menu__item__right-border">Handoff</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/cluster-operations/strong-consistency/" >
+        <span class="block   content-menu__item__right-border">Monitoring Strong Consistency</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/cluster-operations/active-anti-entropy/" >
+        <span class="block   content-menu__item__right-border">Managing Active Anti-Entropy</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/cluster-operations/v3-multi-datacenter/" >
+        <span class="block   content-menu__item__right-border">V3 Multi-Datacenter</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/cluster-operations/v2-multi-datacenter/" >
+        <span class="block   content-menu__item__right-border">V2 Multi-Datacenter</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/repair-recovery/" >
+        <span class="block   content-menu__item__right-border">Repair &amp; Recovery</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/repair-recovery/failure-recovery/" >
+        <span class="block   content-menu__item__right-border">Failure &amp; Recovery</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/repair-recovery/errors/" >
+        <span class="block   content-menu__item__right-border">Errors</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/repair-recovery/repairs/" >
+        <span class="block   content-menu__item__right-border">Repairs</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/repair-recovery/rolling-restart/" >
+        <span class="block   content-menu__item__right-border">Rolling Restarts</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/repair-recovery/failed-node/" >
+        <span class="block   content-menu__item__right-border">Recover a Failed Node</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/repair-recovery/secondary-indexes/" >
+        <span class="block   content-menu__item__right-border">Repair Secondary Indexes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/repair-recovery/rolling-replaces/" >
+        <span class="block   content-menu__item__right-border">Rolling Replaces</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/security/" >
+        <span class="block   content-menu__item__right-border">Security</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/security/basics/" >
+        <span class="block   content-menu__item__right-border">Security Basics</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/security/managing-sources/" >
+        <span class="block   content-menu__item__right-border">Managing Security Sources</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/performance/" >
+        <span class="block   content-menu__item__right-border">Performance</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/performance/benchmarking/" >
+        <span class="block   content-menu__item__right-border">Benchmarking</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/performance/open-files-limit/" >
+        <span class="block   content-menu__item__right-border">Open Files Limit</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/performance/v2-scheduling-fullsync/" >
+        <span class="block   content-menu__item__right-border">V2 Scheduling Fullsync</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/performance/latency-reduction/" >
+        <span class="block   content-menu__item__right-border">Latency Reduction</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/performance/erlang/" >
+        <span class="block   content-menu__item__right-border">Erlang VM</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/performance/amazon-web-services/" >
+        <span class="block   content-menu__item__right-border">Amazon Web Services</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/performance/multi-datacenter-tuning/" >
+        <span class="block   content-menu__item__right-border">Multi-Datacenter Replication</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/troubleshooting/" >
+        <span class="block   content-menu__item__right-border">Troubleshooting</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/troubleshooting/http-204/" >
+        <span class="block   content-menu__item__right-border">HTTP 204</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/" >
+        <span class="block   content-menu__item__right-border">Reference</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/logging/" >
+        <span class="block   content-menu__item__right-border">Logging</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/handoff/" >
+        <span class="block   content-menu__item__right-border">Handoff</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/bucket-types/" >
+        <span class="block   content-menu__item__right-border">Bucket Types</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/object-deletion/" >
+        <span class="block   content-menu__item__right-border">Object Deletion</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/runtime-interaction/" >
+        <span class="block   content-menu__item__right-border">Runtime Interaction</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/statistics-monitoring/" >
+        <span class="block   content-menu__item__right-border">Monitoring</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/snmp/" >
+        <span class="block   content-menu__item__right-border">SNMP</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/jmx/" >
+        <span class="block   content-menu__item__right-border">JMX Monitoring</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/search/" >
+        <span class="block   content-menu__item__right-border">Search</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/secondary-indexes/" >
+        <span class="block   content-menu__item__right-border">Secondary Indexes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/custom-code/" >
+        <span class="block   content-menu__item__right-border">Installing Custom Code</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/strong-consistency/" >
+        <span class="block   content-menu__item__right-border">Strong Consistency</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/multi-datacenter/" >
+        <span class="block   content-menu__item__right-border">Multi-Datacenter</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/multi-datacenter/statistics/" >
+        <span class="block   content-menu__item__right-border">Statistics</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/multi-datacenter/per-bucket-replication/" >
+        <span class="block   content-menu__item__right-border">Per Bucket</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/multi-datacenter/monitoring/" >
+        <span class="block   content-menu__item__right-border">Monitoring</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/multi-datacenter/comparison/" >
+        <span class="block   content-menu__item__right-border">Comparison</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/v3-multi-datacenter/" >
+        <span class="block   content-menu__item__right-border">V3 Replication</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/v3-multi-datacenter/architecture/" >
+        <span class="block   content-menu__item__right-border">Architecture</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/v3-multi-datacenter/aae/" >
+        <span class="block   content-menu__item__right-border">Active Anti-Entropy</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/v3-multi-datacenter/cascading-writes/" >
+        <span class="block   content-menu__item__right-border">Cascading Writes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/v3-multi-datacenter/scheduling-fullsync/" >
+        <span class="block   content-menu__item__right-border">Scheduling Fullsync</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/v2-multi-datacenter/" >
+        <span class="block   content-menu__item__right-border">V2 Replication</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/v2-multi-datacenter/architecture/" >
+        <span class="block   content-menu__item__right-border">Architecture</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/using/reference/v2-multi-datacenter/scheduling-fullsync/" >
+        <span class="block   content-menu__item__right-border">Scheduling Fullsync</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--icon-lambda">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/" >
+              <span class="block   content-menu__item__right-border"><strong>Developing</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/" >
+        <span class="block   content-menu__item__right-border">Getting Started</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/java/" >
+        <span class="block   content-menu__item__right-border">Java</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/java/crud-operations/" >
+        <span class="block   content-menu__item__right-border">CRUD Operations</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/java/querying/" >
+        <span class="block   content-menu__item__right-border">Querying</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/java/object-modeling/" >
+        <span class="block   content-menu__item__right-border">Object Modeling</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/ruby/" >
+        <span class="block   content-menu__item__right-border">Ruby</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/ruby/crud-operations/" >
+        <span class="block   content-menu__item__right-border">CRUD Operations</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/ruby/querying/" >
+        <span class="block   content-menu__item__right-border">Querying</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/ruby/object-modeling/" >
+        <span class="block   content-menu__item__right-border">Object Modeling</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/python/" >
+        <span class="block   content-menu__item__right-border">Python</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/python/crud-operations/" >
+        <span class="block   content-menu__item__right-border">CRUD Operations</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/python/querying/" >
+        <span class="block   content-menu__item__right-border">Querying</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/python/object-modeling/" >
+        <span class="block   content-menu__item__right-border">Object Modeling</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/csharp/" >
+        <span class="block   content-menu__item__right-border">C Sharp</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/csharp/crud-operations/" >
+        <span class="block   content-menu__item__right-border">CRUD Operations</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/csharp/querying/" >
+        <span class="block   content-menu__item__right-border">Querying</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/csharp/object-modeling/" >
+        <span class="block   content-menu__item__right-border">Object Modeling</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/nodejs/" >
+        <span class="block   content-menu__item__right-border">NodeJS</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/nodejs/crud-operations/" >
+        <span class="block   content-menu__item__right-border">CRUD Operations</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/nodejs/querying/" >
+        <span class="block   content-menu__item__right-border">Querying</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/nodejs/object-modeling/" >
+        <span class="block   content-menu__item__right-border">Object Modeling</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/erlang/" >
+        <span class="block   content-menu__item__right-border">Erlang</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/erlang/crud-operations/" >
+        <span class="block   content-menu__item__right-border">CRUD Operations</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/erlang/querying/" >
+        <span class="block   content-menu__item__right-border">Querying</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/erlang/object-modeling/" >
+        <span class="block   content-menu__item__right-border">Object Modeling</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/golang/" >
+        <span class="block   content-menu__item__right-border">Go</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/golang/crud-operations/" >
+        <span class="block   content-menu__item__right-border">CRUD Operations</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/golang/querying/" >
+        <span class="block   content-menu__item__right-border">Querying</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/golang/object-modeling/" >
+        <span class="block   content-menu__item__right-border">Object Modeling</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/php/" >
+        <span class="block   content-menu__item__right-border">PHP</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/php/crud-operations/" >
+        <span class="block   content-menu__item__right-border">CRUD Operations</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/getting-started/php/querying/" >
+        <span class="block   content-menu__item__right-border">Querying</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/" >
+        <span class="block   content-menu__item__right-border">Usage</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/creating-objects/" >
+        <span class="block   content-menu__item__right-border">Creating Objects</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/reading-objects/" >
+        <span class="block   content-menu__item__right-border">Reading Objects</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/updating-objects/" >
+        <span class="block   content-menu__item__right-border">Updating Objects</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/deleting-objects/" >
+        <span class="block   content-menu__item__right-border">Deleting Objects</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/content-types/" >
+        <span class="block   content-menu__item__right-border">Content Types</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/search/" >
+        <span class="block   content-menu__item__right-border">Searching</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/mapreduce/" >
+        <span class="block   content-menu__item__right-border">Using MapReduce</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/secondary-indexes/" >
+        <span class="block   content-menu__item__right-border">Using Secondary Indexes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/bucket-types/" >
+        <span class="block   content-menu__item__right-border">Bucket Types</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/commit-hooks/" >
+        <span class="block   content-menu__item__right-border">Using Commit Hooks</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/search-schemas/" >
+        <span class="block   content-menu__item__right-border">Creating Search Schemas</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/searching-data-types/" >
+        <span class="block   content-menu__item__right-border">Searching with Data Types</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/document-store/" >
+        <span class="block   content-menu__item__right-border">Implementing a Document Store</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/custom-extractors/" >
+        <span class="block   content-menu__item__right-border">Custom Extractors</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/security/" >
+        <span class="block   content-menu__item__right-border">Security</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/security/java/" >
+        <span class="block   content-menu__item__right-border">Java</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/security/ruby/" >
+        <span class="block   content-menu__item__right-border">Ruby</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/security/python/" >
+        <span class="block   content-menu__item__right-border">Python</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/security/erlang/" >
+        <span class="block   content-menu__item__right-border">Erlang</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/security/php/" >
+        <span class="block   content-menu__item__right-border">PHP</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/replication/" >
+        <span class="block   content-menu__item__right-border">Replication</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/conflict-resolution/" >
+        <span class="block   content-menu__item__right-border">Conflict Resolution</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/conflict-resolution/java/" >
+        <span class="block   content-menu__item__right-border">Java</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/conflict-resolution/ruby/" >
+        <span class="block   content-menu__item__right-border">Ruby</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/conflict-resolution/python/" >
+        <span class="block   content-menu__item__right-border">Python</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/conflict-resolution/csharp/" >
+        <span class="block   content-menu__item__right-border">C Sharp</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/conflict-resolution/nodejs/" >
+        <span class="block   content-menu__item__right-border">NodeJS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/conflict-resolution/php/" >
+        <span class="block   content-menu__item__right-border">PHP</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/usage/conflict-resolution/golang/" >
+        <span class="block   content-menu__item__right-border">Go</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/data-types/" >
+        <span class="block   content-menu__item__right-border">Data Types</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/data-types/counters/" >
+        <span class="block   content-menu__item__right-border">Counters</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/data-types/hyperloglogs/" >
+        <span class="block   content-menu__item__right-border">HyperLogLogs</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/data-types/sets/" >
+        <span class="block   content-menu__item__right-border">Sets</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/data-types/maps/" >
+        <span class="block   content-menu__item__right-border">Maps</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/data-modeling/" >
+        <span class="block   content-menu__item__right-border">Data Modeling</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/key-value-modeling/" >
+        <span class="block   content-menu__item__right-border">Key/Value Modeling</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/app-guide/" >
+        <span class="block   content-menu__item__right-border">Application Guide</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/app-guide/replication-properties/" >
+        <span class="block   content-menu__item__right-border">Replication Properties</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/app-guide/strong-consistency/" >
+        <span class="block   content-menu__item__right-border">Strong Consistency</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/app-guide/write-once/" >
+        <span class="block   content-menu__item__right-border">Write Once</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/app-guide/advanced-mapreduce/" >
+        <span class="block   content-menu__item__right-border">Advanced MapReduce</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/app-guide/cluster-metadata/" >
+        <span class="block   content-menu__item__right-border">Cluster Metadata</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/client-libraries/" >
+        <span class="block   content-menu__item__right-border">Client Libraries</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/" >
+        <span class="block   content-menu__item__right-border">APIs</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/repl-hooks/" >
+        <span class="block   content-menu__item__right-border">Multi-Datacenter REPL Hooks API</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/backend/" >
+        <span class="block   content-menu__item__right-border">Backend API</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/" >
+        <span class="block   content-menu__item__right-border">HTTP API</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/get-bucket-props/" >
+        <span class="block   content-menu__item__right-border">Get Bucket Properties</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/set-bucket-props/" >
+        <span class="block   content-menu__item__right-border">Set Bucket Properties</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/reset-bucket-props/" >
+        <span class="block   content-menu__item__right-border">Reset Bucket Properties</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/list-buckets/" >
+        <span class="block   content-menu__item__right-border">List Buckets</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/list-keys/" >
+        <span class="block   content-menu__item__right-border">List Keys</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/fetch-object/" >
+        <span class="block   content-menu__item__right-border">Fetch Object</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/store-object/" >
+        <span class="block   content-menu__item__right-border">Store Object</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/delete-object/" >
+        <span class="block   content-menu__item__right-border">Delete Object</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/mapreduce/" >
+        <span class="block   content-menu__item__right-border">MapReduce</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/secondary-indexes/" >
+        <span class="block   content-menu__item__right-border">Secondary Indexes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/ping/" >
+        <span class="block   content-menu__item__right-border">Ping</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/status/" >
+        <span class="block   content-menu__item__right-border">Status</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/list-resources/" >
+        <span class="block   content-menu__item__right-border">List Resources</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/search-query/" >
+        <span class="block   content-menu__item__right-border">Search Query</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/search-index-info/" >
+        <span class="block   content-menu__item__right-border">Search Index Info</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/fetch-search-index/" >
+        <span class="block   content-menu__item__right-border">Fetch Search Index</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/store-search-index/" >
+        <span class="block   content-menu__item__right-border">Store Search Index</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/delete-search-index/" >
+        <span class="block   content-menu__item__right-border">Delete Search Index</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/fetch-search-schema/" >
+        <span class="block   content-menu__item__right-border">Fetch Search Schema</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/store-search-schema/" >
+        <span class="block   content-menu__item__right-border">Store Search Schema</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/counters/" >
+        <span class="block   content-menu__item__right-border">Counters</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/http/link-walking/" >
+        <span class="block   content-menu__item__right-border">Link Walking</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/" >
+        <span class="block   content-menu__item__right-border">Protocol Buffers API</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/list-buckets/" >
+        <span class="block   content-menu__item__right-border">List Buckets</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/list-keys/" >
+        <span class="block   content-menu__item__right-border">List Keys</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/get-bucket-props/" >
+        <span class="block   content-menu__item__right-border">Get Bucket Properties</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/set-bucket-props/" >
+        <span class="block   content-menu__item__right-border">Set Bucket Properties</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/reset-bucket-props/" >
+        <span class="block   content-menu__item__right-border">Reset Bucket Properties</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/fetch-object/" >
+        <span class="block   content-menu__item__right-border">Fetch Object</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/store-object/" >
+        <span class="block   content-menu__item__right-border">Store Object</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/delete-object/" >
+        <span class="block   content-menu__item__right-border">Delete Object</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/mapreduce/" >
+        <span class="block   content-menu__item__right-border">MapReduce</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/secondary-indexes/" >
+        <span class="block   content-menu__item__right-border">Secondary Indexes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/search/" >
+        <span class="block   content-menu__item__right-border">Search</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/ping/" >
+        <span class="block   content-menu__item__right-border">Ping</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/server-info/" >
+        <span class="block   content-menu__item__right-border">Server Info</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/get-bucket-type/" >
+        <span class="block   content-menu__item__right-border">Get Bucket Type</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/set-bucket-type/" >
+        <span class="block   content-menu__item__right-border">Set Bucket Type</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/dt-fetch/" >
+        <span class="block   content-menu__item__right-border">Data Type Fetch</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/dt-union/" >
+        <span class="block   content-menu__item__right-border">Data Type Union</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/dt-store/" >
+        <span class="block   content-menu__item__right-border">Data Type Store</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/dt-counter-store/" >
+        <span class="block   content-menu__item__right-border">Data Type Counter Store</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/dt-set-store/" >
+        <span class="block   content-menu__item__right-border">Data Type Set Store</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/dt-map-store/" >
+        <span class="block   content-menu__item__right-border">Data Type Map Store</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/yz-index-get/" >
+        <span class="block   content-menu__item__right-border">Yokozuna Index Get</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/yz-index-put/" >
+        <span class="block   content-menu__item__right-border">Yokozuna Index Put</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/yz-index-delete/" >
+        <span class="block   content-menu__item__right-border">Yokozuna Index Delete</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/yz-schema-get/" >
+        <span class="block   content-menu__item__right-border">Yokozuna Schema Get</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/yz-schema-put/" >
+        <span class="block   content-menu__item__right-border">Yokozuna Schema Put</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/auth-req/" >
+        <span class="block   content-menu__item__right-border">Auth Request</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/set-client-id/" >
+        <span class="block   content-menu__item__right-border">Set Client ID</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/api/protocol-buffers/get-client-id/" >
+        <span class="block   content-menu__item__right-border">Get Client ID</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/developing/faq/" >
+        <span class="block   content-menu__item__right-border">Developing FAQ</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--icon-tools">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/add-ons/" >
+              <span class="block   content-menu__item__right-border"><strong>Add-ons</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/add-ons/redis/" >
+        <span class="block   content-menu__item__right-border">Redis Add-on</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/add-ons/redis/set-up-rra/" >
+        <span class="block   content-menu__item__right-border">Set Up Redis Add-on</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/add-ons/redis/set-up-rra/deployment-models/" >
+        <span class="block   content-menu__item__right-border">Redis Add-on Deployment Models</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/add-ons/redis/using-rra/" >
+        <span class="block   content-menu__item__right-border">Using Redis Addon</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/add-ons/redis/developing-rra/" >
+        <span class="block   content-menu__item__right-border">Develop with Redis Add-on</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/add-ons/redis/redis-add-on-features/" >
+        <span class="block   content-menu__item__right-border">Redis Add-on Features</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--icon-beaker">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/learn/" >
+              <span class="block   content-menu__item__right-border"><strong>Learning</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/learn/why-riak-kv/" >
+        <span class="block   content-menu__item__right-border">Why Riak KV?</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/learn/use-cases/" >
+        <span class="block   content-menu__item__right-border">Use Cases</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/learn/glossary/" >
+        <span class="block   content-menu__item__right-border">Riak KV Glossary</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/learn/concepts/" >
+        <span class="block   content-menu__item__right-border">Concepts</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/learn/concepts/active-anti-entropy/" >
+        <span class="block   content-menu__item__right-border">Active Anti-Entropy</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/learn/concepts/buckets/" >
+        <span class="block   content-menu__item__right-border">Buckets</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/learn/concepts/capability-negotiation/" >
+        <span class="block   content-menu__item__right-border">Capability Negotiation</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/learn/concepts/causal-context/" >
+        <span class="block   content-menu__item__right-border">Causal Context</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/learn/concepts/clusters/" >
+        <span class="block   content-menu__item__right-border">Clusters</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/learn/concepts/crdts/" >
+        <span class="block   content-menu__item__right-border">Data Types</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/learn/concepts/eventual-consistency/" >
+        <span class="block   content-menu__item__right-border">Eventual Consistency</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/learn/concepts/keys-and-objects/" >
+        <span class="block   content-menu__item__right-border">Keys and Objects</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/learn/concepts/replication/" >
+        <span class="block   content-menu__item__right-border">Replication</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/learn/concepts/strong-consistency/" >
+        <span class="block   content-menu__item__right-border">Strong Consistency</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/learn/concepts/vnodes/" >
+        <span class="block   content-menu__item__right-border">Vnodes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/kv/2.0.9/learn/dynamo/" >
+        <span class="block   content-menu__item__right-border">Dynamo</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+        <li class="content-menu__blank-entry"></li>
+
+      </ul>
+
+    </div>
+
+
+
+    <div class="content-nav__fixed-bottom">
+
+      <ul class="content-menu">
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--comments">|</span>
+
+            <a class="block overflow" href="//evadne.github.io/basho_docs/community">
+              <span class="block   content-menu__item__right-border">
+                <sub>Want some extra help?</sub><br>
+                <strong>Ask our Community</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--question-sign">|</span>
+
+            <a class="block overflow" href="http://basho.com/contact">
+              <span class="block   content-menu__item__right-border">
+                <sub>Need to chat?</sub><br>
+                <strong>Contact us directly</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--github-alt">|</span>
+
+            <a class="block overflow" href="https://github.com/basho/basho_docs/edit/master/content/riak/kv/2.0.9/release-notes.md">
+              <span class="block   content-menu__item__right-border">
+                <sub>Noticed a typo?</sub><br>
+                <strong>Correct it in GitHub</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+  </div>
+  </div>
+
+
+
+</nav>
+
+<script>
+  (function() {
+    var cx = '011972015458788978446:zgdcy4fa-o0';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<div style="width:0px;overflow:hidden;height:0px;">
+  <gcse:search></gcse:search>
+</div>
+
+
+
+
+
+
+  <div class="content-well">
+
+
+    <article class="main-article">
+
+
+      
+
+<header class="front-matter">
+
+
+  <h1 class="front-matter__title">
+
+    
+    <br>
+    Riak KV 2.0.9 Release Notes
+
+  </h1>
+  <nav class="table-of-contents"></nav>
+
+
+</header>
+
+
+      <main>
+        
+
+<p>Released March 21, 2017.</p>
+
+<p>In KV 2.0.8 we <a href="https://github.com/basho/node_package/pull/183">fixed</a> an  <a href="https://github.com/basho/riak/issues/509">issue</a> with nodetool, allowing it to work with SSL options in vm.args. However, <code>exec</code> was, in specific cases, calling the new NODETOOL alias, and four riak-admin commands (<code>handoff</code>, <code>get</code>, <code>set</code>, and <code>describe</code>) were using <code>exec</code> to allow them to run properly on all of our supported operating systems, meaning running those commands caused the following error message:</p>
+
+<pre><code>[root@node1 ~]# riak-admin handoff
+/usr/sbin/riak-admin: line 1072: exec: NODETOOL: not found
+</code></pre>
+
+<p>This bugfix release resolves the issues with <code>exec</code> and <code>NODETOOL</code>, allowing <code>handoff</code>, <code>get</code>, <code>set</code>, and <code>describe</code> to function properly. We have located the broken QA test that misidentified these commands as working and have corrected it for future releases.</p>
+
+<h2 id="bugs-fixed">Bugs Fixed</h2>
+
+<ul>
+<li>[<a href="https://github.com/basho/riak/pull/903">riak PR 903</a>] Remove <code>exec</code> from calls to NODETOOL alias entirely.</li>
+</ul>
+
+<h2 id="riak-kv-2-0-8-release-notes">Riak KV 2.0.8 Release Notes</h2>
+
+<p>Released February 15, 2017.</p>
+
+<p>This is an LTS (long term support) bugfix release that includes improvements to Solr integration and Riak search.</p>
+
+<h3 id="new-features">New Features</h3>
+
+<ul>
+<li><p>Improved Solr integration with Riak search. In KV 2.0.7, we introduced a new batching system for Riak search so indexing calls are no longer made synchronously when data is written to Riak. This allows Solr to process the data in larger chunks and Riak to move forward accepting new work at the vnode level without waiting for the call to Solr to happen. In 2.0.9, we&rsquo;ve significantly improved that batching system (see below).</p>
+
+<ul>
+<li>[<a href="https://github.com/basho/yokozuna/pull/614">yokozuna PR 614</a>]</li>
+<li>[<a href="https://github.com/basho/yokozuna/pull/634">yokozuna PR 634</a>]</li>
+<li>[<a href="https://github.com/basho/yokozuna/pull/648">yokozuna PR 648</a>]</li>
+</ul></li>
+
+<li><p>The Riak search batching system has significant improvements to its performance, robustness, and operational logging, including:</p>
+
+<ul>
+<li>deleteByQuery has been changed to delete documents in Solr by document ID rather than by query. Prior to this change, when a document that might contain siblings was added to Solr, we would add a delete by query operation to the batch we send to Solr (in a single HTTP request). This negatively impacted performance, especially when objects being updated had a lot of siblings.
+*<code>yz_drain_fsm</code>, <code>yz_drain_mgr</code>, and <code>yz_exchange_fsm</code> have been changed to split Solr drains from the hashtree update. This split resolves the issue of drain timeouts under normal operating conditions.</li>
+<li><code>fold_keys</code> now uses the same &ldquo;90 async + 1 sync&rdquo; call pattern that <code>yz_kv:index</code> uses. During performance testing, it was discovered that the yz_index_hashtree:fold_keys function could swamp the mailbox of the yz_index_hashtree so that other processes could not make progress. That logic (which lived in yz_kv) has been moved to yz_index_hashtree and shared b the new index and delete calls that do not take an explicit &ldquo;call mode&rdquo; parameter.</li>
+<li>&ldquo;Will Repair&rdquo; logs in the yz_exchange_fsm have been modified to track the direction of repair, specifically, whether the repair resulted in a delete of Solr data or an add/update to Solr.</li>
+<li>Exometer statistics are now removed when an index is removed. Before, if an index was later re-added, the fuse creation would fail eventually causing the node to crash.</li>
+<li><code>yz_solrq_drain_fsm</code> are now monitored from the queues being drained. Before, it was possible for a queue to get stuck in <code>wait_for_drain_complete</code> state if the drain fsm crashed before the drain complete messages were sent.</li>
+<li>Logging has been added to clear and exchange trees for audit of administrative operations.</li>
+<li>All above work captured in <a href="https://github.com/basho/yokozuna/pull/704">yokozuna PR 704</a>.</li>
+</ul></li>
+
+<li><p>Additional <a href="//evadne.github.io/basho_docs/riak/kv/2.0.9/configuring/reference/#search">Cuttlefish parameters</a> have been added to support the Riak search batching updates. These configs will allow you to set batching parameters based on your needs and have, in certain cases, led to significantly higher write throughput to Solr.</p>
+
+<ul>
+<li>[<a href="https://github.com/basho/yokozuna/pull/704">yokozuna PR 704</a>]</li>
+</ul></li>
+</ul>
+
+<h3 id="bugs-fixed-1">Bugs Fixed</h3>
+
+<ul>
+<li>LevelDB has been upgraded to version 2.0.33, which resolves the <a href="http://docs.basho.com/community/productadvisories/aaestall/">AAE stall product advisory</a>.</li>
+<li>[<a href="https://github.com/basho/riak_kv/pull/1527">riak_kv PR 1527</a>] A race condition was occurring where a <code>gen_fsm</code> timeout event was not reliably sent, even when the timeout was set to zero, and another message or event could preempt or unset the timeout. To fix this, a timeout event is manually sent using <code>gen_fsm:send_event</code>.</li>
+<li>[<a href="https://github.com/basho/riak/pull/886">riak PR 886</a>, <a href="https://github.com/basho/riak_ee/pull/412">riak_ee PR 412</a>, and <a href="https://github.com/basho/node_package/pull/210">node_package PR 210</a>] Atom usage in <code>riak</code> and <code>riak-admin</code> commands has been restricted to 1000. Previously, the OS PID was being used as a pseudo-random number generator, but the range was too large since each nodename used would generate an entry in the atom table. <code>riak-admin top</code> uses $$ to randomize the name used to connect to the local Riak node, and the large range of possible OS PIDs can result in atom table exhaustion on long running nodes/clusters. The nodename used by <code>riak top</code> has been changed to match <code>riak-admin top</code> convention, using <code>$RANDOM</code> with the range restricted to 1-1000.</li>
+<li>[<a href="https://github.com/basho/riak_core/issues/855">riak_core Issue 855</a>/<a href="https://github.com/basho/riak_core/pull/886">riak_core PR 886</a>] If updates to the same key in the ring metadata occurred on different nodes during the same second, they were not reconciled. This could lead to nodes flip-flopping the value and many gossip messages causing extremely high message queues and heap usage by the gossip processes. Nodenames have been added to the <code>merge_meta</code> comparison to avoid this issue.</li>
+<li>[<a href="https://github.com/basho/riak_repl/pull/766">riak_repl PR 766</a>] Status output is expected to be a list. When the repl leader is undefined the status will now match the regular format: a list.</li>
+<li>[<a href="https://github.com/basho/riak_core/pull/894">riak_core PR 894</a>] The <code>dropped_vnode_requests_total</code> stat was not incremented correctly in Riak stats due to being incorrectly projected in <code>riak_core_stat</code>. This has been fixed by setting stat name correctly as <code>dropped_vnode_requests</code>.</li>
+<li>[<a href="https://github.com/basho/riak_core/pull/887">riak_core PR 887</a>] If <code>riak_core_vnode_master:sync_spawn_command</code> was called, it would send a <code>gen_event all-state</code> event to the proxy for forwarding. However, in <code>handle_overload</code>, the code only had case clauses for &lsquo;$gen_event&rsquo; and not &lsquo;$gen_all_state_event&rsquo;, meaning the event would be passed to <code>handle_overload_info</code> instead of <code>handle_overload_reques</code> which would skip the vnode callback code that sends a response. Then certain operations would hang during overload since the caller to <code>sync_spawn_command</code> would never be sent a response.
+A clause for <code>$gen_all_state_event</code> has been added to fix potential hang due to vnode proxy overload bug.</li>
+<li>[<a href="https://github.com/basho/riak_kv/pull/1575">riak_kv PR 1575</a>] Dots are now always dropped from CRDTS. Prior to this change the first write of a new CRDT contained  a dot in its metadata, since dots were only dropped on merge. This could potentially lead to sibling CRDTs on disk, since our merge code assumes CRDTs will never have dots. Typically this did not cause problems, but doing a basic GET could cause the siblings to be exposed to the client directly, and was causing the test_hll test to intermittently fail.</li>
+<li>[<a href="https://github.com/basho/riak/issues/509">riak Issue 509</a>/<a href="https://github.com/basho/node_package/pull/183">node_package PR 183</a>] SSL options in vm.args would let nodetool stop working. This was fixed by having node_package use an alias for nodetool rather than an environment variable.</li>
+<li>[<a href="https://github.com/basho/riak_core/pull/812">riak_core PR 812</a>] <code>riak_core_tcp_mon</code> became blocked when checking the socket options when SSL sockets were used for replication. The processes holding SSL sockets can block indefinitely when the TCP buffer is full and the getopt call goes through the SSL connection process. This is now fixed by peeking into to the SSL socket structure to find the options.</li>
+<li>[<a href="https://github.com/basho/riak_repl/issues/649">riak_repl Issue 649 </a>/<a href="https://github.com/basho/riak_repl/pull/652">riak_repl PR 652</a> and <a href="https://github.com/basho/riak_repl/pull/725">riak_repl PR 725</a>] A memory leak problem was discovered in Riak&rsquo;s replication. The leak was discovered in a sink cluster. The real-time sink and source connection has been fixed to ensure cleaner shutdown of processes within real-time replication. Also, real-time queues have been refactored to ignore exceptions from pull delivery functions and the error for unregistered consumers now includes debugging information.</li>
+<li>[<a href="https://github.com/basho/leveldb/pull/197">leveldb PR 197</a>] MoveItems are eLevelDB&rsquo;s iterator objects and are reusable. MoveItems communicate the reuse desire to the hot threads logic via the resubmit() property. When resubmit() returns true, hot threads executes the same task again immediately. Prior to merging eLevelDB&rsquo;s hot threads with LevelDB&rsquo;s hot threads, only eLevelDB&rsquo;s code supported the resubmit() property. The support required an extra five lines of code within the thread loop routine. Unfortunately, leveldb had two thread loop routines. Only one of the two received the extra five lines during the merge. The additional five lines supporting the resubmit() property have been added to LevelDB&rsquo;s second thread loop.</li>
+<li>[<a href="https://github.com/basho/yokozuna/commit/0b4486e9331048e371ea01aeb554fb42c5228d2f">yokozuna commit</a>] When making requests to Solr, if requests timed-out between the caller and ibrowse, ibrowse might still send a response slightly after the timeout. The post-timeout response would cause <code>yz_solrq_proc</code> to crash due to improperly handling the late reply message. This fix prevents late replies from causing crashes.</li>
+<li>[<a href="https://github.com/basho/yokozuna/commit/f6e16f9cbf14b193ab447cfce0bb8d6971fb93a4">yokozuna commit</a>] When Riak search and active anti-entropy are both enabled, all keys written to Riak KV must be hashed and written to yokozuna hash trees, even if they are not written to Solr. This is done asynchronously, by passing the data along to the yokozuna batching infrastructure. Initially, the queues responsible for handling these non-indexed items were not included in the list of required queues, so they would be shut down by the synchronization mechanism that is designed to keep the queue processes running in sync with the partitions and indexes that are currently hosted by the node in question. Non-indexed queues are now included in the list of required queues so they stay active.</li>
+</ul>
+
+<h3 id="additions">Additions</h3>
+
+<ul>
+<li>The Debian packages have been updated to support Debian 8. And Ubuntu 16.0.4 (Xenial) is  now supported. [<a href="https://github.com/basho/node_package/pull/204">node_package PR 204</a>]</li>
+<li>While cleaning up yz_stats.erl, we discovered that the yz_stats_worker was no longer being used. Made yz_stats use a background process to update exometer stats similar to riak_kv_stat. [<a href="https://github.com/basho/yokozuna/pull/646">yokozuna PR 646</a>]</li>
+</ul>
+
+<h3 id="changes">Changes</h3>
+
+<ul>
+<li>The following changes have been backported to KV 2.0.9: When calling <code>clear_trees</code>, trees are not updated before being destroyed; error returns are handled in vnode fold request; and build throttle may now be changed while a build is ongoing. Detailed information for each change is below. [<a href="https://github.com/basho/riak_kv/pull/1574">riak_kv PR 1574</a>]
+
+<ul>
+<li>When the hashtree is about to be destroyed, via <code>clear_trees</code>, it can now simply close without updating.</li>
+<li>When <code>fold_fun</code> called <code>riak_core_master:sync_command</code>, the result of the call was ignored. Now, <code>sync_command</code> returns an <code>{error, overload}</code> if the vnode is overloaded and the non-success result causes the tree build to fail.</li>
+<li>The build throttle can be changed while a build is in-progress. Before, the size and wait time of a build could only be changed before a build started. Once the build began, the settings could not be altered, even if the vnode was large and you wanted to decrease the wait or increase the size.</li>
+</ul></li>
+<li>Empty exchange history is now handled. When <code>compute_exchange_info</code> is called on an index with no previous exchanges, <code>undefined</code> is now returned for the Recent and LastAll timestamps. [<a href="https://github.com/basho/riak_kv/pull/1576">riak_kv PR 1576</a>]</li>
+<li>Debug logging for ring metadata merges and ring membership has been added. There have been a few issues where rapidly updating the ring results in suboptimal behavior, and it has been difficult to debug due to the lack of logging in the riak_core_ring module. This logging can be enabled as needed. [<a href="https://github.com/basho/riak_core/pull/893">riak_core PR 893</a>]</li>
+<li>node_package has been updated to version 3.1.1. You may have to change permissions &amp; etc. Please read the <a href="https://github.com/basho/node_package/blob/develop/RELEASE-NOTES.md">node_package release notes</a> for more information.</li>
+<li>The Solr queue is now flushed on graceful shutdown. [<a href="https://github.com/basho/yokozuna/issues/581">yokozuna Issue 581</a> and <a href="https://github.com/basho/yokozuna/issues/582">yokozuna Issue 582</a>/<a href="https://github.com/basho/yokozuna/pull/610">yokozuna PR 610</a>]</li>
+<li>In KV 2.1, an <a href="https://github.com/basho/riak_kv/issues/679">issue</a> was fixed by having a monotonic counter fsynced to disk when the vnode starts. Additional detail has been added to the <code>vnodeid</code> warning, and the warning has been downgraded to warn from error since the per-key-epoch code stops this from being an error. [<a href="https://github.com/basho/riak_kv/pull/1344">riak_kv PR 1344</a>]</li>
+<li>Erlang sets have been changed to ordsets across data types for a small performance improvement. [<a href="https://github.com/basho/riak_dt/pull/117">riak_dt PR 117</a>]</li>
+<li>The <code>riak_core_table_owner</code> gen_server process has been introduced to replace the use of application environment variables with ETS tables. This was needed because <code>riak_core_throttle</code> had used application environment variables for maintaining its state. However, due to race conditions that manifested during application shutdown, errors would occur that prevented applications from shutting down cleanly.  The replacement avoids these errors and shutdown cleanly. [<a href="https://github.com/basho/riak_core/pull/861">riak_core PR 861</a>]</li>
+<li>Additional checks have been added to validate object values. It is possible to write objects to a CRDT-enabled bucket that are not, in fact, CRDTs. To prevent Yokozuna from attempting to merge non-CRDT objects, additional checks have implemented in <code>riak_kv_crdt:is_crdt_object</code> to validate that the object values are, in fact, CRDTs. [<a href="https://github.com/basho/yokozuna/pull/630">yokozuna PR 630</a>]</li>
+<li>All successful requests are now logged at the debug level. [<a href="https://github.com/basho/riak_core/pull/864">riak_core PR 864</a>]</li>
+<li>Calls to <code>yz_index_hashtree:compare/5</code> are now made on a separate process to allow the exchange FSM to handle other messages. This change prevents &lsquo;DOWN&rsquo; messages from failing to get through due to compare calls. [<a href="https://github.com/basho/yokozuna/commit/62ef65aee9fd035d4cce55219e0d0110509b02f7">yokozuna commit</a>]</li>
+<li><code>riak_core_vnode_manager</code> is now asked which <code>riak_kv_vnode</code> vnodes are currently running, and uses the list to figure out which queues need to run. This prevents the soleqs on fallback vnodes from stopping if they are still needed. [<a href="https://github.com/basho/yokozuna/commit/e228268148b02364da52801d787dc367999db9bf">yokozuna commit</a>]</li>
+<li>riak_kv has been changed such that updating an object also sends the old object being replaced. From that old object, we can extract any siblings and generate associated document ids to delete in Solr. [<a href="https://github.com/basho/riak_kv/pull/1520">riak_kv PR 1520</a>]</li>
+</ul>
+
+<h3 id="upgraded-components">Upgraded components</h3>
+
+<ul>
+<li>Bitcask has been upgraded to version 1.7.4</li>
+<li>Cuttlefish has been upgraded to version 2.0.2p2</li>
+<li>eLevelDB has been upgraded to version 2.0.23</li>
+<li>LevelDB has been upgraded to version 2.0.33</li>
+<li>node_package has been upgraded to version 4.0.0</li>
+<li>OTP has been upgraded to version R16B02_basho10</li>
+</ul>
+
+      </main>
+
+
+    </article>
+
+
+    <footer class="footer">
+
+  <div class="inline-block   footer__attributions">
+
+    <p>
+      This work is licensed under a
+      <br class="[bs] hidden-md-up">
+      <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+        Creative Commons Attribution 4.0 <br class="[bs] hidden-sm-up"> International Public License
+      </a>
+    </p>
+
+    <p>
+      © 2011-2017&nbsp;<a href="http://www.basho.com">Basho Technologies, Inc.</a>
+    </p>
+
+  </div>
+
+</footer>
+
+
+
+  </div>
+
+
+  <script src="//evadne.github.io/basho_docs/js/main.js" type="text/javascript"></script>
+
+</body>
+</html>

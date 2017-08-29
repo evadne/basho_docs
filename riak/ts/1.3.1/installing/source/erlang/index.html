@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+<html class="no-js" lang="en">
+
+
+
+
+<head>
+
+  <meta charset="utf-8">
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width">
+  <link rel="shortcut icon" href="//evadne.github.io/basho_docs/images/branding/favicon.ico" type="image/x-icon" />
+
+  <title>Installing Erlang</title>
+
+  <link href="//evadne.github.io/basho_docs/css/main.css" media="screen" rel="stylesheet" type="text/css">
+  <link rel="canonical" href="//evadne.github.io/basho_docs/riak/ts/latest/installing/source/erlang/" />
+  <!-- The below meta tags are included to allow JS code to use variables
+       defined in Hugo---our static site generator. -->
+  <meta name="project" content="riak_ts">
+  <meta name="version" content="1.3.1">
+  <meta name="project_relative_path" content="installing/source/erlang/">
+  <meta name="version_history_locations" content="[[&#34;1.3.0-1.3.1&#34;,&#34;installing/source/erlang&#34;],[&#34;1.4.0&#43;&#34;,&#34;setup/installing/source/erlang&#34;]]">
+
+</head>
+
+
+
+<body class="riak_ts 1.3.1  ">
+
+
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-T9C8MK" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-T9C8MK');</script>
+
+
+  
+<header class="banner">
+
+
+
+  
+  <div class="float-right   banner__menu-bars   [bs] hidden-md-up">
+    <div class="menu-bars   js_toggle-content-nav"></div>
+  </div>
+
+
+
+  
+  <div class="float-left   banner__docs-logo">
+    <a href="//evadne.github.io/basho_docs/index.html" class="block   docs-logo"><img class="docs-logo__image" src="//evadne.github.io/basho_docs/images/branding/basho_docs_logo.png"></a>
+  </div>
+
+
+
+  
+  <div class="overflow-hidden   banner__navigation-pane   [bs] hidden-sm-down">
+
+
+    
+    <div class="float-left    banner__intra-brand__width-wrapper">
+    <div class="float-right   banner__intra-brand">
+      <div class="float-right">
+        
+        <a class="inline-block   banner__brand-link" href="http://basho.com/">Basho</a><a class="inline-block   banner__brand-link" href="https://academy.basho.com">Academy</a><a class="inline-block   banner__brand-link" href="//evadne.github.io/basho_docs/community">Community</a><a class="inline-block   banner__brand-link" href="http://basho.com/contact">Contact</a></div>
+    </div>
+    </div>
+
+
+
+
+    
+    <div class="float-left    banner__intra-site__width-wrapper">
+    <div class="float-right   banner__intra-site">
+      
+      <a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/kv/latest/">Riak KV</a><a class="inline-block   banner__brand-link banner__brand-link--current">Riak TS</a><a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/cs/latest/">Riak CS</a></div>
+    </div>
+
+
+  </div>
+
+</header>
+
+
+
+  
+  
+
+
+
+<nav class="content-nav content-nav--top-size-full">
+
+
+
+
+  <div class="content-nav__fixed-top">
+    <form id="searchbox_011972015458788978446:zgdcy4fa-o0" class="search" action="">
+
+      <span class="block float-left   search__icon-container   docs-icon--search">|</span>
+
+      <span class="block overflow">
+        <input class="search__input" id="main-search" type="search" name="q" placeholder="Search">
+      </span>
+
+    </form>
+
+
+    <div class="clearfix   version-picker">
+
+  
+      <a class="inline-block float-left    product__title" href="//evadne.github.io/basho_docs/"><img class="product__logo" src="//evadne.github.io/basho_docs/images/branding/riak-logo.png">Riak<span class="product__title-highlight">TS</span>
+      </a>
+  
+
+      <div class="inline-block float-right   selector selector--version">
+        <header class="selector__title">Versions</header>
+        <button class="selector__btn" type="button">1.3.1</button>
+        <div    class="selector__arrow"></div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  
+  <div class="overflow-y-hidden   selector-pane__sizing-box selector-pane__sizing-box--hidden">
+  <div class="                    selector-pane__shadow-box">
+
+    
+    <div class="edge-fader edge-fader--left">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+    <div class="edge-fader edge-fader--right">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+
+    <div class="overflow-x        selector-pane__primary selector-pane--versions  js_edge-fader--target">
+      
+    </div>
+  </div>
+  </div>
+
+
+
+
+  
+  <div class="             content-nav__primary__sizing-box">
+  <div class="             content-nav__primary__shadow-box">
+  <div class="overflow-y   content-nav__primary">
+
+    <div class="content-nav__menu-container">
+
+      <ul class="content-menu
+                 content-menu--depth-0
+                 content-menu--open">
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--riak">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/" >
+              <span class="block   content-menu__item__right-border"><strong>Riak TS</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/releasenotes/" >
+        <span class="block   content-menu__item__right-border">Release Notes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li class="content-menu__download-entry">
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--download-alt">|</span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/downloads/" >
+              <span class="block   content-menu__item__right-border"><strong>Download Riak TS</strong></span>
+            </a>
+
+          </div>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--install">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                         content-menu__menu-toggle--open ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/installing/" >
+              <span class="block   content-menu__item__right-border"><strong>Install</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           content-menu--open"
+    style="display: block">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/installing/debian-ubuntu/" >
+        <span class="block   content-menu__item__right-border">Debian and Ubuntu</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/installing/mac-osx/" >
+        <span class="block   content-menu__item__right-border">Mac OS X</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/installing/rhel-centos/" >
+        <span class="block   content-menu__item__right-border">CentOS/RHEL</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/installing/aws/" >
+        <span class="block   content-menu__item__right-border">AWS Marketplace</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                   content-menu__menu-toggle--open ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/installing/source/" >
+        <span class="block   content-menu__item__right-border">Source</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           content-menu--open"
+    style="display: block">
+
+
+
+  <li>
+
+    <div class="content-menu__item  content-menu__item--selected ">
+
+      <a class="block overflow   content-menu__link--depth-2" >
+        <span class="block   content-menu__item__right-border">Erlang</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--database">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/using/" >
+              <span class="block   content-menu__item__right-border"><strong>Use</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/using/planning/" >
+        <span class="block   content-menu__item__right-border">Plan Your Table</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/using/creating-activating/" >
+        <span class="block   content-menu__item__right-border">Create and Activate Your Table</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/using/writingdata/" >
+        <span class="block   content-menu__item__right-border">Write Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/using/querying/" >
+        <span class="block   content-menu__item__right-border">Query Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/using/configuring/" >
+        <span class="block   content-menu__item__right-border">Configure</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/using/mdc/" >
+        <span class="block   content-menu__item__right-border">MDC</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/using/aggregate-functions/" >
+        <span class="block   content-menu__item__right-border">Aggregate Functions</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/using/arithmetic-operations/" >
+        <span class="block   content-menu__item__right-border">Arithmetic Operations</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/using/riakshell/" >
+        <span class="block   content-menu__item__right-border">riak shell</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--lambda">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/developing/" >
+              <span class="block   content-menu__item__right-border"><strong>Develop</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/developing/csharp/" >
+        <span class="block   content-menu__item__right-border">C#</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/developing/erlang/" >
+        <span class="block   content-menu__item__right-border">Erlang</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/developing/golang/" >
+        <span class="block   content-menu__item__right-border">Go</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/developing/http/" >
+        <span class="block   content-menu__item__right-border">HTTP</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/developing/java/" >
+        <span class="block   content-menu__item__right-border">Java</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/developing/nodejs/" >
+        <span class="block   content-menu__item__right-border">Node.js</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/developing/php/" >
+        <span class="block   content-menu__item__right-border">PHP</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/developing/python/" >
+        <span class="block   content-menu__item__right-border">Python</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/developing/ruby/" >
+        <span class="block   content-menu__item__right-border">Ruby</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--tools">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/add-ons/" >
+              <span class="block   content-menu__item__right-border"><strong>Add-ons</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/add-ons/spark-riak-connector/" >
+        <span class="block   content-menu__item__right-border">Spark-Riak Connector</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/add-ons/spark-riak-connector/quick-start/" >
+        <span class="block   content-menu__item__right-border">Quick Start Guide</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/add-ons/spark-riak-connector/getting/" >
+        <span class="block   content-menu__item__right-border">Get Spark-Riak Connector</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/add-ons/spark-riak-connector/building-testing/" >
+        <span class="block   content-menu__item__right-border">Building &amp; Testing</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/add-ons/spark-riak-connector/usage/" >
+        <span class="block   content-menu__item__right-border">Usage</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/add-ons/spark-riak-connector/usage/config-spark-context/" >
+        <span class="block   content-menu__item__right-border">Spark Context Configuration</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/add-ons/spark-riak-connector/usage/reading-data/" >
+        <span class="block   content-menu__item__right-border">Reading Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/add-ons/spark-riak-connector/usage/writing-data/" >
+        <span class="block   content-menu__item__right-border">Writing Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/add-ons/spark-riak-connector/usage/dataframes/" >
+        <span class="block   content-menu__item__right-border">Working With Spark Dataframes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/add-ons/spark-riak-connector/usage/dates/" >
+        <span class="block   content-menu__item__right-border">Working With TS Dates</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/add-ons/spark-riak-connector/usage/range-query-partition/" >
+        <span class="block   content-menu__item__right-border">TS Table Range Query Partitioning</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/add-ons/spark-riak-connector/usage/bulk-write/" >
+        <span class="block   content-menu__item__right-border">Bulk Write</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/add-ons/spark-riak-connector/usage/streaming-example/" >
+        <span class="block   content-menu__item__right-border">Spark Streaming Example</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--beaker">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/learn-about/" >
+              <span class="block   content-menu__item__right-border"><strong>Learn</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/learn-about/bestpractices/" >
+        <span class="block   content-menu__item__right-border">Best Practices</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/learn-about/sqlriakts/" >
+        <span class="block   content-menu__item__right-border">SQL for Riak TS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.1/learn-about/tablearchitecture/" >
+        <span class="block   content-menu__item__right-border">Table Architecture </span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+        <li class="content-menu__blank-entry"></li>
+
+      </ul>
+
+    </div>
+
+
+
+    <div class="content-nav__fixed-bottom">
+
+      <ul class="content-menu">
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--comments">|</span>
+
+            <a class="block overflow" href="//evadne.github.io/basho_docs/community">
+              <span class="block   content-menu__item__right-border">
+                <sub>Want some extra help?</sub><br>
+                <strong>Ask our Community</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--question-sign">|</span>
+
+            <a class="block overflow" href="http://basho.com/contact">
+              <span class="block   content-menu__item__right-border">
+                <sub>Need to chat?</sub><br>
+                <strong>Contact us directly</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--github-alt">|</span>
+
+            <a class="block overflow" href="https://github.com/basho/basho_docs/edit/master/content/riak/ts/1.3.1/installing/source/erlang.md">
+              <span class="block   content-menu__item__right-border">
+                <sub>Noticed a typo?</sub><br>
+                <strong>Correct it in GitHub</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+  </div>
+  </div>
+
+
+
+</nav>
+
+<script>
+  (function() {
+    var cx = '011972015458788978446:zgdcy4fa-o0';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<div style="width:0px;overflow:hidden;height:0px;">
+  <gcse:search></gcse:search>
+</div>
+
+
+
+
+
+
+  <div class="content-well">
+
+
+    <article class="main-article">
+
+
+      
+
+<header class="front-matter">
+
+
+  <h1 class="front-matter__title">
+
+    
+    <br>
+    Installing Erlang
+
+  </h1>
+  <nav class="table-of-contents"></nav>
+
+
+</header>
+
+
+      <main>
+        
+
+<blockquote>
+<p><strong>NOTE:</strong> Pre-packaged versions of Riak TS include an Erlang installation.</p>
+</blockquote>
+
+<p>If you are building Riak TS from <a href="../../source">source</a>, you will need to install <a href="https://github.com/basho/otp/archive/OTP_R16B02_basho10.tar.gz">Basho&rsquo;s patched version of Erlang</a>. If you do not use this version of Erlang, you will not be able to use Riak TS&rsquo;s security features.</p>
+
+<blockquote>
+<p><strong>Note on Official Support</strong></p>
+
+<p>Only packaged Riak TS installs are officially supported.</p>
+</blockquote>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+<li><a href="#kerl-prerequisites">kerl</a></li>
+<li><a href="#debian-ubuntu-prerequisites">Debian/Ubuntu</a></li>
+<li><a href="#mac-os-x-prerequisites">Mac OS X</a></li>
+<li><a href="#rhel-centos-prerequisites">RHEL/CentOS</a></li>
+</ul>
+
+<p>To build and install Erlang you must have a GNU-compatible build system and these tools:</p>
+
+<p><strong>Unpacking</strong></p>
+
+<ul>
+<li><a href="http://www.gzip.org/">GNU unzip</a> or a modern uncompressing utility.</li>
+<li><a href="http://www.gnu.org/software/tar/">GNU Tar</a> for working with GNU TAR archives.</li>
+</ul>
+
+<p><strong>Building</strong></p>
+
+<ul>
+<li><a href="http://www.gnu.org/software/autoconf/autoconf.html">autoconf</a>: generates configure scripts.</li>
+<li><a href="http://www.gnu.org/software/make/">make</a>: generates executables and other non-source files of a program.</li>
+<li><a href="https://gcc.gnu.org/">gcc</a>: for compiling C.</li>
+<li><a href="http://www.gnu.org/software/ncurses/">ncurses</a>: for terminal-based interfaces.</li>
+<li><a href="https://www.openssl.org/">OpenSSL</a>: toolkit that implements SSL and TSL protocols.</li>
+<li><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java SE JDK</a>: platform for deploying Java.</li>
+</ul>
+
+<h3 id="kerl-prerequisites">kerl Prerequisites</h3>
+
+<p><a href="https://github.com/yrashk/kerl">kerl</a> is the quickest way to install different versions of Erlang on most systems.</p>
+
+<p>Install kerl by running the following command:</p>
+
+<pre><code class="language-bash">curl -O https://raw.githubusercontent.com/spawngrid/kerl/master/kerl
+chmod a+x kerl
+</code></pre>
+
+<p>If you are using Mac OS X, see the following section for additional requirements before building with kerl.</p>
+
+<p>Otherwise, continue with <a href="#installing-with-kerl">Installing with kerl</a>.</p>
+
+<h4 id="configuring-kerl-on-mac-os-x">Configuring kerl on Mac OS X</h4>
+
+<p>To compile Erlang as 64-bit on Mac OS X you need to instruct kerl to pass the correct flags to the <code>configure</code> command.</p>
+
+<p>Start by by creating a <code>~/.kerlrc</code> file:</p>
+
+<pre><code class="language-bash">touch ~/.kerlrc
+</code></pre>
+
+<p>Next add the following contents to your <code>~/.kerlrc</code> file:</p>
+
+<pre><code class="language-shell">KERL_CONFIGURE_OPTIONS=&quot;--disable-hipe --enable-smp-support --enable-threads
+                        --enable-kernel-poll --without-odbc --enable-darwin-64bit&quot;
+</code></pre>
+
+<p>On OS X 10.9 (Mavericks) or later, you may need to install <a href="http://www.gnu.org/software/autoconf/autoconf.html">autoconf</a>. You can check for the presence of autoconf by running:</p>
+
+<pre><code class="language-shell">which autoconf
+</code></pre>
+
+<p>If this returns <code>autoconf not found</code>, install autoconf with:</p>
+
+<p><a href="http://brew.sh/">Homebrew</a>:</p>
+
+<pre><code class="language-shell">brew install autoconf
+</code></pre>
+
+<p>Or curl:</p>
+
+<pre><code class="language-shell">curl -O http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz
+tar zxvf autoconf-2.69.tar.gz
+cd autoconf-2.69
+./configure &amp;&amp; make &amp;&amp; sudo make install
+</code></pre>
+
+<p>Once you&rsquo;ve configured kerl and installed autoconf continue with <a href="#installing-with-kerl">Installing with kerl</a>.</p>
+
+<h3 id="debian-ubuntu-prerequisites">Debian/Ubuntu Prerequisites</h3>
+
+<h4 id="dependencies">Dependencies</h4>
+
+<p>To install the required dependencies run the following <code>apt-get</code> commands:</p>
+
+<pre><code class="language-bash">sudo apt-get update
+sudo apt-get install build-essential autoconf libncurses5-dev openssl libssl-dev fop xsltproc unixodbc-dev git
+</code></pre>
+
+<h4 id="gui-dependencies">GUI Dependencies</h4>
+
+<p>If you&rsquo;re using a graphical environment and want to use Erlang&rsquo;s GUI utilities, you will need to install additional dependencies.</p>
+
+<blockquote>
+<p><strong>Note on build output</strong></p>
+
+<p>These packages are not required for operation of a Riak node.
+Notes in the build output about missing support for wxWidgets can be
+safely ignored when installing Riak in a typical non-graphical server
+environment.</p>
+</blockquote>
+
+<p>To install packages for graphics support use the following <code>apt-get</code> command:</p>
+
+<pre><code class="language-bash">sudo apt-get install libwxbase2.8 libwxgtk2.8-dev libqt4-opengl-dev
+</code></pre>
+
+<h4 id="next-steps">Next Steps</h4>
+
+<p>Once you&rsquo;ve installed the prerequisites, continue with <a href="#installing-on-debian-ubuntu">Installing on Debian/Ubuntu</a>.</p>
+
+<h3 id="mac-os-x-prerequisites">Mac OS X Prerequisites</h3>
+
+<ul>
+<li><a href="http://developer.apple.com/">XCode Developer Tools</a> - Apple Software Development Tools.</li>
+<li><a href="http://brew.sh/">Homebrew</a> <em>(optional)</em> - Package Manager.</li>
+</ul>
+
+<p>First install <a href="http://developer.apple.com/">XCode Developer Tools</a>. XCode is a set software development tools for developing on OS X.</p>
+
+<p>We also recommend installing <a href="http://brew.sh/">Homebrew</a>, a package manager for OS X. Homebrew is not required to install Erlang.</p>
+
+<p>Next, if you are running OS X 10.9 (Mavericks) or later, you may need to
+install <a href="http://www.gnu.org/software/autoconf/autoconf.html">autoconf</a>. To check for the presence of autoconf run:</p>
+
+<pre><code class="language-bash">which autoconf
+</code></pre>
+
+<p>If this returns <code>autoconf not found</code>, install autoconf with:</p>
+
+<p><a href="http://brew.sh/">Homebrew</a>:</p>
+
+<pre><code class="language-bash">brew install autoconf
+</code></pre>
+
+<p>Or curl:</p>
+
+<pre><code class="language-bash">curl -O http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz
+tar zxvf autoconf-2.69.tar.gz
+cd autoconf-2.69
+./configure &amp;&amp; make &amp;&amp; sudo make install
+</code></pre>
+
+<p>Once you&rsquo;ve installed the prerequisites continue with <a href="#installing-on-mac-os-x">Installing on Mac OS X</a>.</p>
+
+<h3 id="rhel-centos-prerequisites">RHEL/CentOS Prerequisites</h3>
+
+<h4 id="dependencies-1">Dependencies</h4>
+
+<p>To install the required dependencies run the following <code>yum</code> command:</p>
+
+<pre><code class="language-bash">sudo yum install gcc gcc-c++ glibc-devel make ncurses-devel openssl-devel autoconf java-1.8.0-openjdk-devel git
+</code></pre>
+
+<h4 id="gui-dependencies-1">GUI Dependencies</h4>
+
+<p>If you&rsquo;re using a graphical environment and want to use Erlang&rsquo;s GUI utilities, you will need to install additional dependencies.</p>
+
+<p>To install packages for graphics support use the following <code>blank</code> command:</p>
+
+<pre><code class="language-bash">sudo yum install wxBase.x86_64
+</code></pre>
+
+<h4 id="next-steps-1">Next Steps</h4>
+
+<p>Once you&rsquo;ve installed the prerequisites, continue with <a href="#installing-on-rhel-centos">Installing on RHEL/CentOS</a>.</p>
+
+<h2 id="installation">Installation</h2>
+
+<ul>
+<li><a href="#installing-with-kerl">Installing with kerl</a></li>
+<li><a href="#installing-on-debian-ubuntu">Installing on Debian/Ubuntu</a></li>
+<li><a href="#installing-on-mac-os-x">Installing on Mac OS X</a></li>
+<li><a href="#installing-on-rhel-centos">Installing on RHEL/CentOS</a></li>
+</ul>
+
+<h2 id="installing-with-kerl">Installing with kerl</h2>
+
+<p>First make sure you have installed the necessary dependencies and prerequisites found in <a href="#kerl-prerequisites">kerl Prerequisites</a>.</p>
+
+<p>With <a href="https://github.com/yrashk/kerl">kerl</a> installed, you can install Basho&rsquo;s recommended version of
+Erlang <a href="https://github.com/basho/otp">from Github</a> using the following
+command:</p>
+
+<pre><code class="language-bash">./kerl build git git://github.com/basho/otp.git OTP_R16B02_basho10 R16B02-basho10
+</code></pre>
+
+<p>This builds the Erlang distribution and performs all of the steps
+required to manually install Erlang for you.</p>
+
+<p>After Erlang is successfully built, you can install the build as follows:</p>
+
+<pre><code class="language-bash">./kerl install R16B02-basho10 ~/erlang/R16B02-basho10
+. ~/erlang/R16B02-basho10/activate
+</code></pre>
+
+<p>The last line activates the Erlang build that was just installed into
+<code>~/erlang/R16B02-basho10</code>.</p>
+
+<blockquote>
+<p>See the kerl <a href="https://github.com/yrashk/kerl">README</a> for more details on the available commands.</p>
+</blockquote>
+
+<p>Confirm Erlang installed to the correct location:</p>
+
+<pre><code class="language-bash">which erl
+</code></pre>
+
+<p>And start Erlang from your terminal with:</p>
+
+<pre><code class="language-bash">erl
+</code></pre>
+
+<h2 id="installing-on-debian-ubuntu">Installing on Debian/Ubuntu</h2>
+
+<p>First make sure you have installed the necessary dependencies found in <a href="#debian-ubuntu-prerequisites">Debian/Ubuntu Prerequisites</a>.</p>
+
+<p>Next download <a href="https://github.com/basho/otp/archive/OTP_R16B02_basho10.tar.gz">Basho&rsquo;s patched version of Erlang</a>.</p>
+
+<p>Using <code>wget</code>:</p>
+
+<pre><code class="language-bash">wget http://s3.amazonaws.com/downloads.basho.com/erlang/otp_src_R16B02-basho10.tar.gz
+</code></pre>
+
+<p>Then unpack the download with:</p>
+
+<pre><code class="language-bash">tar zxvf otp_src_R16B02-basho10.tar.gz
+</code></pre>
+
+<p>Next <code>cd</code> into the unpacked directory, build and install Erlang with:</p>
+
+<pre><code class="language-bash">cd OTP_R16B02_basho10
+./otp_build autoconf
+./configure &amp;&amp; make &amp;&amp; sudo make install
+</code></pre>
+
+<p>Confirm Erlang installed to the correct location:</p>
+
+<pre><code class="language-bash">which erl
+</code></pre>
+
+<p>And start Erlang from your terminal with:</p>
+
+<pre><code class="language-bash">erl
+</code></pre>
+
+<h2 id="installing-on-mac-os-x">Installing on Mac OS X</h2>
+
+<p>First make sure you have installed the necessary dependencies found in <a href="#mac-os-x-prerequisites">Mac OS X Prerequisites</a>.</p>
+
+<p>You can install Erlang in several ways on OS X:</p>
+
+<ul>
+<li><a href="#installing-on-mac-os-x-from-source">From Source</a></li>
+<li><a href="#installing-on-mac-os-x-with-homebrew">Homebrew</a></li>
+<li><a href="#installing-on-mac-os-x-with-macports">MacPorts</a></li>
+</ul>
+
+<h3 id="installing-on-mac-os-x-from-source">Installing on Mac OS X from Source</h3>
+
+<p>Next download <a href="https://github.com/basho/otp/archive/OTP_R16B02_basho10.tar.gz">Basho&rsquo;s patched version of Erlang</a>:</p>
+
+<pre><code class="language-bash">curl -O http://s3.amazonaws.com/downloads.basho.com/erlang/otp_src_R16B02-basho10.tar.gz
+</code></pre>
+
+<p>Then unpack the download with:</p>
+
+<pre><code class="language-bash">tar zxvf otp_src_R16B02-basho10.tar.gz
+</code></pre>
+
+<p>Follow the steps below to configure Erlang for your operating system.</p>
+
+<h4 id="configuring-erlang-on-mavericks-os-x-10-9-mountain-lion-os-x-10-8-and-lion-os-x-10-7">Configuring Erlang on Mavericks (OS X 10.9), Mountain Lion (OS X 10.8), and Lion (OS X 10.7)</h4>
+
+<p>If you&rsquo;re on Mavericks (OS X 10.9), Mountain Lion (OS X 10.8), or Lion
+(OS X 10.7) you can use LLVM (the default) or GCC to compile Erlang.</p>
+
+<p>Using LLVM:</p>
+
+<pre><code class="language-bash">CFLAGS=-O0 ./configure --disable-hipe --enable-smp-support --enable-threads \
+--enable-kernel-poll --enable-darwin-64bit
+</code></pre>
+
+<p>Or if you prefer GCC:</p>
+
+<pre><code class="language-bash">CC=gcc-4.2 CPPFLAGS='-DNDEBUG' MAKEFLAGS='-j 3' \
+./configure --disable-hipe --enable-smp-support --enable-threads \
+--enable-kernel-poll --enable-darwin-64bit
+</code></pre>
+
+<h4 id="configuring-erlang-on-snow-leopard-os-x-10-6">Configuring Erlang on Snow Leopard (OS X 10.6)</h4>
+
+<p>If you&rsquo;re on Snow Leopard (OS X 10.6) or Leopard (OS X 10.5) with an
+Intel processor:</p>
+
+<pre><code class="language-bash">./configure --disable-hipe --enable-smp-support --enable-threads \
+--enable-kernel-poll  --enable-darwin-64bit
+</code></pre>
+
+<h4 id="configuring-erlang-on-older-versions-of-os-x">Configuring Erlang on older versions of OS X</h4>
+
+<p>If you&rsquo;re on a non-Intel processor or older version of OS X:</p>
+
+<pre><code class="language-bash">./configure --disable-hipe --enable-smp-support --enable-threads \
+--enable-kernel-poll
+</code></pre>
+
+<p>After you&rsquo;ve configured your system <code>cd</code> into the unpacked directory, build and install Erlang with:</p>
+
+<pre><code class="language-bash">cd OTP_R16B02_basho10
+./otp_build autoconf
+./configure &amp;&amp; make &amp;&amp; sudo make install
+</code></pre>
+
+<p>Confirm Erlang installed to the correct location by running:</p>
+
+<pre><code class="language-bash">which erl
+</code></pre>
+
+<p>And start Erlang from your terminal with:</p>
+
+<pre><code class="language-bash">erl
+</code></pre>
+
+<h3 id="installing-on-mac-os-x-with-homebrew">Installing on Mac OS X with Homebrew</h3>
+
+<p>To install Erlang with Homebrew, use this command:</p>
+
+<pre><code class="language-bash">brew install erlang
+</code></pre>
+
+<p>Confirm Erlang installed to the correct location by running:</p>
+
+<pre><code class="language-bash">which erl
+</code></pre>
+
+<p>And start Erlang from your terminal with:</p>
+
+<pre><code class="language-bash">erl
+</code></pre>
+
+<h3 id="installing-on-mac-os-x-with-macports">Installing on Mac OS X with MacPorts</h3>
+
+<p>Installing with MacPorts:</p>
+
+<pre><code class="language-bash">port install erlang +ssl
+</code></pre>
+
+<p>Confirm Erlang installed to the correct location by running:</p>
+
+<pre><code class="language-bash">which erl
+</code></pre>
+
+<p>And start Erlang from your terminal with:</p>
+
+<pre><code class="language-bash">erl
+</code></pre>
+
+<h2 id="installing-on-rhel-centos">Installing on RHEL/CentOS</h2>
+
+<p>First make sure you have installed the necessary dependencies and prerequisites found in <a href="#rhel-centos-prerequisites">RHEL/CentOS Prerequisites</a>.</p>
+
+<p>Using <code>wget</code>:</p>
+
+<pre><code class="language-bash">wget http://s3.amazonaws.com/downloads.basho.com/erlang/otp_src_R16B02-basho10.tar.gz
+</code></pre>
+
+<p>Then unpack the download with:</p>
+
+<pre><code class="language-bash">tar zxvf otp_src_R16B02-basho10.tar.gz
+</code></pre>
+
+<p>Next <code>cd</code> into the unpacked directory, build and install Erlang with:</p>
+
+<pre><code class="language-bash">cd OTP_R16B02_basho10
+./otp_build autoconf
+./configure &amp;&amp; make &amp;&amp; sudo make install
+</code></pre>
+
+<blockquote>
+<p><strong>Note for RHEL6/CentOS6</strong></p>
+
+<p>In certain versions of RHEL6 and CentO6 the <code>openSSL-devel</code> package
+ships with Elliptical Curve Cryptography partially disabled. To
+communicate this to Erlang and prevent compile- and run-time errors, the
+environment variable <code>CFLAGS=&quot;-DOPENSSL_NO_EC=1&quot;</code> needs to be added to
+Erlang&rsquo;s <code>./configure</code> call.</p>
+
+<p>The full <code>make</code> invocation then becomes</p>
+
+<pre><code class="language-bash">CFLAGS=&quot;-DOPENSSL_NO_EC=1&quot; ./configure &amp;&amp; make &amp;&amp; sudo make install
+</code></pre>
+</blockquote>
+
+<p>Confirm Erlang installed to the correct location:</p>
+
+<pre><code class="language-bash">which erl
+</code></pre>
+
+<p>And start Erlang from your terminal with:</p>
+
+<pre><code class="language-bash">erl
+</code></pre>
+
+      </main>
+
+
+    </article>
+
+
+    <footer class="footer">
+
+  <div class="inline-block   footer__attributions">
+
+    <p>
+      This work is licensed under a
+      <br class="[bs] hidden-md-up">
+      <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+        Creative Commons Attribution 4.0 <br class="[bs] hidden-sm-up"> International Public License
+      </a>
+    </p>
+
+    <p>
+      © 2011-2017&nbsp;<a href="http://www.basho.com">Basho Technologies, Inc.</a>
+    </p>
+
+  </div>
+
+</footer>
+
+
+
+  </div>
+
+
+  <script src="//evadne.github.io/basho_docs/js/main.js" type="text/javascript"></script>
+
+</body>
+</html>

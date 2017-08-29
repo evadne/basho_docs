@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+<html class="no-js" lang="en">
+
+
+
+
+<head>
+
+  <meta charset="utf-8">
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width">
+  <link rel="shortcut icon" href="//evadne.github.io/basho_docs/images/branding/favicon.ico" type="image/x-icon" />
+
+  <title>Using riak shell</title>
+
+  <link href="//evadne.github.io/basho_docs/css/main.css" media="screen" rel="stylesheet" type="text/css">
+  <link rel="canonical" href="//evadne.github.io/basho_docs/riak/ts/latest/using/riakshell/" />
+  <!-- The below meta tags are included to allow JS code to use variables
+       defined in Hugo---our static site generator. -->
+  <meta name="project" content="riak_ts">
+  <meta name="version" content="1.3.0">
+  <meta name="project_relative_path" content="using/riakshell/">
+  <meta name="version_history_in"        content="1.2.0&#43;">
+
+</head>
+
+
+
+<body class="riak_ts 1.3.0  ">
+
+
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-T9C8MK" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-T9C8MK');</script>
+
+
+  
+<header class="banner">
+
+
+
+  
+  <div class="float-right   banner__menu-bars   [bs] hidden-md-up">
+    <div class="menu-bars   js_toggle-content-nav"></div>
+  </div>
+
+
+
+  
+  <div class="float-left   banner__docs-logo">
+    <a href="//evadne.github.io/basho_docs/index.html" class="block   docs-logo"><img class="docs-logo__image" src="//evadne.github.io/basho_docs/images/branding/basho_docs_logo.png"></a>
+  </div>
+
+
+
+  
+  <div class="overflow-hidden   banner__navigation-pane   [bs] hidden-sm-down">
+
+
+    
+    <div class="float-left    banner__intra-brand__width-wrapper">
+    <div class="float-right   banner__intra-brand">
+      <div class="float-right">
+        
+        <a class="inline-block   banner__brand-link" href="http://basho.com/">Basho</a><a class="inline-block   banner__brand-link" href="https://academy.basho.com">Academy</a><a class="inline-block   banner__brand-link" href="//evadne.github.io/basho_docs/community">Community</a><a class="inline-block   banner__brand-link" href="http://basho.com/contact">Contact</a></div>
+    </div>
+    </div>
+
+
+
+
+    
+    <div class="float-left    banner__intra-site__width-wrapper">
+    <div class="float-right   banner__intra-site">
+      
+      <a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/kv/latest/">Riak KV</a><a class="inline-block   banner__brand-link banner__brand-link--current">Riak TS</a><a class="inline-block   banner__brand-link " href="//evadne.github.io/basho_docs/riak/cs/latest/">Riak CS</a></div>
+    </div>
+
+
+  </div>
+
+</header>
+
+
+
+  
+  
+
+
+
+<nav class="content-nav content-nav--top-size-full">
+
+
+
+
+  <div class="content-nav__fixed-top">
+    <form id="searchbox_011972015458788978446:zgdcy4fa-o0" class="search" action="">
+
+      <span class="block float-left   search__icon-container   docs-icon--search">|</span>
+
+      <span class="block overflow">
+        <input class="search__input" id="main-search" type="search" name="q" placeholder="Search">
+      </span>
+
+    </form>
+
+
+    <div class="clearfix   version-picker">
+
+  
+      <a class="inline-block float-left    product__title" href="//evadne.github.io/basho_docs/"><img class="product__logo" src="//evadne.github.io/basho_docs/images/branding/riak-logo.png">Riak<span class="product__title-highlight">TS</span>
+      </a>
+  
+
+      <div class="inline-block float-right   selector selector--version">
+        <header class="selector__title">Versions</header>
+        <button class="selector__btn" type="button">1.3.0</button>
+        <div    class="selector__arrow"></div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  
+  <div class="overflow-y-hidden   selector-pane__sizing-box selector-pane__sizing-box--hidden">
+  <div class="                    selector-pane__shadow-box">
+
+    
+    <div class="edge-fader edge-fader--left">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+    <div class="edge-fader edge-fader--right">
+      <span class="inline-block   edge-fader__arrow edge-fader__arrow--invisible"></span>
+    </div>
+
+    <div class="overflow-x        selector-pane__primary selector-pane--versions  js_edge-fader--target">
+      
+    </div>
+  </div>
+  </div>
+
+
+
+
+  
+  <div class="             content-nav__primary__sizing-box">
+  <div class="             content-nav__primary__shadow-box">
+  <div class="overflow-y   content-nav__primary">
+
+    <div class="content-nav__menu-container">
+
+      <ul class="content-menu
+                 content-menu--depth-0
+                 content-menu--open">
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--riak">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/" >
+              <span class="block   content-menu__item__right-border"><strong>Riak TS</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/releasenotes/" >
+        <span class="block   content-menu__item__right-border">Release Notes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li class="content-menu__download-entry">
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--download-alt">|</span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/downloads/" >
+              <span class="block   content-menu__item__right-border"><strong>Download Riak TS</strong></span>
+            </a>
+
+          </div>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--install">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/installing/" >
+              <span class="block   content-menu__item__right-border"><strong>Install</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/installing/debian-ubuntu/" >
+        <span class="block   content-menu__item__right-border">Debian and Ubuntu</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/installing/mac-osx/" >
+        <span class="block   content-menu__item__right-border">Mac OS X</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/installing/rhel-centos/" >
+        <span class="block   content-menu__item__right-border">CentOS/RHEL</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/installing/aws/" >
+        <span class="block   content-menu__item__right-border">AWS Marketplace</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/installing/source/" >
+        <span class="block   content-menu__item__right-border">Source</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/installing/source/erlang/" >
+        <span class="block   content-menu__item__right-border">Erlang</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--database">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                         content-menu__menu-toggle--open ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/using/" >
+              <span class="block   content-menu__item__right-border"><strong>Use</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           content-menu--open"
+    style="display: block">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/using/planning/" >
+        <span class="block   content-menu__item__right-border">Plan Your Table</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/using/creating-activating/" >
+        <span class="block   content-menu__item__right-border">Create and Activate Your Table</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/using/writingdata/" >
+        <span class="block   content-menu__item__right-border">Write Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/using/querying/" >
+        <span class="block   content-menu__item__right-border">Query Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/using/configuring/" >
+        <span class="block   content-menu__item__right-border">Configure</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/using/mdc/" >
+        <span class="block   content-menu__item__right-border">MDC</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/using/aggregate-functions/" >
+        <span class="block   content-menu__item__right-border">Aggregate Functions</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/using/arithmetic-operations/" >
+        <span class="block   content-menu__item__right-border">Arithmetic Operations</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item  content-menu__item--selected ">
+
+      <a class="block overflow   content-menu__link--depth-1" >
+        <span class="block   content-menu__item__right-border">riak shell</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--lambda">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/developing/" >
+              <span class="block   content-menu__item__right-border"><strong>Develop</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/developing/csharp/" >
+        <span class="block   content-menu__item__right-border">C#</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/developing/erlang/" >
+        <span class="block   content-menu__item__right-border">Erlang</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/developing/golang/" >
+        <span class="block   content-menu__item__right-border">Go</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/developing/http/" >
+        <span class="block   content-menu__item__right-border">HTTP</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/developing/java/" >
+        <span class="block   content-menu__item__right-border">Java</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/developing/nodejs/" >
+        <span class="block   content-menu__item__right-border">Node.js</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/developing/php/" >
+        <span class="block   content-menu__item__right-border">PHP</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/developing/python/" >
+        <span class="block   content-menu__item__right-border">Python</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/developing/ruby/" >
+        <span class="block   content-menu__item__right-border">Ruby</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--tools">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/add-ons/" >
+              <span class="block   content-menu__item__right-border"><strong>Add-ons</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/add-ons/spark-riak-connector/" >
+        <span class="block   content-menu__item__right-border">Spark-Riak Connector</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-2
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/add-ons/spark-riak-connector/quick-start/" >
+        <span class="block   content-menu__item__right-border">Quick Start Guide</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/add-ons/spark-riak-connector/getting/" >
+        <span class="block   content-menu__item__right-border">Get Spark-Riak Connector</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/add-ons/spark-riak-connector/building-testing/" >
+        <span class="block   content-menu__item__right-border">Building &amp; Testing</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+      <span class="block float-right   content-menu__menu-toggle
+                  ">
+      </span>
+
+      <a class="block overflow   content-menu__link--depth-2"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/add-ons/spark-riak-connector/usage/" >
+        <span class="block   content-menu__item__right-border">Usage</span>
+      </a>
+
+    </div>
+    
+    
+
+
+<ul class="content-menu
+           content-menu--depth-3
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/add-ons/spark-riak-connector/usage/config-spark-context/" >
+        <span class="block   content-menu__item__right-border">Spark Context Configuration</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/add-ons/spark-riak-connector/usage/reading-data/" >
+        <span class="block   content-menu__item__right-border">Reading Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/add-ons/spark-riak-connector/usage/writing-data/" >
+        <span class="block   content-menu__item__right-border">Writing Data</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/add-ons/spark-riak-connector/usage/dataframes/" >
+        <span class="block   content-menu__item__right-border">Working With Spark Dataframes</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/add-ons/spark-riak-connector/usage/dates/" >
+        <span class="block   content-menu__item__right-border">Working With TS Dates</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/add-ons/spark-riak-connector/usage/range-query-partition/" >
+        <span class="block   content-menu__item__right-border">TS Table Range Query Partitioning</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/add-ons/spark-riak-connector/usage/bulk-write/" >
+        <span class="block   content-menu__item__right-border">Bulk Write</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-3"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/add-ons/spark-riak-connector/usage/streaming-example/" >
+        <span class="block   content-menu__item__right-border">Spark Streaming Example</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+
+        <li >
+
+          <div class="content-menu__item ">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--beaker">|</span>
+            <span class="block float-right   content-menu__menu-toggle
+                        ">
+            </span>
+
+            <a class="block overflow   content-menu__link--depth-0"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/learn-about/" >
+              <span class="block   content-menu__item__right-border"><strong>Learn</strong></span>
+            </a>
+
+          </div>
+          
+          
+
+
+<ul class="content-menu
+           content-menu--depth-1
+           "
+    style="display: none">
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/learn-about/bestpractices/" >
+        <span class="block   content-menu__item__right-border">Best Practices</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/learn-about/sqlriakts/" >
+        <span class="block   content-menu__item__right-border">SQL for Riak TS</span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+  <li>
+
+    <div class="content-menu__item ">
+
+      <a class="block overflow   content-menu__link--depth-1"  href="//evadne.github.io/basho_docs/riak/ts/1.3.0/learn-about/tablearchitecture/" >
+        <span class="block   content-menu__item__right-border">Table Architecture </span>
+      </a>
+
+    </div>
+
+  </li>
+
+
+
+</ul>
+
+        </li>
+
+        <li class="content-menu__blank-entry"></li>
+
+      </ul>
+
+    </div>
+
+
+
+    <div class="content-nav__fixed-bottom">
+
+      <ul class="content-menu">
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--comments">|</span>
+
+            <a class="block overflow" href="//evadne.github.io/basho_docs/community">
+              <span class="block   content-menu__item__right-border">
+                <sub>Want some extra help?</sub><br>
+                <strong>Ask our Community</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--question-sign">|</span>
+
+            <a class="block overflow" href="http://basho.com/contact">
+              <span class="block   content-menu__item__right-border">
+                <sub>Need to chat?</sub><br>
+                <strong>Contact us directly</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+        <li>
+          <div class="content-menu__item">
+
+            <span class="block float-left   content-menu__icon-container   docs-icon--github-alt">|</span>
+
+            <a class="block overflow" href="https://github.com/basho/basho_docs/edit/master/content/riak/ts/1.3.0/using/riakshell.md">
+              <span class="block   content-menu__item__right-border">
+                <sub>Noticed a typo?</sub><br>
+                <strong>Correct it in GitHub</strong>
+              </span>
+            </a>
+
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+  </div>
+  </div>
+
+
+
+</nav>
+
+<script>
+  (function() {
+    var cx = '011972015458788978446:zgdcy4fa-o0';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<div style="width:0px;overflow:hidden;height:0px;">
+  <gcse:search></gcse:search>
+</div>
+
+
+
+
+
+
+  <div class="content-well">
+
+
+    <article class="main-article">
+
+
+      
+
+<header class="front-matter">
+
+
+  <h1 class="front-matter__title">
+
+    
+    <br>
+    Using riak shell
+
+  </h1>
+  <nav class="table-of-contents"></nav>
+
+
+</header>
+
+
+      <main>
+        
+
+<p>You can use riak shell within Riak TS to run SQL and logging commands from one place.</p>
+
+<h2 id="capabilities">Capabilities</h2>
+
+<p>While riak shell is in the early stages of development, the following are well-supported:</p>
+
+<ul>
+<li>logging</li>
+<li>log replay</li>
+<li>log regression replay
+
+<ul>
+<li>you can run replay and regression logs in batch mode by specifying a file of commands to replay</li>
+</ul></li>
+<li>extensible architecture</li>
+<li>history</li>
+<li>configuration</li>
+<li>specification of alternative configuration files at run time</li>
+<li>SQL mode</li>
+<li>batch mode</li>
+<li>management of connections to remote Riak nodes</li>
+<li>shell management (including cookies)</li>
+<li>debugging</li>
+</ul>
+
+<p>The shell is also trivially extendable for developer use.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>To get started using riak shell:</p>
+
+<p>1. Locate your riak_shell.config configuration file. It will be in the <code>/etc/riak</code> directory with the other Riak TS configuration files. On Mac OS X, the configuration files are in the <code>riak-ts-1.3.0/etc</code> directory.</p>
+
+<p>2. Open the configuration file, riak_shell.config, and add your nodename and IP address to <code>nodes</code>:</p>
+
+<pre><code>[
+ {riak_shell, [
+              {logging, off},
+              {cookie, riak},
+              {show_connection_status, false},
+              {nodes, [
+                       'dev1@127.0.0.1',
+                       'yournodename@youripaddress'
+                      ]}
+             ]}
+].
+</code></pre>
+
+<p>3. If you change the IP address in any of the configuration files, you will need to perform the steps in the <a href="//evadne.github.io/basho_docs/riak/kv/2.1.4/using/cluster-operations/changing-cluster-info/">Rename Single Node Clusters</a> before proceeding.</p>
+
+<p>4. Navigate back to your Riak TS directory, and open riak shell:</p>
+
+<pre><code class="language-bash">./riak-shell
+</code></pre>
+
+<p>You can verify your connection by running <code>show_connection</code>. You should see a reply like this one:</p>
+
+<pre><code>riak_shell is connected to: 'dev1@127.0.0.1' on port 8087
+</code></pre>
+
+<h2 id="basic-commands">Basic Commands</h2>
+
+<h3 id="connecting-and-reconnecting">Connecting and reconnecting</h3>
+
+<p>You can connect riak shell to multiple nodes.</p>
+
+<blockquote>
+<p><strong>Warning</strong></p>
+
+<p>You cannot run more than one shell per machine. If you try to connect two shells to a single machine, you will receive an error message.</p>
+</blockquote>
+
+<p>To connect to a specific node, run: <code>connect '»nodename«'</code></p>
+
+<pre><code>riak-shell&gt;connect 'dev2@127.0.0.1';
+&quot;Trying to connect...&quot;
+</code></pre>
+
+<p>To show all the nodes you are connected to, run <code>show_nodes</code>. You will see something like this:</p>
+
+<pre><code>riak-shell&gt;show_nodes;
+The connected nodes are: ['dev1@127.0.0.1','dev2@127.0.0.1']
+</code></pre>
+
+<p>You can reconnect riak shell by running: <code>reconnect</code>. This will try to connect you to one of the nodes listed in your riak_shell.config. Each node will be tried until it succeeds or runs out of nodes to try.</p>
+
+<p>You can toggle a connection prompt to show the connect status in the prompt:</p>
+
+<pre><code>riak-shell&gt;connection_prompt on;
+Connection Prompt turned on
+riak-shell&gt;connection_prompt off;
+Connection Prompt turned off
+</code></pre>
+
+<h3 id="history-and-repeating-past-commands">History and repeating past commands</h3>
+
+<p>You can see the log of your activity in riak shell by running <code>&gt;show_history;</code></p>
+
+<pre><code>riak-shell&gt;show_history;
+The history contains:
+- 1: show_connection;
+- 2: connect dev2@127.0.0.1;
+- 3: show_connection;
+- 4: help connection reconnect;
+- 5: reconnect;
+- 6: show_connection;
+- 7: help history h;
+- 8: h 9;
+</code></pre>
+
+<p>You can re-run a past command by running <code>h »number of command to re-run«</code></p>
+
+<p>For instance:</p>
+
+<pre><code>riak-shell&gt;h 6;
+rerun (6)&gt; show_connection;
+riak-shell is connected to: 'dev2@127.0.0.1' on port 8097
+</code></pre>
+
+<h3 id="sql">SQL</h3>
+
+<p>You can use riak shell to <a href="//evadne.github.io/basho_docs/riak/ts/1.3.0/using/creating-activating">create a table</a>:</p>
+
+<pre><code>riak-shell&gt;CREATE TABLE GeoCheckin (region VARCHAR NOT NULL, state VARCHAR NOT NULL, time  TIMESTAMP NOT NULL, weather  VARCHAR NOT NULL, temperature DOUBLE, PRIMARY KEY ((region, state, QUANTUM(time, 15, 'm')), region, state, time));
+</code></pre>
+
+<p>Then, you can see the table in riak shell:</p>
+
+<pre><code>riak-shell&gt;describe GeoCheckin;
++-----------+---------+-------+-----------+---------+
+|  Column   |  Type   |Is Null|Primary Key|Local Key|
++-----------+---------+-------+-----------+---------+
+| region    | varchar | false |     1     |    1    |
+| state     | varchar | false |     2     |    2    |
+|   time    |timestamp| false |     3     |    3    |
+|  weather  | varchar | false |           |         |
+|temperature| double  | true  |           |         |
++-----------+---------+-------+-----------+---------+
+</code></pre>
+
+<p>You can also select specific data points from your table:</p>
+
+<pre><code>riak-shell&gt;select time, weather, temperature from GeoCheckin where region='South Atlantic' and state='South Carolina' and time &gt; 0 and time &lt; 1000;
++----+----------------+---------------------------+
+|time|    weather     |        temperature        |
++----+----------------+---------------------------+
+| 1  |    z«êPò¹    |4.19111744258298777600e+18 |
+| 2  |  ^OOgz^Blu7)  |6.07861409217513676800e+18 |
+| 3  |      ÔÖã       |6.84034338181623808000e+17 |
+| 4  |       ^G        |-5.55785206740398080000e+16|
+| 5  |   ¸LËäà«d    |-3.62555783091625574400e+18|
+| 6  |    ^AE^S¥­     |1.11236574770119680000e+18 |
+| 7  |    ïö?ï^Fv     |5.51455556936744140800e+18 |
+| 8  | ^FtFVÅë=+#^Y5  |2.44525777392835584000e+17 |
+| 9  |ðÁÖ·©Ü^GV^^^DkU|6.90864738609726668800e+18 |
+| 10 | QÝZa^QËfQ  |5.08590022245487001600e+18 |
++----+----------------+---------------------------+
+</code></pre>
+
+<p>You can add data via a simple SQL <code>INSERT</code> statement, too:</p>
+
+<pre><code class="language-sql">riak-shell&gt;INSERT INTO GeoCheckin (region, state, time, weather, temperature) VALUES ('South Atlantic','South Carolina',1420113600000,'snow',25.2);
+</code></pre>
+
+<p>See <a href="//evadne.github.io/basho_docs/riak/ts/1.3.0/using/writingdata">Writing Data</a> for more details.</p>
+
+<blockquote>
+<p><strong>Note:</strong> SQL commands in riak shell may span multiple lines.</p>
+</blockquote>
+
+<h3 id="logging">Logging</h3>
+
+<p>You can specify the name of your logfile by running: <code>logfile &quot;»mylogname«&quot;</code>.</p>
+
+<pre><code>riak-shell&gt;logfile &quot;mylogfile&quot;;
+Log file changed to &quot;mylogfile&quot;
+</code></pre>
+
+<p>You can turn logging on or off by running either <code>log on</code> or <code>log off</code>.</p>
+
+<pre><code>riak-shell&gt;log on;
+Logging turned on.
+riak-shell&gt;log off;
+Logging turned off.
+</code></pre>
+
+<p>Logging is off by default. The above command will allow you to turn logging on or off for the duration of your time using riak shell. To change the default state, you must edit the <code>riak_shell.config</code> <a href="#configuration">configuration file</a>.</p>
+
+<p>You can check whether logging is currently on or off by running <code>show_log_status</code>:</p>
+
+<pre><code>riak-shell&gt;show_log_status;
+Logging : on
+Date Log : off
+Logfile : &quot;/users/myusername/riakts/riak-ts-1.3.0/bin/../log/riak_shell/riak_shell&quot;
+Current Date: &quot;2016_02_02-00:26:19&quot;
+</code></pre>
+
+<blockquote>
+<p><strong>Note:</strong> If you have temporarily turned logging on/off, the output of <code>show_log_status</code> may differ from the output of <code>show_config</code>.</p>
+</blockquote>
+
+<p>If you would like your logfile to have a timestamp, run <code>date_log</code>.</p>
+
+<p>You can replay the current logfile regardless of whether logging is turned on. To replay your logfile, run <code>replay_log</code>.</p>
+
+<pre><code>riak-shell&gt;replay_log;
+
+Replaying &quot;mylogfile.log&quot;
+replay (1)&gt; describe GeoCheckin;
+
++-----------+---------+-------+-----------+---------+
+|  Column   |  Type   |Is Null|Primary Key|Local Key|
++-----------+---------+-------+-----------+---------+
+| region    | varchar | false |     1     |    1    |
+| state     | varchar | false |     2     |    2    |
+|   time    |timestamp| false |     3     |    3    |
+|  weather  | varchar | false |           |         |
+|temperature| double  | true  |           |         |
++-----------+---------+-------+-----------+---------+
+
+replay (2)&gt; select time, weather, temperature from GeoCheckin where region='South Atlantic' and state='South Carolina' and time &gt; 0 and time &lt; 1000;
+
++----+----------------+---------------------------+
+|time|    weather     |        temperature        |
++----+----------------+---------------------------+
+| 1  |    z«êPò¹    |4.19111744258298777600e+18 |
+| 2  |  ^OOgz^Blu7)  |6.07861409217513676800e+18 |
+| 3  |      ÔÖã       |6.84034338181623808000e+17 |
+| 4  |       ^G        |-5.55785206740398080000e+16|
+| 5  |   ¸LËäà«d    |-3.62555783091625574400e+18|
+| 6  |    ^AE^S¥­     |1.11236574770119680000e+18 |
+| 7  |    ïö?ï^Fv     |5.51455556936744140800e+18 |
+| 8  | ^FtFVÅë=+#^Y5  |2.44525777392835584000e+17 |
+| 9  |ðÁÖ·©Ü^GV^^^DkU|6.90864738609726668800e+18 |
+| 10 | QÝZa^QËfQ  |5.08590022245487001600e+18 |
++----+----------------+---------------------------+
+</code></pre>
+
+<p>To play a specific logfile, run <code>replay_log »filename.log«</code>.</p>
+
+<p>You can also run a regression test on your logfile by running <code>regression_log &quot;»path to logfile«&quot;</code>. The <code>regression_log</code> command will check the output of the log to see if it matches the previous run.</p>
+
+<pre><code>riak-shell&gt;regression_log &quot;../log/riak_shell.log&quot;;
+
+Regression Testing &quot;../log/riak_shell.log&quot;
+No Regression Errors.
+</code></pre>
+
+<h3 id="help">Help</h3>
+
+<p>You get help on riak shell functions with the <code>help</code> command:</p>
+
+<pre><code>riak-shell&gt; help;
+</code></pre>
+
+<p>You can get more specific help by calling <code>help</code> with the extension name and function name like <code>help shell quit;</code>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>You can configure riak shell from the riak_shell.config file. You can find the file in your Riak TS directory.</p>
+
+<p>The following things can be configured:</p>
+
+<ul>
+<li>logging (on | off) - Defaults to &lsquo;off&rsquo;; determines whether or not to enable logging.</li>
+<li>date_log (on | off) - Defaults to &lsquo;off&rsquo;; determines whether or not to add timestamp information to the logs.</li>
+<li>logfile (&ldquo;../some/dir/mylogfile.log&rdquo;) - Defaults to &lsquo;../log/riak_shell.log&rsquo;; sets the name and location of the logfile.</li>
+<li>cookie - No default; any atom representing the Erlang cookie that riak shell uses to connect to Riak.</li>
+<li>show_connection_status (true | false) - Defaults to &lsquo;false&rsquo;; sets whether to show the green tick or red cross in the command line.</li>
+<li>nodes ([nodenames]) - No defaults; a list of nodes to try and connect to on startup or &lsquo;reconnect;&rsquo;.</li>
+</ul>
+
+<h2 id="command-line-flags">Command Line Flags</h2>
+
+<p>There are 4 different configurations, two of which trigger batch mode.</p>
+
+<p>By default riak shell swallows error messages, this makes it hard to develop new extensions. You can run it in debug mode as shown below:</p>
+
+<pre><code>./riak-shell -d
+</code></pre>
+
+<p>You can pass in a different config file than <code>../etc/riak/riak_shell.config</code>:</p>
+
+<pre><code>./riak-shell -c ../path/to/my.config
+</code></pre>
+
+<p>You can run a riak shell replay log for batch/scripting:</p>
+
+<pre><code>./riak-shell -f ../path/to/my.log
+</code></pre>
+
+<p>You can run a riak shell regression log for batch/scripting:</p>
+
+<pre><code>./riak-shell -r ../path/to/my.log
+</code></pre>
+
+<h2 id="extending-riak-shell">Extending Riak Shell</h2>
+
+<p>riak shell uses a magic architecture with convention.</p>
+
+<p>Riak modules with names like <code>mymodule_EXT.erl</code> are considered to be riak shell extension modules.</p>
+
+<p>All exported functions with an arity &gt;= 1 are automatically exposed in riak shell mode, with some exceptions.</p>
+
+<p>Exported functions with the following names will be silently ignored:</p>
+
+<ul>
+<li><code>module_info/0</code></li>
+<li><code>module_info/1</code></li>
+<li><code>help/1</code></li>
+<li><code>'riak-admin'/N</code></li>
+</ul>
+
+<p>Functions that share a name with the first keyword of supported SQL statements will likewise be ignored:</p>
+
+<ul>
+<li><code>create/N</code></li>
+<li><code>describe/N</code></li>
+<li><code>select/N</code></li>
+</ul>
+
+<p>As additional SQL statements are supported, adding them to the macro <code>IMPLEMENTED_SQL_STATEMENTS</code> in <code>riakshell.hrl</code> will automatically make them available to riak shell and exclude them from extensions.</p>
+
+<p>To add a function which appears to the user like:</p>
+
+<pre><code>riak-shell&gt; frobulator bish bash bosh;
+</code></pre>
+
+<p>You implement a function with the following signature:</p>
+
+<pre><code>frobulator(#state{} = State, _Arg1, _Arg2, N) when is_integer(N) -&gt;
+    Result = &quot;some string that is the result of the fn&quot;,
+    {Result, State};
+frobulator(S, _Arg1, Arg2, N) -&gt;
+    ErrMsg = io_lib:format(&quot;The third parameter '~p' should be an integer&quot;,
+        [N]),
+   {ErrMsg, S#state{cmd_error = true}}.
+</code></pre>
+
+<p>Your function may modify the state record if appropriate. All the shell functions are implemented as extensions.</p>
+
+<p>This example shows you how to handle errors - return an error message and a state record with the <code>cmd_error</code> flag set to &lsquo;true&rsquo;.</p>
+
+<p>To be a good citizen you should add a clause to the help function like:</p>
+
+<pre><code>-help(frobulator) -&gt;
+    &quot;This is how you use my function&quot;;
+</code></pre>
+
+<p>If you have a function with the same name that appears in two EXT modules riak shell will not start. It will not check if the arities match. You may have the same function with different arities in the same module - but there is only one help call.</p>
+
+<p>As a convenience, there is a module called <code>debug_EXT.erl</code>. This module implements a function which reloads and reregisters all extensions <code>riak-shell&gt;load</code>, and can hot-load changes into the shell (it won&rsquo;t work on first-creation of a new EXT module, only on reloading). The only EXT that debug doesn&rsquo;t load is <code>debug_EXT</code>, so please do not add functions to it.</p>
+
+<p>riak shell suppresses error messages that would otherwise be written to the console. For instance, if the remote Riak node goes down the protocol buffer connection is torn down. This makes debugging painful. You can stop this behavior by starting riak shell in debug mode. You can do this by starting it from the shell with the <code>-d</code> flag:</p>
+
+<pre><code>cd ~/riakshell/bin
+./riak-shell -d
+</code></pre>
+
+<h3 id="architecture-notes">Architecture Notes</h3>
+
+<p>This shell has a simpler architecture than conventional Erlang/LFE/Elixir REPLS.</p>
+
+<p>Although there are no <code>-spec()</code> annotations this is actually an example of spec-first development.</p>
+
+      </main>
+
+
+    </article>
+
+
+    <footer class="footer">
+
+  <div class="inline-block   footer__attributions">
+
+    <p>
+      This work is licensed under a
+      <br class="[bs] hidden-md-up">
+      <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+        Creative Commons Attribution 4.0 <br class="[bs] hidden-sm-up"> International Public License
+      </a>
+    </p>
+
+    <p>
+      © 2011-2017&nbsp;<a href="http://www.basho.com">Basho Technologies, Inc.</a>
+    </p>
+
+  </div>
+
+</footer>
+
+
+
+  </div>
+
+
+  <script src="//evadne.github.io/basho_docs/js/main.js" type="text/javascript"></script>
+
+</body>
+</html>
